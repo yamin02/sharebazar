@@ -1,0 +1,138 @@
+#myInput{
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    text-align: center;
+    display: block;
+    margin : 10px auto;
+    width: 700px; 
+    /* float: left; */
+    /* width: 80%; */
+    background: #f1f1f1;
+  }
+  
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    /* width: 100%; */
+    width: 700px ;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+td,th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+tr:nth-child(even){background-color: #f2f2f2;}
+  
+tr:hover {background-color: #ddd;}
+  
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #6646f7;
+    color: white;
+    }
+
+
+
+
+/* Header */
+    *{padding: 0; margin: 0; box-sizing: border-box;}
+    /* body{height: 900px;} */
+    header {
+      background: url('https://picsum.photos/1000/300');
+      text-align: center;
+      width: 100%;
+      height: 50%;
+      background-size: cover;
+      background-attachment: fixed;
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 0 85% 85% / 30%;
+    }
+    header .overlay{
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      color: #FFF;
+      text-shadow: 1px 1px 1px #333;
+      background-image: linear-gradient( 135deg, #9f05ff69 10%, #fd5e086b 100%);
+      
+    }
+    
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 80px;
+      margin-bottom: 30px;
+    }
+    
+    h3, p {
+      font-family: 'Open Sans', sans-serif;
+      margin-bottom: 30px;
+    }
+    
+    button {
+      border: none;
+      outline: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      color: #333;
+      background: #fff;
+      margin-bottom: 50px;
+      box-shadow: 0 3px 20px 0 #0000003b;
+    }
+    button:hover{
+      cursor: pointer;
+      background-color: fuchsia;
+      font-weight: bold;
+      color: gainsboro;
+    }
+
+    a { outline: none; color:inherit; }
+
+
+    /* Each stock data page */
+
+    #stocknameh3{
+      text-align: center;
+    }
+
+
+    /* Navbar at Bottom */
+
+/* Place the navbar at the bottom of the page, and make it stick */
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Style the links inside the navigation bar */
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.navbar a.active {
+  background-color: #04AA6D;
+  color: white;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "public",
+  "version": "1.0.0",
+  "description": "Npm for my frontend",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify main.js -o bundle.js"
+  },
+  "author": "yamin",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "browserify": "^17.0.0"
+  }
+}
