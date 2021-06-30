@@ -1,30 +1,34 @@
-// var api = require('./api');
 var tableget = require('./table');
-var eachstock = require('./eachstock')
+var eachstockdata = require('./eachstock')
+var utils = require('./utils')
 
-const loader = () =>{
-    console.log('kolla')
-
-var action = document.location.hash.split('/')[1]
-var params = ''
-console.log(action)
-switch(action) {
-    case 'home':
-        var screen = tableget.tableReal
-      break;
-    case 'data':
-         var screen = eachstock.eachstock
-         params = document.location.hash.split('/')[2]
-      break;
-    default:
-      var screen = tableget.tableReal
+const screenurl ={
+  '/' : tableget.tableReal ,
+  '/home' :tableget.tableReal ,
+  '/data/:id' : eachstockdata.eachstock ,
 }
 
-const content = document.getElementById("contents");
-content.innerHTML = screen.rend()
-screen.afterRend(params); 
+const loader = async () =>{
+  const content = document.getElementById("contents");
+  utils.showloading();
+
+const request = utils.parseurl()
+const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
+console.log(parseUrl)
+var screen = screenurl[parseUrl];
+
+content.innerHTML = await screen.rend()
+await screen.afterRend()
+utils.hideloading();
+setInterval(async()=>{
+  await screen.afterRend()
+},6000)
 }
 
 
-window.addEventListener('load' , loader);
+
+window.addEventListener('load' , loader) ;
 window.addEventListener('hashchange' , loader);
+
+
+

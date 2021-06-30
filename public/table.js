@@ -1,27 +1,30 @@
 var api = require('./api');
 
-
 const tab =  {
-    afterRend : ()=>{
+    afterRend : async ()=>{
         const tbody = document.getElementById('tbody');
-        api.getits().then(data=>{
-            for (var i in data){
-              //  console.log(`${data[`${i}`].ltp}`);
-        const trow = document.createElement('tr');
-        var color = data[`${i}`].change < 0 ? 'red' : 'green' ;
-        if(data[`${i}`].change==0){color ="blue"}
-        trow.style.color = `${color}`
-        
-        // setAttribute("style",`color:${color}`) ;
-        trow.innerHTML = `<td class="name"><a href= '/#/data/${i}' style="none">${i}</a>
-                        </td><td>${data[`${i}`].ltp}</td>
-                        <td>${data[`${i}`].value}</td>
-                        <td>${data[`${i}`].change}</td>`
-        tbody.appendChild(trow);
-        }});
+        console.log('running after render')
+        const data = await api.getits() ;
+        tbody.innerHTML = "" ;
+        for (var i in data){
+            var trow = document.createElement('tr');
+            tbody.appendChild(trow);
+            var color = data[`${i}`].change < 0 ? 'red' : 'green' ;
+            if(data[`${i}`].change==0){color ="blue"}
+            trow.style.color = `${color}`
+            trow.innerHTML = `<td class="name" onclick="window.open('/#/data/${i}')">${i}</td>
+                            <td>${data[`${i}`].ltp}</td>
+                            <td>${data[`${i}`].value}</td>
+                            <td>${data[`${i}`].change}</td>`
+            tbody.appendChild(trow);
+            trow.addEventListener('click',()=>{
+                window.open(`/#/data/${i}`)
+            })
+        };
 
         const selectFunc = () =>{
-            var input = document.getElementById("myInput").value.toUpperCase();
+           var input = document.getElementById("myInput").value.toUpperCase();
+          // var input = e.target.value.toUpperCase();
             var row = document.getElementsByClassName("name");
             for(var i of row){
                 var stonk = i.innerHTML.toUpperCase()
@@ -32,14 +35,15 @@ const tab =  {
                 }
             }
         }
-        document.getElementById("myInput").addEventListener("keyup",selectFunc);
+        if(document.getElementById("myInput").value){selectFunc()}
+        document.getElementById("myInput").addEventListener("input",selectFunc);
     },
 
 rend : ()=>{
 
     return `
     <input type="text" id="myInput" placeholder="Search for Stocks.." title="Type in a name">
-    <table>
+    <table id="stocktable">
         <thead>
             <tr>
                 <th>Stonk</th>
@@ -51,8 +55,6 @@ rend : ()=>{
         <tbody id="tbody">
         </tbody>
     </table>`
-
-    
  }
  }
 

@@ -186,10 +186,11 @@ process.umask = function() { return 0; };
 
 },{}],2:[function(require,module,exports){
 var axios = require('axios');
+var url = require('./config')
 
 module.exports.getits  = async() =>{
   const res = await axios({
-      url : 'http://localhost:5000/getdata',
+      url : `${url.apiUrl}/getdata`,
       method:'POST' ,
       headers :  {
           "Content-Type" : 'application/json',
@@ -203,7 +204,7 @@ module.exports.getits  = async() =>{
 
 module.exports.price90  = async(stock) =>{
   const res = await axios({
-      url : `http://localhost:5000/eachstock/${stock}`,
+      url : `${url.apiUrl}/eachstock/${stock}`,
       method:'POST' ,
       headers :  {
           "Content-Type" : 'application/json',
@@ -220,18 +221,24 @@ module.exports.price90  = async(stock) =>{
 // })
 
 // module.exports.getits = geit ;
-},{"axios":5}],3:[function(require,module,exports){
+},{"./config":3,"axios":6}],3:[function(require,module,exports){
+module.exports.apiUrl = document.location.href.startsWith('http://localhost') ? 'http://localhost:5000' : "";
+},{}],4:[function(require,module,exports){
 var api = require('./api');
+var utils = require('./utils')
+
 
 module.exports.eachstock =  {
-    afterRend : (name)=>{
+    afterRend : async ()=>{
+        const params = utils.parseurl().id
         const tbody = document.getElementById('tbody');
-        document.getElementById('stocknameh3').innerHTML =name ;
-        api.price90(`${name}`).then(data=>{
+        document.getElementById('stocknameh3').innerHTML = params.toUpperCase() ;
+        const data = await api.price90(`${params}`)
+        tbody.innerHTML = "" ;
             for (var i in data){
         const trow = document.createElement('tr');
-        var change = ((data[`${i}`].ltp - data[`${i}`].ycp)/data[`${i}`].ycp).toFixed(2) ;
-        console.log(change)
+        var change = data[`${i}`].change;
+       // console.log(change)
         var color = change < 0 ? 'red' : 'green' ;
         if(change==0){color ="blue"}
         trow.style.color = `${color}`
@@ -239,13 +246,14 @@ module.exports.eachstock =  {
                         <td>${data[`${i}`].ltp}</td>
                         <td>${data[`${i}`].value}</td>
                         <td>${data[`${i}`].volume}</td>
-                        <td>${change}</td>`
+                        <td>${data[`${i}`].change}</td>`
         tbody.appendChild(trow);
-        }});
+
+        }
     },
 
 rend : ()=>{
-    console.log('kolla life')
+    console.log('Each stock page loaded')
     return `
     <h3 id="stocknameh3">kolla</h3>
     <table>
@@ -264,41 +272,47 @@ rend : ()=>{
  }
 
  
-},{"./api":2}],4:[function(require,module,exports){
+},{"./api":2,"./utils":34}],5:[function(require,module,exports){
 // var api = require('./api');
 var tableget = require('./table');
-var eachstock = require('./eachstock')
+var eachstockdata = require('./eachstock')
+var utils = require('./utils')
 
-const loader = () =>{
-    console.log('kolla')
+const screenurl ={
+  '/' : tableget.tableReal ,
+  '/home' :tableget.tableReal ,
+  '/data/:id' : eachstockdata.eachstock ,
+}
 
-var action = document.location.hash.split('/')[1]
-var params = ''
-console.log(action)
-switch(action) {
-    case 'home':
-        var screen = tableget.tableReal
-      break;
-    case 'data':
-         var screen = eachstock.eachstock
-         params = document.location.hash.split('/')[2]
-      break;
-    default:
-      // error page
- }
+const loader = async () =>{
+  const content = document.getElementById("contents");
+ // content.innerHTML = "Loading"
+  utils.showloading();
+// var action = document.location.hash.split('/')[1]
+// var params = ''
+// var screen =  tableget.tableReal
 
-const content = document.getElementById("contents");
-content.innerHTML = screen.rend()
-screen.afterRend(params); 
+const request = utils.parseurl()
+const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
+console.log(parseUrl)
+var screen = screenurl[parseUrl];
+
+content.innerHTML = await screen.rend()
+await screen.afterRend()
+utils.hideloading();
+setInterval(async()=>{
+  await screen.afterRend()
+},6000)
 }
 
 
-window.addEventListener('load' , loader);
+
+window.addEventListener('load' , loader) ;
 window.addEventListener('hashchange' , loader);
 
-},{"./eachstock":3,"./table":32}],5:[function(require,module,exports){
+},{"./eachstock":4,"./table":33,"./utils":34}],6:[function(require,module,exports){
 module.exports = require('./lib/axios');
-},{"./lib/axios":7}],6:[function(require,module,exports){
+},{"./lib/axios":8}],7:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -479,7 +493,7 @@ module.exports = function xhrAdapter(config) {
   });
 };
 
-},{"../core/buildFullPath":13,"../core/createError":14,"./../core/settle":18,"./../helpers/buildURL":22,"./../helpers/cookies":24,"./../helpers/isURLSameOrigin":27,"./../helpers/parseHeaders":29,"./../utils":31}],7:[function(require,module,exports){
+},{"../core/buildFullPath":14,"../core/createError":15,"./../core/settle":19,"./../helpers/buildURL":23,"./../helpers/cookies":25,"./../helpers/isURLSameOrigin":28,"./../helpers/parseHeaders":30,"./../utils":32}],8:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -537,7 +551,7 @@ module.exports = axios;
 // Allow use of default import syntax in TypeScript
 module.exports.default = axios;
 
-},{"./cancel/Cancel":8,"./cancel/CancelToken":9,"./cancel/isCancel":10,"./core/Axios":11,"./core/mergeConfig":17,"./defaults":20,"./helpers/bind":21,"./helpers/isAxiosError":26,"./helpers/spread":30,"./utils":31}],8:[function(require,module,exports){
+},{"./cancel/Cancel":9,"./cancel/CancelToken":10,"./cancel/isCancel":11,"./core/Axios":12,"./core/mergeConfig":18,"./defaults":21,"./helpers/bind":22,"./helpers/isAxiosError":27,"./helpers/spread":31,"./utils":32}],9:[function(require,module,exports){
 'use strict';
 
 /**
@@ -558,7 +572,7 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 var Cancel = require('./Cancel');
@@ -617,14 +631,14 @@ CancelToken.source = function source() {
 
 module.exports = CancelToken;
 
-},{"./Cancel":8}],10:[function(require,module,exports){
+},{"./Cancel":9}],11:[function(require,module,exports){
 'use strict';
 
 module.exports = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -721,7 +735,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = Axios;
 
-},{"../helpers/buildURL":22,"./../utils":31,"./InterceptorManager":12,"./dispatchRequest":15,"./mergeConfig":17}],12:[function(require,module,exports){
+},{"../helpers/buildURL":23,"./../utils":32,"./InterceptorManager":13,"./dispatchRequest":16,"./mergeConfig":18}],13:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -775,7 +789,7 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 module.exports = InterceptorManager;
 
-},{"./../utils":31}],13:[function(require,module,exports){
+},{"./../utils":32}],14:[function(require,module,exports){
 'use strict';
 
 var isAbsoluteURL = require('../helpers/isAbsoluteURL');
@@ -797,7 +811,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
   return requestedURL;
 };
 
-},{"../helpers/combineURLs":23,"../helpers/isAbsoluteURL":25}],14:[function(require,module,exports){
+},{"../helpers/combineURLs":24,"../helpers/isAbsoluteURL":26}],15:[function(require,module,exports){
 'use strict';
 
 var enhanceError = require('./enhanceError');
@@ -817,7 +831,7 @@ module.exports = function createError(message, config, code, request, response) 
   return enhanceError(error, config, code, request, response);
 };
 
-},{"./enhanceError":16}],15:[function(require,module,exports){
+},{"./enhanceError":17}],16:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -898,7 +912,7 @@ module.exports = function dispatchRequest(config) {
   });
 };
 
-},{"../cancel/isCancel":10,"../defaults":20,"./../utils":31,"./transformData":19}],16:[function(require,module,exports){
+},{"../cancel/isCancel":11,"../defaults":21,"./../utils":32,"./transformData":20}],17:[function(require,module,exports){
 'use strict';
 
 /**
@@ -942,7 +956,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
   return error;
 };
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -1031,7 +1045,7 @@ module.exports = function mergeConfig(config1, config2) {
   return config;
 };
 
-},{"../utils":31}],18:[function(require,module,exports){
+},{"../utils":32}],19:[function(require,module,exports){
 'use strict';
 
 var createError = require('./createError');
@@ -1058,7 +1072,7 @@ module.exports = function settle(resolve, reject, response) {
   }
 };
 
-},{"./createError":14}],19:[function(require,module,exports){
+},{"./createError":15}],20:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -1080,7 +1094,7 @@ module.exports = function transformData(data, headers, fns) {
   return data;
 };
 
-},{"./../utils":31}],20:[function(require,module,exports){
+},{"./../utils":32}],21:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -1182,7 +1196,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 }).call(this)}).call(this,require('_process'))
-},{"./adapters/http":6,"./adapters/xhr":6,"./helpers/normalizeHeaderName":28,"./utils":31,"_process":1}],21:[function(require,module,exports){
+},{"./adapters/http":7,"./adapters/xhr":7,"./helpers/normalizeHeaderName":29,"./utils":32,"_process":1}],22:[function(require,module,exports){
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -1195,7 +1209,7 @@ module.exports = function bind(fn, thisArg) {
   };
 };
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -1267,7 +1281,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
   return url;
 };
 
-},{"./../utils":31}],23:[function(require,module,exports){
+},{"./../utils":32}],24:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1283,7 +1297,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
     : baseURL;
 };
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -1338,7 +1352,7 @@ module.exports = (
     })()
 );
 
-},{"./../utils":31}],25:[function(require,module,exports){
+},{"./../utils":32}],26:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1354,7 +1368,7 @@ module.exports = function isAbsoluteURL(url) {
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 };
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1367,7 +1381,7 @@ module.exports = function isAxiosError(payload) {
   return (typeof payload === 'object') && (payload.isAxiosError === true);
 };
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -1437,7 +1451,7 @@ module.exports = (
     })()
 );
 
-},{"./../utils":31}],28:[function(require,module,exports){
+},{"./../utils":32}],29:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -1451,7 +1465,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
   });
 };
 
-},{"../utils":31}],29:[function(require,module,exports){
+},{"../utils":32}],30:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -1506,7 +1520,7 @@ module.exports = function parseHeaders(headers) {
   return parsed;
 };
 
-},{"./../utils":31}],30:[function(require,module,exports){
+},{"./../utils":32}],31:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1535,7 +1549,7 @@ module.exports = function spread(callback) {
   };
 };
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 'use strict';
 
 var bind = require('./helpers/bind');
@@ -1888,31 +1902,34 @@ module.exports = {
   stripBOM: stripBOM
 };
 
-},{"./helpers/bind":21}],32:[function(require,module,exports){
+},{"./helpers/bind":22}],33:[function(require,module,exports){
 var api = require('./api');
 
-
 const tab =  {
-    afterRend : ()=>{
+    afterRend : async ()=>{
         const tbody = document.getElementById('tbody');
-        api.getits().then(data=>{
-            for (var i in data){
-              //  console.log(`${data[`${i}`].ltp}`);
-        const trow = document.createElement('tr');
-        var color = data[`${i}`].change < 0 ? 'red' : 'green' ;
-        if(data[`${i}`].change==0){color ="blue"}
-        trow.style.color = `${color}`
-        
-        // setAttribute("style",`color:${color}`) ;
-        trow.innerHTML = `<td class="name"><a href= '/#/data/${i}' style="none">${i}</a>
-                        </td><td>${data[`${i}`].ltp}</td>
-                        <td>${data[`${i}`].value}</td>
-                        <td>${data[`${i}`].change}</td>`
-        tbody.appendChild(trow);
-        }});
+        console.log('running after render')
+        const data = await api.getits() ;
+        tbody.innerHTML = "" ;
+        for (var i in data){
+            var trow = document.createElement('tr');
+            tbody.appendChild(trow);
+            var color = data[`${i}`].change < 0 ? 'red' : 'green' ;
+            if(data[`${i}`].change==0){color ="blue"}
+            trow.style.color = `${color}`
+            trow.innerHTML = `<td class="name" onclick="window.open('/#/data/${i}')">${i}</td>
+                            <td>${data[`${i}`].ltp}</td>
+                            <td>${data[`${i}`].value}</td>
+                            <td>${data[`${i}`].change}</td>`
+            tbody.appendChild(trow);
+            trow.addEventListener('click',()=>{
+                window.open(`/#/data/${i}`)
+            })
+        };
 
         const selectFunc = () =>{
-            var input = document.getElementById("myInput").value.toUpperCase();
+           var input = document.getElementById("myInput").value.toUpperCase();
+          // var input = e.target.value.toUpperCase();
             var row = document.getElementsByClassName("name");
             for(var i of row){
                 var stonk = i.innerHTML.toUpperCase()
@@ -1923,14 +1940,15 @@ const tab =  {
                 }
             }
         }
-        document.getElementById("myInput").addEventListener("keyup",selectFunc);
+        if(document.getElementById("myInput").value){selectFunc()}
+        document.getElementById("myInput").addEventListener("input",selectFunc);
     },
 
 rend : ()=>{
 
     return `
     <input type="text" id="myInput" placeholder="Search for Stocks.." title="Type in a name">
-    <table>
+    <table id="stocktable">
         <thead>
             <tr>
                 <th>Stonk</th>
@@ -1942,8 +1960,6 @@ rend : ()=>{
         <tbody id="tbody">
         </tbody>
     </table>`
-
-    
  }
  }
 
@@ -1951,4 +1967,31 @@ module.exports.tableReal = tab
 
 
 
-},{"./api":2}]},{},[4]);
+},{"./api":2}],34:[function(require,module,exports){
+module.exports.parseurl = () => {
+    const url = document.location.hash.toLowerCase();
+    const request = url.split('/');
+    return {
+        resource: request[1],
+        id: request[2] 
+    }
+}
+
+
+
+module.exports.rerender = async (comp) => {
+    document.getElementById("main-container").innerHTML = await comp.rend() ;
+    await comp.after_render();
+}
+
+
+module.exports.showloading = () =>{
+    console.log('Loading started')
+    document.getElementById('loading-overlay').classList.add('active');
+}
+
+module.exports.hideloading = () =>{
+    console.log('loading ends')
+    document.getElementById('loading-overlay').classList.remove('active');
+}
+},{}]},{},[5]);

@@ -3,23 +3,28 @@
     <title>stock market  virtual trade</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
+    
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
 </head>
 <body>
-    <header>
-        <div class="overlay">
-    <h1>DSE-2021</h1>
-    <h3>Reasons for Choosing US</h3>
-    <p>Be the part of the future of the stock market.As we dump all your stock and then pump it back.</p>
+   <!-- <header>
+        <div class="overlay" id="loading-overlay">Loading</div>
+        <div class="overlay" id="message-overlay"></div>
+        <h2>DSE-2021</h2>
         <button onclick="window.open('/port')">Create Your Portfolio</button>
-            </div>
-    </header>
+    </header> -->
+    <div class="overlay" id="loading-overlay">Loading</div>
+    <div class="overlay" id="message-overlay"></div>
     <div id="contents"></div>
+
     <br>
     <div class="navbar">
         <a href="#/home" class="active">Home</a>
         <a href="#/news">News</a>
         <a href="#/contact">Contact</a>
-      </div>
+    </div>
     <script src="bundle.js"></script>
+
 </body>
 </html>
