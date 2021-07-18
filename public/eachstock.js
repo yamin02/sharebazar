@@ -11,7 +11,7 @@ module.exports.eachstock =  {
         tbody.innerHTML = "" ;
             for (var i in data){
         const trow = document.createElement('tr');
-        var change = data[`${i}`].change;
+        var change = data[`${i}`].changeP;
        // console.log(change)
         var color = change < 0 ? 'red' : 'green' ;
         if(change==0){color ="blue"}
@@ -20,9 +20,8 @@ module.exports.eachstock =  {
                         <td>${data[`${i}`].ltp}</td>
                         <td>${data[`${i}`].value}</td>
                         <td>${data[`${i}`].volume}</td>
-                        <td>${data[`${i}`].change}</td>`
+                        <td>${data[`${i}`].changeP}</td>`
         tbody.appendChild(trow);
-
         }
     },
 

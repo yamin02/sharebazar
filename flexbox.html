@@ -5,14 +5,15 @@
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
   </head>
   <body>
+    <div class="stocklist">
     <div class="flex">
       <div id="name"><p>ROBI</p><p>Trade:1000 , Volume : 45,000</p><p>Value:87 crore</p></div>
-      <div id="chart"></div>
+      <div id="chart" class="ct-line"></div>
       <div id="data"><p>44.6</p><p>+12.43 , 9.00%</p></div>
     </div>
     <script>
 var data = {series: [[1, 2, 4, 2,  2, 4, 2, 3,3,7,10,13,10 ,4, 2,  2, 4, 2, 3,3,7,10,]]};
-new Chartist.Line('#chart', data,{
+new Chartist.Line('.ct-line', data,{
   showPoint:false,
   color:'green' ,
   axisX:{  
@@ -25,15 +26,19 @@ new Chartist.Line('#chart', data,{
 });
     </script>
     <style>
+      .ct-line{
+        stroke: green;
+      }
       .flex{
         display: flex;
         flex-direction: row;
-        border: 1px solid rgba(252, 0, 0, 0.966);
+        /* border: 1px solid rgba(252, 0, 0, 0.966); */
         flex-wrap: nowrap; 
         height: 100px;
+        margin: 2px;
       }
       .flex div {
-        background-color: #f0f1eb;
+        background-color: #dfe2cf;
          width: 100%; 
          display: flex;
          flex-direction: column;

@@ -7,8 +7,6 @@ module.exports.parseurl = () => {
     }
 }
 
-
-
 module.exports.rerender = async (comp) => {
     document.getElementById("main-container").innerHTML = await comp.rend() ;
     await comp.after_render();
@@ -24,3 +22,4 @@ module.exports.hideloading = () =>{
     console.log('loading ends')
     document.getElementById('loading-overlay').classList.remove('active');
 }
+

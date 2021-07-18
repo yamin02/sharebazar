@@ -12,6 +12,9 @@
   "dependencies": {
     "axios": "^0.21.1",
     "browserify": "^17.0.0",
-    "gridjs": "^5.0.2"
+    "chart.js": "^3.4.1",
+    "chartist": "^0.11.4",
+    "gridjs": "^5.0.2",
+    "node-chartist": "^1.0.5"
   }
 }

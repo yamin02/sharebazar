@@ -7,11 +7,17 @@
     text-align: center;
     display: block;
     margin : 10px auto;
-    width: 700px; 
+    width: 40%; 
     /* float: left; */
     /* width: 80%; */
     background: #f1f1f1;
   }
+
+  @media screen and (max-width: 1000px) {
+    #myInput{
+      width: 100%; 
+    }
+}
   
                       /* Table  */
 
@@ -44,67 +50,9 @@ th {
 
 
 
-
-                                /* Header */
-
-
-    *{padding: 0; margin: 0; box-sizing: border-box;}
-    /* body{height: 900px;} */
-    header {
-      background: url('https://picsum.photos/1000/300');
-      text-align: center;
-      width: 100%;
-      height: 200px;
-      background-size: cover;
-      background-attachment: fixed;
-      position: relative;
-      overflow: hidden;
-      /* border-radius: 0 0 85% 85% / 30%; */
-    }
-    header .overlay{
-      width: 100%;
-      height: 100%;
-      padding: 10px;
-      color: #FFF;
-      text-shadow: 1px 1px 1px #333;
-      background-image: linear-gradient( 135deg, #9f05ff69 10%, #fd5e086b 100%);
-      
-    }
-    
-    h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 80px;
-      margin-bottom: 30px;
-    }
-    
-    h3, p {
-      font-family: 'Open Sans', sans-serif;
-      margin-bottom: 30px;
-    }
-    
-    button {
-      border: none;
-      outline: none;
-      padding: 10px 20px;
-      border-radius: 50px;
-      color: #333;
-      background: #fff;
-      margin-bottom: 50px;
-      box-shadow: 0 3px 20px 0 #0000003b;
-    }
-    button:hover{
-      cursor: pointer;
-      background-color: fuchsia;
-      font-weight: bold;
-      color: gainsboro;
-    }
-
-    a { outline: none; color:inherit; }
-
-
     /* Each stock data page */
 
-    #stocknameh3{
+#stocknameh3 {
       text-align: center;
     }
 
@@ -114,11 +62,13 @@ th {
 
 /* Place the navbar at the bottom of the page, and make it stick */
 .navbar {
-  background-color: #333;
+  background-color: rgb(44, 44, 44);
   overflow: hidden;
   position: fixed;
   bottom: 0;
   width: 100%;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 /* Style the links inside the navigation bar */
@@ -129,20 +79,24 @@ th {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 16px;
+  font-family: monospace;
 }
-
+body { 
+  margin: 0;
+  padding-bottom: 36px;
+}
 /* Change the color of links on hover */
-.navbar a:hover {
-  background-color: #ddd;
+  .navbar a:hover {
+   background-color: #ddd;
   color: black;
 }
 
 /* Add a color to the active/current link */
-.navbar a.active {
-  background-color: #04AA6D;
-  color: white;
-}
+ .navbar a.active {
+  background-color: #50e2ad;
+  color: rgb(0, 0, 0); 
+} 
 
 
                         /* Loading overlay */
@@ -176,3 +130,214 @@ th {
   margin: 2rem;
 }
 
+                              /* Stock list */
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 3px solid rgba(245, 233, 233, 0.966);
+  flex-wrap: nowrap; 
+  height: 90px;
+  padding: 0;
+}
+
+.flex div {
+  background-color: #e9f1f0ce;
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.name{
+  margin-left: 3px;
+}
+.name p{
+  margin: 0;
+}
+
+.name p:first-child{
+  font-size: 17px;
+  font-family: monospace;
+  /* font-weight: bold; */
+}
+.name p:nth-child(2),.name p:nth-child(3),.name p:nth-child(4){
+  color: rgb(80, 76, 76);
+  font-weight: bold;
+  font-size: 11px;
+}
+
+
+
+.chart{
+  margin: 0;
+  padding: 0;
+  width: 10%;
+  font-family: monospace;
+  font-size: 10px;
+  /* border: 1px solid violet;  */
+  /* padding-top: 7px; */
+}
+.chart p{
+  margin: 0;
+}
+.strokegreen{
+  stroke: rgb(49, 206, 49);
+  /* stroke-dasharray: 10px 20px; */
+}
+.strokered{
+  stroke: rgb(212, 75, 75);
+  /* stroke-dasharray: 10px 20px; */
+}
+.strokeblue{
+  stroke: rgb(61, 61, 247);
+}
+
+
+
+
+#data p{
+  margin: 0;
+  font-weight: bold;
+}
+#data p:last-child{
+  font-size: 12px;
+}
+#data p:first-child{
+  color: white;
+  font-size: 17px;
+  border-radius: 14px ;
+  /* background-color: rgb(243, 105, 101); */
+  padding: 6px 13px;
+}
+
+.red{
+  background-color: rgb(236, 52, 52);
+}
+
+.green{
+  background-color: rgb(21, 175, 67);
+}
+.green p:last-child{
+  color: green;
+}
+.blue{
+  background-color: rgb(81, 130, 235);
+}
+
+.fa-star{
+   /* border: 2px solid black; */
+   margin-left: 0;
+   margin-right: 0%;
+   color: blanchedalmond;
+   /* color: rgb(100, 97, 97); */
+   text-shadow: 1px 1px 1px #000;
+}
+.checked{
+  color: orange;
+  text-shadow: none;
+}
+#icon{
+  margin: 0;
+  padding-left: 0;
+  /* border: 2px solid black; */
+  width: 20px
+}
+
+
+                     /* top nav */
+
+.topnav {
+  overflow: hidden;
+  display: flex;
+}
+
+.topnav a {
+  width: 100%;
+  float: left;
+  color: black ;
+  text-align: center;
+  padding: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: monospace;
+  border: 1px  solid rgb(101, 108, 109);
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active0 {
+  background-color: #25d695;
+  color: black;
+  font-weight: bold;
+}
+
+.sectrwise {
+  overflow: hidden;
+  /* display: flex; */
+  display: none;
+}
+
+/* Style the links inside the navigation bar */
+.sectrwise a {
+  width: 100%;
+  float: left;
+  color: rgb(2, 4, 39) ;
+  text-align: center;
+  padding: 3px;
+  text-decoration: none;
+  font-size: 13px;
+  font-family: monospace  ;
+  border: 1px  solid rgb(0, 0, 0);
+  border-radius: 8px;
+  margin: 0.5px;
+  background-color: rgb(37, 37, 37);
+  color: #19e499;
+  font-weight: bold; 
+
+}
+
+/* Change the color of links on hover */
+.sectrwise a:hover {
+  background-color: rgb(73, 68, 68);
+  color: rgb(255, 253, 253);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Add a color to the active/current link */
+.sectrwise a.active0 {
+  background-color: rgb(71, 65, 65);
+  color: white;
+  font-weight: bold;
+}
+
+.spacing{
+  font-size: 8px;
+}
+
+
+                  /* Sector Wise Data */
+
+#sector {
+  display: none ;
+}
+
+.diplayShow div { 
+  display: flex  ;
+}
+
+
+                    /* Update Animate  */
+.animate{
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+@keyframes example {
+  from {background-color: rgba(35, 219, 11, 0.815);}
+  to {background-color: rgba(126, 235, 153, 0.829);}
+}

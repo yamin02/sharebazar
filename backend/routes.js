@@ -9,7 +9,7 @@ app.use(express.json({limit : '1mb'}));
 
 async function getdata(request,response){
     // console.log({kolla : 'life'})
-    datagat.dataDse().then(dara =>{
+    await datagat.dataDse().then(dara =>{
         response.send(dara);
     });
     console.log(request.body);

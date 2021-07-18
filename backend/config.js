@@ -4,6 +4,6 @@ dotenv.config() ;
 
 module.exports.default = {
     PORT : process.env.PORT || 5000,
-    MONGODB_URL : '' ,
+    MONGODB_URL : process.env.MONGODB_URL  ,
     JWT_SECRET: '',
 }
