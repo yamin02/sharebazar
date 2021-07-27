@@ -35,7 +35,7 @@ app.get('/getupdate', async(req,res)=>{
 });
 
 app.get('/preload',async (req,res)=>{
-    const dsedata = await model.stockmodel.find({},{_id:0,high:0,low:0,ycp:0,closep:0})
+    const dsedata = await model.stockmodel.find({})
     res.send(dsedata);
 })
 
@@ -48,7 +48,7 @@ app.post('/eachstock/:id',async (req,res)=>{
 })
 
 app.get('/dsex',async (req,res)=>{
-    var json = await model.dsexmodel.find({},{_id:0});
+    var json = await model.dsexmodel.find({});
     res.send(json[0])
 })
 
