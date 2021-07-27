@@ -1,15 +1,15 @@
 {
-  "marketStatus": "Open",
-  "dsex": 6377.8689,
-  "dsexChange": -26.16383,
-  "dsexChangeP": -0.40855,
-  "ds30": 1388.1748,
-  "ds30Change": -2.09099,
-  "ds30ChangeP": -0.1504,
-  "totaltrade": 233337,
-  "totalvolume": 434950745,
-  "totalvalue": 13410.817,
-  "issueAdvance": 151,
-  "issueDecline": 191,
-  "issueUnchange": 31
+  "marketStatus": "Closed",
+  "dsex": 6379.67649,
+  "dsexChange": -24.35624,
+  "dsexChangeP": -0.38033,
+  "ds30": 1388.28289,
+  "ds30Change": -1.9829,
+  "ds30ChangeP": -0.14263,
+  "totaltrade": 253832,
+  "totalvolume": 479117999,
+  "totalvalue": 14628.109,
+  "issueAdvance": 153,
+  "issueDecline": 194,
+  "issueUnchange": 26
 }

@@ -115,10 +115,9 @@ const jobFinalUpdate = schedule.scheduleJob( rule2 , async function(triggerDate)
 
 var update0 = setInterval(async ()=> {
     const marketStatus = await datagather.updatedb();
-
     console.log('updated DB');
     console.log(marketStatus)
-    if(marketStatus.toUpperCase()=="CLOSED"){
-        clearInterval(update0);
-        }
+    // if(marketStatus.toUpperCase()=="CLOSED"){
+    //     clearInterval(update0);
+    //     }
     },50*1000);
