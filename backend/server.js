@@ -29,12 +29,13 @@ app.use(express.static(path.join(__dirname,'/../public')));
 app.use(express.json({limit : '1mb'}));   //remember to use , as for express to accpet json during POST req
 
 
-app.get('/getUpdate ', async(req,res)=>{
-    const dsedata = await model.stockmodel.find({},{'name':1,'ltp':1,'change':1,'changeP':1,'trade':1,'value':1,'volume':1})
+app.get('/getupdate', async(req,res)=>{
+    const dsedata = await model.stockmodel.find({},{name:1,trade:1,volume:1,value:1,_id:0,ltp:1,change:1,changeP:1})
     res.send(dsedata);
 });
+
 app.get('/preload',async (req,res)=>{
-    const dsedata = await model.stockmodel.find({})
+    const dsedata = await model.stockmodel.find({},{_id:0,high:0,low:0,ycp:0,closep:0})
     res.send(dsedata);
 })
 
@@ -47,7 +48,7 @@ app.post('/eachstock/:id',async (req,res)=>{
 })
 
 app.get('/dsex',async (req,res)=>{
-    var json = await model.dsexmodel.find({});
+    var json = await model.dsexmodel.find({},{_id:0});
     res.send(json[0])
 })
 
@@ -103,6 +104,8 @@ const jobFinalUpdate = schedule.scheduleJob( rule2 , async function(triggerDate)
     await datagather.finalupdate();
     console.log(`Final Update of Chartdata and All stocks done at : ${triggerDate}`)
 });
+
+
 
 var update0 = setInterval(async ()=> {
     const marketStatus = await datagather.updatedb();
