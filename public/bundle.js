@@ -1824,28 +1824,35 @@ var url = require('./config')
 module.exports.getpreload  = async() =>{
   const res = await axios({
       url : `${url.apiUrl}/preload`,
-      method:'POST' ,
+      method:'GET' ,
       headers :  {
           "Content-Type" : 'application/json',
       },
-      data :{
-        text : 'send ltp',
-      }
   })
   return res.data
 }
 
-module.exports.getits  = async() =>{
+module.exports.getupdate  = async() =>{
   const res = await axios({
-      url : `${url.apiUrl}/getdata`,
-      method:'POST' ,
+      url : `${url.apiUrl}/getUpdate`,
+      method:'GET' ,
       headers :  {
           "Content-Type" : 'application/json',
       },
-      data :{
-        text : 'send ltp',
-      }
   })
+  return res.data
+}
+
+
+module.exports.dsex  = async() =>{
+  const res = await axios({
+      url : `${url.apiUrl}/dsex`,
+      method:'GET' ,
+      headers :  {
+          "Content-Type" : 'application/json',
+      },
+  })
+ // console.log(res.data)
   return res.data
 }
 
@@ -1861,48 +1868,6 @@ module.exports.price90  = async(stock) =>{
       }
   })
   console.log(res.data)
-  return res.data
-}
-
-module.exports.getchartdata  = async(stock) =>{
-  const res = await axios({
-      url : `${url.apiUrl}/getchartdata`,
-      method:'POST' ,
-      headers :  {
-          "Content-Type" : 'application/json',
-      },
-      data :{
-        text : 'Send chart data',
-      }
-  })
- // console.log(res.data)
-  return res.data
-}
-
-module.exports.test0  = async() =>{
-  const res = await axios({
-      url : `${url.apiUrl}/test`,
-      method:'POST' ,
-      headers :  {
-          "Content-Type" : 'application/json',
-      },
-      data :{
-        text : 'Send chart data',
-      }
-  })
- // console.log(res.data)
-  return res.data
-}
-
-module.exports.realtime  = async() =>{
-  const res = await axios({
-      url : `${url.apiUrl}/realtime`,
-      method:'GET' ,
-      headers :  {
-          "Content-Type" : 'application/json',
-      },
-  })
- // console.log(res.data)
   return res.data
 }
 },{"./config":4,"axios":7}],4:[function(require,module,exports){
@@ -1955,11 +1920,10 @@ rend : ()=>{
  }
 
  
-},{"./api":3,"./utils":36}],6:[function(require,module,exports){
+},{"./api":3,"./utils":35}],6:[function(require,module,exports){
 var tableget = require('./table');
 var eachstockdata = require('./eachstock');
 var utils = require('./utils');
-var api = require('./api');
 
 const screenurl = {
   '/' : tableget.tableReal ,
@@ -1967,46 +1931,37 @@ const screenurl = {
   '/data/:id' : eachstockdata.eachstock ,
 }
 
-
-const secwise = (sector) => {
-  console.log('sector');
-  var row = document.getElementsByClassName("name");
-  var sectordata = require('./sectordata.json');
-  var arr = sectordata[sector] ;
-  for(var i of row) {
-      var stonk = i.children[0].innerHTML.toUpperCase()
-      if (arr.includes(stonk)) {
-          i.parentElement.style.display = "" ;
-      } else {
-          i.parentElement.style.display ="none" ;
-      }
-   }
-}
-
 const loader = async () => {
   const content = document.getElementById("contents");
-  utils.showloading();
+  // utils.showloading();
   const request = utils.parseurl()
   const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
   console.log(parseUrl)
+
   var screen = screenurl[parseUrl];
   content.innerHTML = await screen.rend()
-  const dsedata = await screen.afterRend()
+
+  const marketStatus = await screen.afterRend()
   utils.hideloading();
   var arr = JSON.parse(localStorage.fav);
   console.log(arr)
-  for(var i of arr) {
-      document.getElementById(`fav${i}`).classList.add('checked');
+  for(var i of arr) {document.getElementById(`fav${i}`).classList.add('checked');}
+
+
+  if(!(marketStatus == "CLOSED")){
+    console.log("Starting to update data");
+    document.querySelector('.progress .color').style.display = "";
+    setInterval(async()=> {
+        // console.log('updating it');
+        await screen.repeatRend();
+    }, 70*1000)
   }
-  await screen.repeatRend(dsedata);
-  // setInterval(async()=>{
-  //   await screen.repeatRend();
-  // },10*1000)
+
 }
 
 window.addEventListener('load' , loader) ;
 window.addEventListener('hashchange' , loader);
-},{"./api":3,"./eachstock":5,"./sectordata.json":34,"./table":35,"./utils":36}],7:[function(require,module,exports){
+},{"./eachstock":5,"./table":34,"./utils":35}],7:[function(require,module,exports){
 module.exports = require('./lib/axios');
 },{"./lib/axios":9}],8:[function(require,module,exports){
 'use strict';
@@ -3599,442 +3554,32 @@ module.exports = {
 };
 
 },{"./helpers/bind":23}],34:[function(require,module,exports){
-module.exports={
-    "bank" : [
-        "ICBIBANK",
-        "FIRSTSBANK",
-        "UTTARABANK",
-        "NBL",
-        "STANDBANKL",
-        "EXIMBANK",
-        "JAMUNABANK",
-        "PREMIERBAN",
-        "CITYBANK",
-        "NCCBANK",
-        "DHAKABANK",
-        "MERCANBANK",
-        "UCB",
-        "EBL",
-        "PUBALIBANK",
-        "SIBL",
-        "ONEBANKLTD",
-        "DUTCHBANGL",
-        "SOUTHEASTB",
-        "ISLAMIBANK",
-        "ALARABANK",
-        "SHAHJABANK",
-        "TRUSTBANK",
-        "BANKASIA",
-        "PRIMEBANK",
-        "NRBCBANK",
-        "BRACBANK",
-        "MTB",
-        "IFIC",
-        "RUPALIBANK",
-        "ABBANK"
-    ] ,
-    "cement" : [
-        "ARAMITCEM",
-        "CONFIDCEM",
-        "HEIDELBCEM",
-        "LHBL",
-        "MEGHNACEM",
-        "MICEMENT",
-        "PREMIERCE"
-    ] ,
-    "ceramic" : [
-        "FUWANGCER",
-        "MONNOCERA",
-        "RAKCERAMIC",
-        "SPCERAMICS",
-        "STANCERA"
-    ] ,
-    "engr" : [
-        "AFTABAUTO",
-        "ANWARGALV",
-        "APOLOISPAT",
-        "ATLASBANG",
-        "AZIZPIPES",
-        "BBS",
-        "BBSCABLES",
-        "BDAUTOCA",
-        "BDLAMPS",
-        "BDTHAI",
-        "BENGALWTL",
-        "BSRMLTD",
-        "BSRMSTEEL",
-        "COPPERTECH",
-        "DESHBANDHU",
-        "DOMINAGE",
-        "ECABLES",
-        "GOLDENSON",
-        "GPHISPAT",
-        "IFADAUTOS",
-        "KAY&QUE",
-        "KDSALTD",
-        "MIRAKHTER",
-        "MONNOAGML",
-        "NAHEEACP",
-        "NAVANACNG",
-        "NPOLYMAR",
-        "NTLTUBES",
-        "OAL",
-        "OIMEX",
-        "QUASEMIND",
-        "RANFOUNDRY",
-        "RENWICKJA",
-        "RSRMSTEEL",
-        "RUNNERAUTO",
-        "SALAMCRST",
-        "SHURWID",
-        "SINGERBD",
-        "SSSTEEL",
-        "WALTONHIL",
-        "WMSHIPYARD",
-        "YP"
-    ] ,
-    "fin" : [
-        "BAYLEASING",
-        "BDFINANCE",
-        "BIFC",
-        "DBH",
-        "FAREASTFIN",
-        "FASFIN",
-        "FIRSTFIN",
-        "GSPFINANCE",
-        "ICB",
-        "IDLC",
-        "ILFSL",
-        "IPDC",
-        "ISLAMICFIN",
-        "LANKABAFIN",
-        "MIDASFIN",
-        "NHFIL",
-        "PHOENIXFIN",
-        "PLFSL",
-        "PREMIERLEA",
-        "PRIMEFIN",
-        "UNIONCAP",
-        "UNITEDFIN",
-        "UTTARAFI"
-    ] ,
-    "food" : [
-        "AMCL(PRAN)",
-        "APEXFOODS",
-        "BANGAS",
-        "BATBC",
-        "BEACHHATCH",
-        "EMERALDOIL",
-        "FINEFOODS",
-        "FUWANGFOOD",
-        "GEMINISEA",
-        "GHAIL",
-        "MEGCONMILK",
-        "MEGHNAPET",
-        "NTC",
-        "OLYMPIC",
-        "RAHIMAFOOD",
-        "RDFOOD",
-        "SHYAMPSUG",
-        "TAUFIKA",
-        "UNILEVERCL",
-        "ZEALBANGL"
-    ] ,
-    "power" : [
-        "AOL",
-        "BARKAPOWER",
-        "BDWELDING",
-        "CVOPRL",
-        "DESCO",
-        "DOREENPWR",
-        "EASTRNLUB",
-        "EPGL",
-        "GBBPOWER",
-        "INTRACO",
-        "JAMUNAOIL",
-        "KPCL",
-        "LINDEBD",
-        "LRBDL",
-        "MJLBD",
-        "MPETROLEUM",
-        "PADMAOIL",
-        "POWERGRID",
-        "SPCL",
-        "SUMITPOWER",
-        "TITASGAS",
-        "UPGDC"
-    ] ,
-    "insu" : [
-        "AGRANINS",
-        "ASIAINS",
-        "ASIAPACINS",
-        "BGIC",
-        "BNICL",
-        "CENTRALINS",
-        "CITYGENINS",
-        "CONTININS",
-        "CRYSTALINS",
-        "DGIC",
-        "DHAKAINS",
-        "EASTERNINS",
-        "EASTLAND",
-        "EIL",
-        "FEDERALINS",
-        "GLOBALINS",
-        "GREENDELT",
-        "ISLAMIINS",
-        "JANATAINS",
-        "KARNAPHULI",
-        "MERCINS",
-        "NITOLINS",
-        "NORTHRNINS",
-        "PARAMOUNT",
-        "PEOPLESINS",
-        "PHENIXINS",
-        "PIONEERINS",
-        "PRAGATIINS",
-        "PRIMEINSUR",
-        "PROVATIINS",
-        "PURABIGEN",
-        "RELIANCINS",
-        "REPUBLIC",
-        "RUPALIINS",
-        "SONARBAINS",
-        "STANDARINS",
-        "TAKAFULINS",
-        "UNITEDIN",
-        "FAREASTLIF",
-        "MEGHNALIFE",
-        "NATLIFEINS",
-        "PADMALIFE",
-        "POPULARLIF",
-        "PRAGATILIF",
-        "PRIMELIFE",
-        "PROGRESLIF",
-        "RUPALILIFE",
-        "SANDHANINS",
-        "SONALILIFE",
-        "SUNLIFEIN"
-    ] ,
-    "it" : [
-        "AAMRANET",
-        "AAMRATECH",
-        "ADNTEL",
-        "AGNISYSL",
-        "BDCOM",
-        "DAFODILCOM",
-        "EGEN",
-        "GENEXIL",
-        "INTECH",
-        "ISNLTD",
-        "IT"
-    ] ,
-    "jute" : [
-        "JUTESPINN",	
-        "NORTHERN",
-        "SONALIANSH"
-    ] ,
-    "mf" : [
-        "1JANATAMF",
-        "1STPRIMFMF",
-        "ABB1STMF",
-        "AIBL1STIMF",
-        "ATCSLGF",
-        "CAPMBDBLMF",
-        "CAPMIBBLMF",
-        "DBH1STMF",
-        "EBL1STMF",
-        "EBLNRBMF",
-        "EXIM1STMF",
-        "FBFIF",
-        "GRAMEENS2",
-        "GREENDELMF",
-        "ICB3RDNRB",
-        "ICBAGRANI1",
-        "ICBAMCL2ND",
-        "ICBEPMF1S1",
-        "ICBSONALI1",
-        "IFIC1STMF",
-        "IFILISLMF1",
-        "LRGLOBMF1",
-        "MBL1STMF",
-        "NCCBLMF1",
-        "NLI1STMF",
-        "PF1STMF",
-        "PHPMF1",
-        "POPULAR1MF",
-        "PRIME1ICBA",
-        "RELIANCE1",
-        "SEBL1STMF",
-        "SEMLFBSLGF",
-        "SEMLIBBLSF",
-        "SEMLLECMF",
-        "TRUSTB1MF",
-        "VAMLBDMF1",
-        "VAMLRBB"
-    ] ,
-    "paper" : [
-        "MONOSPOOL",	
-        "PAPERPROC",
-        "BPML",	
-        "HAKKANIPUL",
-        "KPPL",
-        "SONALIPAPR"
-    ] ,
-    "pharma" : [
-        "ACI",
-        "ACIFORMULA",
-        "ACMELAB",
-        "ACTIVEFINE",
-        "ADVENT",
-        "AFCAGRO",
-        "AMBEEPHA",
-        "BEACONPHAR",
-        "BXPHARMA",
-        "BXSYNTH",
-        "CENTRALPHL",
-        "FARCHEM",
-        "GHCL",
-        "IBNSINA",
-        "IBP",
-        "IMAMBUTTON",
-        "JMISMDL",
-        "KEYACOSMET",
-        "KOHINOOR",
-        "LIBRAINFU",
-        "MARICO",
-        "ORIONINFU",
-        "ORIONPHARM",
-        "PHARMAID",
-        "RECKITTBEN",
-        "RENATA",
-        "SALVOCHEM",
-        "SILCOPHL",
-        "SILVAPHL",
-        "SQURPHARMA",
-        "WATACHE"
-    ] ,
-    "service" : [
-        "EHL",
-        "SAIFPOWER",
-        "SAMORITA",
-        "SAPORT"
-    ] ,
-    "tannery" : [
-        "APEXFOOT",
-        "APEXTANRY",
-        "BATASHOE",
-        "FORTUNE",
-        "LEGACYFOOT",
-        "SAMATALET"
-    ] ,
-    "tex" : [
-        "ACFL",
-        "AIL",
-        "AL-HAJTEX",
-        "ALIF",
-        "ALLTEX",
-        "ANLIMAYARN",
-        "APEXSPINN",
-        "ARGONDENIM",
-        "CNATEX",
-        "DACCADYE",
-        "DELTASPINN",
-        "DSHGARME",
-        "DSSL",
-        "DULAMIACOT",
-        "ENVOYTEX",
-        "ESQUIRENIT",
-        "ETL",
-        "FAMILYTEX",
-        "FEKDIL",
-        "GENNEXT",
-        "HFL",
-        "HRTEX",
-        "HWAWELLTEX",
-        "KTL",
-        "MAKSONSPIN",
-        "MALEKSPIN",
-        "MATINSPINN",
-        "METROSPIN",
-        "MHSML",
-        "MITHUNKNIT",
-        "MLDYEING",
-        "MONNOFABR",
-        "NEWLINE",
-        "NURANI",
-        "PDL",
-        "PRIMETEX",
-        "PTL",
-        "QUEENSOUTH",
-        "RAHIMTEXT",
-        "REGENTTEX",
-        "RINGSHINE",
-        "RNSPIN",
-        "SAFKOSPINN",
-        "SAIHAMCOT",
-        "SAIHAMTEX",
-        "SHASHADNIM",
-        "SHEPHERD",
-        "SIMTEX",
-        "SKTRIMS",
-        "SONARGAON",
-        "SQUARETEXT",
-        "STYLECRAFT",
-        "TALLUSPIN",
-        "TAMIJTEX",
-        "TOSRIFA",
-        "TUNGHAI",
-        "VFSTDL",
-        "ZAHEENSPIN",
-        "ZAHINTE"
-    ] ,
-    "telecom" : [
-        "BSCCL",
-        "GP",
-        "ROBI"
-    ],
-    "travel" : [
-        "PENINSULA",
-        "SEAPEARL",
-        "UNIQUEHRL",
-        "UNITEDAI"
-    ] ,
-    "others" : [
-        "AMANFEED",
-        "ARAMIT",
-        "BERGERPBL",
-        "BEXIMCO",
-        "BSC",
-        "GQBALLPEN",
-        "INDEXAGRO",
-        "KBPPWBIL",
-        "MIRACLEIND",
-        "NFML",
-        "SAVAREFR",
-        "SINOBANGLA",
-        "USMANIAG"
-    ] 
-}
-
-},{}],35:[function(require,module,exports){
 const { set } = require('mongoose');
 var api = require('./api');
 const tab =  {
     repeatRend : async () => {
-     // const data =  await api.realtime();
-        const data = await api.getpreload() ;
+        const data = await api.getupdate() ;
         for(var i in data){
             //  console.log(data[i].name)
             var trow = document.getElementById(`${data[i].name}`) 
+            if(trow.classList.contains('highlight-red')){trow.classList.remove('highlight-red')} 
+            if(trow.classList.contains('highlight-green')){trow.classList.remove('highlight-green')}
             var volume = data[`${i}`].volume.replace(/,/g,'') > 99999 ? `${Math.floor(data[`${i}`].volume.replace(/,/g,'')/1000)}K` : data[`${i}`].volume ;
             var changeval = (data[`${i}`].change < 0)? `${data[`${i}`].change}` : `+${data[`${i}`].change}`
             var color = data[`${i}`].changeP < 0 ? 'red' : 'green' ;
+            if(data[`${i}`].changeP==0){color ="blue"}
+           
             if(trow.querySelector(`#data p`).innerText < data[`${i}`].ltp){
-                trow.classList.add('animate');
+                trow.classList.add('highlight-green');
+                // console.log('yakka bun bun');
+                // setTimeout(()=>{trow.classList.remove('animate');},5000)
+            }
+            if(trow.querySelector(`#data p`).innerText > data[`${i}`].ltp){
+                trow.classList.add('highlight-red');
                 console.log('yakka bun bun');
                 // setTimeout(()=>{trow.classList.remove('animate');},5000)
             }
+
            trow.querySelector('#name').innerHTML = `
                 <p>${data[i].name}</p>
                 <p>Trade: ${data[`${i}`].trade}</p>
@@ -4043,17 +3588,25 @@ const tab =  {
 
             trow.querySelector('#data').innerHTML = `
             <p class="${color}">${data[`${i}`].ltp}</p><p style="color:${color};">${changeval} , ${data[`${i}`].changeP}%</p>`
-        }
-    } ,
 
+        }
+
+    } ,
     afterRend : async () =>  {
+        var status = await api.dsex();
+        console.log('GOT DSEX DATA')
+        var marketStatus = status['marketStatus'].toUpperCase()
+        if(marketStatus == "CLOSED"){
+            document.getElementById('marketstatus').innerHTML=`<i class="fa fa-times-circle"></i><br>Market<br>Closed`,
+            document.getElementById('marketstatus').style.color ="#e4ae19"
+        }else{
+            document.getElementById('marketstatus').innerHTML=`<i class="fa fa-check-circle"></i><br>Market<br>${marketStatus}`
+            document.getElementById('marketstatus').style.color = "#0ff153"
+        }
         const stocklist = document.getElementById('stocklist');
         console.log('running after render') ;
-   //     const data = await api.getits();
         const data = await api.getpreload() ;
-        // console.log(data)
-        // const chartdata = await api.getchartdata() ;
-        // console.log(chartdata)
+        console.log('GOT DSE DATA FROM DB');
         stocklist.innerHTML = "" ;
         var count = 0
         for (var i in data)
@@ -4072,14 +3625,14 @@ const tab =  {
                 <p>Volume: ${volume}</p>
                 <p>Value: ${(data[`${i}`].value * 0.1).toFixed(3)} cr</p>
             </div>
-            <div id="chart${count}" class="chart"></div>
+            <div class="chart" id="chart${count}"></div>
             <div id="icon"><i id="fav${data[i].name}" class="fa fa-star" onclick="fav('${data[i].name}')"></i></div>
             <div id="data">
                 <p class="${color}">${data[`${i}`].ltp}</p><p style="color:${color};">${changeval} , ${data[`${i}`].changeP}%</p>
             </div>`
-
-            var myarr = Array(data[i].last30.length).fill().map((x,i)=>i)
-            var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: data[i].last30 } ]}
+     
+            var myarr = Array(data[i].last60.length).fill().map((x,i)=>i)
+            var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: data[i].last60 } ]}
             new Chartist.Line(`#chart${count}`, datachart , {
                 width: 140,
                 showPoint:false,
@@ -4097,8 +3650,8 @@ const tab =  {
                     }
                 });
                 count = count +1 ;
-            }
-     
+               }
+
         const selectFunc = () => {
            var input = document.getElementById("myInput").value.toUpperCase();
             var row = document.getElementsByClassName("name");
@@ -4106,6 +3659,7 @@ const tab =  {
                 var stonk = i.innerHTML.toUpperCase()
                 if (stonk.indexOf(input)>-1){
                     i.parentElement.style.display = "" ;
+                    i.parentElement.querySelector('.chart').__chartist__.update();
                 } else {
                     i.parentElement.style.display ="none" ;
                 }
@@ -4114,25 +3668,12 @@ const tab =  {
         if(document.getElementById("myInput").value){selectFunc()}
         document.getElementById("myInput").addEventListener("input",selectFunc);
 
-        const secwise = (sector) => {
-            console.log('sector');
-            var row = document.getElementsByClassName("name");
-            var sectordata = require('./sectordata.json');
-            var arr = sectordata[sector] ;
-            for(var i of row) {
-                var stonk = i.children[0].innerHTML.toUpperCase()
-                if (arr.includes(stonk)){
-                    i.parentElement.style.display = "" ;
-                } else {
-                    i.parentElement.style.display ="none" ;
-                }
-              }
-            }
+        return marketStatus;
         },
 
-rend : () => {
+rend : async () => {
     return `
-    <input type="text" id="myInput" placeholder="Search for Stocks.." title="Type in a name">
+    <div><input type="text" id="myInput" placeholder="Search for Stocks.." title="Type in a name"></div>
     <div class="topnav">
         <a class="active0" onclick="allstock(event)" id="allstock">All Stocks</a>
         <a onclick="starred(event)">Starred</a>
@@ -4165,10 +3706,11 @@ rend : () => {
             <a onclick="secwise('others')">Others</a>
         </div>
     <p class="spacing"></p>
-    <div id="stocklist">The first principle of stock trade is Patience <br>\t\t ---Warren Buffet 
+    <div id="stocklist">
         <div id="sector"></div>
     </div>`
   }
+
 }
 
 module.exports.tableReal = tab
@@ -4176,7 +3718,7 @@ module.exports.tableReal = tab
 
 
 
-},{"./api":3,"./sectordata.json":34,"mongoose":1}],36:[function(require,module,exports){
+},{"./api":3,"mongoose":1}],35:[function(require,module,exports){
 module.exports.parseurl = () => {
     const url = document.location.hash.toLowerCase();
     const request = url.split('/');
@@ -4195,6 +3737,31 @@ module.exports.rerender = async (comp) => {
 module.exports.showloading = () =>{
     console.log('Loading started')
     document.getElementById('loading-overlay').classList.add('active');
+    new Chartist.Line('.ct-chart', {
+        labels: [1, 2, 3, 4, 5, 6, 7, 8],
+        series: [
+          [11, 12, 15, 11, 12, 8, 17, 16],        //Red
+          [14, 15, 13, 15, 18, 17, 19, 17],           // pitch 
+          [5, 8, 12, 6, 15, 18, 20, 19],            // yellow
+      ]}, 
+      {
+      //   high: 90,
+      //   low: 30,
+        showPoint:false,
+        showArea : true,
+        fullWidth: true,
+        axisX:{  
+              showGrid : false ,
+              showLabel : false , 
+              offset : 15,
+          } ,
+        axisY: {
+          onlyInteger: true,
+          showGrid : false ,
+          showLabel : false , 
+          offset: 20
+        }
+      });
 }
 
 module.exports.hideloading = () =>{

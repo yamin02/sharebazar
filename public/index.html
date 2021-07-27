@@ -3,27 +3,53 @@
     <title>stock market  virtual trade</title>
     <link rel="shortcut icon" href="./icon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" id="style-link">
     <link rel="stylesheet" href="chartist.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="chartist.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
 <body>
-    <script src="prerender.js"></script>
-    <!-- <h3 id='console'></h3> -->
-</script>
-    <div class="overlay" id="loading-overlay">Loading</div>
-    <div class="overlay" id="message-overlay"></div>
+    <script>
+        fetch('http://localhost:5000/preload').then(data=>{
+            console.log('got the fuck')
+        })
+    </script>
+    <div class="menu">
+        <div>
+            <div class='sidemenu1'><p>DSEX</p><p>6405.04496</p><p> 39.92729</p><p>0.62728%</p> </div>
+            <div class='sidemenu1'><p>DSEX</p><p>6405.04496</p><p> 39.92729</p><p>0.62728%</p> </div>
+        </div>
+        <!-- <div id="row2">
+            <div class='sidemenu2'><p>DSEX : 6405.04496</p></div>
+            <div class='sidemenu2'><p>DSEX: 6405.04496</p></div>
+            <div class='sidemenu2'><p>DSEX : 6405.04496</p> </div>
+        </div> -->
+        <div>
+            <div class='sidemenu1'><p>DSEX</p><p>6405.04496</p><p> 39.92729</p><p>0.62728%</p> </div>
+            <div class='sidemenu1'><p>DSEX</p><p>6405.04496</p><p> 39.92729</p><p>0.62728%</p> </div>
+        </div>
+      </div>
+    <div class="menu__toggler"><span></span></div>
+    <!-- <button>fucnj</button> -->
+
+    <div class="progress"><div class="color" style="display: none;"></div></div>
+
+    <div class="overlay" id="loading-overlay">
+      <div class="motiv">In the Long Run the market is bullish</div>
+      <div class="motiv">Some Rise Faster, Some Rise Slow</div>
+      <div class="ct-chart ct-golden-section"></div>
+      <h3 class="motiv">Loading...</h3>
+    </div>
+    <!-- <div class="overlay" id="message-overlay"></div> -->
     <div id="contents"></div>
     <br>
     <div class="navbar">
         <a href="#/home" class="active">Home</a>
         <a href="#/news">News</a>
-        <a href="#/fav">Starred</a>
+        <a href="#/fav">Analysis</a>
+        <p id="marketstatus"></p>
     </div>
+    <script src="prerender.js"></script>
     <script src="bundle.js"></script>
-
 </body>
 </html>

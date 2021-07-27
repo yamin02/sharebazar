@@ -2,19 +2,28 @@ const { set } = require('mongoose');
 var api = require('./api');
 const tab =  {
     repeatRend : async () => {
-     // const data =  await api.realtime();
-        const data = await api.getpreload() ;
+        const data = await api.getupdate() ;
         for(var i in data){
             //  console.log(data[i].name)
             var trow = document.getElementById(`${data[i].name}`) 
+            if(trow.classList.contains('highlight-red')){trow.classList.remove('highlight-red')} 
+            if(trow.classList.contains('highlight-green')){trow.classList.remove('highlight-green')}
             var volume = data[`${i}`].volume.replace(/,/g,'') > 99999 ? `${Math.floor(data[`${i}`].volume.replace(/,/g,'')/1000)}K` : data[`${i}`].volume ;
             var changeval = (data[`${i}`].change < 0)? `${data[`${i}`].change}` : `+${data[`${i}`].change}`
             var color = data[`${i}`].changeP < 0 ? 'red' : 'green' ;
+            if(data[`${i}`].changeP==0){color ="blue"}
+           
             if(trow.querySelector(`#data p`).innerText < data[`${i}`].ltp){
-                trow.classList.add('animate');
+                trow.classList.add('highlight-green');
+                // console.log('yakka bun bun');
+                // setTimeout(()=>{trow.classList.remove('animate');},5000)
+            }
+            if(trow.querySelector(`#data p`).innerText > data[`${i}`].ltp){
+                trow.classList.add('highlight-red');
                 console.log('yakka bun bun');
                 // setTimeout(()=>{trow.classList.remove('animate');},5000)
             }
+
            trow.querySelector('#name').innerHTML = `
                 <p>${data[i].name}</p>
                 <p>Trade: ${data[`${i}`].trade}</p>
@@ -23,17 +32,25 @@ const tab =  {
 
             trow.querySelector('#data').innerHTML = `
             <p class="${color}">${data[`${i}`].ltp}</p><p style="color:${color};">${changeval} , ${data[`${i}`].changeP}%</p>`
-        }
-    } ,
 
+        }
+
+    } ,
     afterRend : async () =>  {
+        var status = await api.dsex();
+        console.log('GOT DSEX DATA')
+        var marketStatus = status['marketStatus'].toUpperCase()
+        if(marketStatus == "CLOSED"){
+            document.getElementById('marketstatus').innerHTML=`<i class="fa fa-times-circle"></i><br>Market<br>Closed`,
+            document.getElementById('marketstatus').style.color ="#e4ae19"
+        }else{
+            document.getElementById('marketstatus').innerHTML=`<i class="fa fa-check-circle"></i><br>Market<br>${marketStatus}`
+            document.getElementById('marketstatus').style.color = "#0ff153"
+        }
         const stocklist = document.getElementById('stocklist');
         console.log('running after render') ;
-   //     const data = await api.getits();
         const data = await api.getpreload() ;
-        // console.log(data)
-        // const chartdata = await api.getchartdata() ;
-        // console.log(chartdata)
+        console.log('GOT DSE DATA FROM DB');
         stocklist.innerHTML = "" ;
         var count = 0
         for (var i in data)
@@ -52,14 +69,14 @@ const tab =  {
                 <p>Volume: ${volume}</p>
                 <p>Value: ${(data[`${i}`].value * 0.1).toFixed(3)} cr</p>
             </div>
-            <div id="chart${count}" class="chart"></div>
+            <div class="chart" id="chart${count}"></div>
             <div id="icon"><i id="fav${data[i].name}" class="fa fa-star" onclick="fav('${data[i].name}')"></i></div>
             <div id="data">
                 <p class="${color}">${data[`${i}`].ltp}</p><p style="color:${color};">${changeval} , ${data[`${i}`].changeP}%</p>
             </div>`
-
-            var myarr = Array(data[i].last30.length).fill().map((x,i)=>i)
-            var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: data[i].last30 } ]}
+     
+            var myarr = Array(data[i].last60.length).fill().map((x,i)=>i)
+            var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: data[i].last60 } ]}
             new Chartist.Line(`#chart${count}`, datachart , {
                 width: 140,
                 showPoint:false,
@@ -77,8 +94,8 @@ const tab =  {
                     }
                 });
                 count = count +1 ;
-            }
-     
+               }
+
         const selectFunc = () => {
            var input = document.getElementById("myInput").value.toUpperCase();
             var row = document.getElementsByClassName("name");
@@ -86,6 +103,7 @@ const tab =  {
                 var stonk = i.innerHTML.toUpperCase()
                 if (stonk.indexOf(input)>-1){
                     i.parentElement.style.display = "" ;
+                    i.parentElement.querySelector('.chart').__chartist__.update();
                 } else {
                     i.parentElement.style.display ="none" ;
                 }
@@ -94,25 +112,12 @@ const tab =  {
         if(document.getElementById("myInput").value){selectFunc()}
         document.getElementById("myInput").addEventListener("input",selectFunc);
 
-        const secwise = (sector) => {
-            console.log('sector');
-            var row = document.getElementsByClassName("name");
-            var sectordata = require('./sectordata.json');
-            var arr = sectordata[sector] ;
-            for(var i of row) {
-                var stonk = i.children[0].innerHTML.toUpperCase()
-                if (arr.includes(stonk)){
-                    i.parentElement.style.display = "" ;
-                } else {
-                    i.parentElement.style.display ="none" ;
-                }
-              }
-            }
+        return marketStatus;
         },
 
-rend : () => {
+rend : async () => {
     return `
-    <input type="text" id="myInput" placeholder="Search for Stocks.." title="Type in a name">
+    <div><input type="text" id="myInput" placeholder="Search for Stocks.." title="Type in a name"></div>
     <div class="topnav">
         <a class="active0" onclick="allstock(event)" id="allstock">All Stocks</a>
         <a onclick="starred(event)">Starred</a>
@@ -145,10 +150,11 @@ rend : () => {
             <a onclick="secwise('others')">Others</a>
         </div>
     <p class="spacing"></p>
-    <div id="stocklist">The first principle of stock trade is Patience <br>\t\t ---Warren Buffet 
+    <div id="stocklist">
         <div id="sector"></div>
     </div>`
   }
+
 }
 
 module.exports.tableReal = tab

@@ -426,6 +426,7 @@ const secwise = (sector) => {
         var stonk = i.children[0].innerHTML.toUpperCase()
         if (arr.includes(stonk)){
             i.parentElement.style.display = "" ;
+            i.parentElement.querySelector('.chart').__chartist__.update();
         } else {
             i.parentElement.style.display ="none" ;
         }
@@ -440,40 +441,49 @@ const sectordisplay = (show) => {
         secwise[2].style.display = show ;
 }
 
-const starred = (event) => {
-var active0 = document.getElementsByClassName('active0')[0];
-active0.classList.remove('active0');
-sectordisplay('none')
-event.target.classList.add('active0');
-var row = document.getElementsByClassName("name");
-var arr = JSON.parse(localStorage.fav);
+
+const showstarrred = async () =>{
+    var row = document.getElementsByClassName("name");
+    var arr = JSON.parse(localStorage.fav);
 for(var i of row){
     var stonk = i.children[0].innerHTML.toUpperCase()
     if (arr.includes(stonk)){
         i.parentElement.style.display = "" ;
+        i.parentElement.querySelector('.chart').__chartist__.update();
     } else {
         i.parentElement.style.display ="none" ;
     }
   }
+  return '1'
+}
+
+const starred = async (event) => {
+    var active0 = document.getElementsByClassName('active0')[0];
+    active0.classList.remove('active0');
+    sectordisplay('none')
+    event.target.classList.add('active0');
+    await showstarrred();
+}
+
+
+
+const allstockshow = async () =>{
+    var row = document.querySelectorAll(".flex");
+        for(var i = 0 ; i<=row.length/5 ; i=i+1){
+            row[i].style.display = "" ;
+            row[i].querySelector('.chart').__chartist__.update();
+        }
+        return '1'
 }
 
 const allstock = async (event) =>{
-    // document.getElementById('console').innerText ="kolla"
-    document.getElementById('stocklist').style.display = ""
-    sectordisplay('none');
     var active0 = document.getElementsByClassName('active0')[0] ;
     active0.classList.remove('active0');
-    document.getElementById("allstock").classList.add('active0')
- //   event.target.classList.add('active0');
-    // document.getElementById('stocklist').classList.add('displayShow');
-    // var row = document.getElementsByClassName("name");
-    // for(var i of row){
-    //     i.parentElement.style.display = "" ;
-    // }
-        var row = document.querySelectorAll(".flex");
-        for(var i = 0 ; i<=row.length/5 ; i=i+1){
-            row[i].style.display = "" ;
-        }
+    document.getElementById('allstock').classList.add('active0')
+    // event.target.classList.add('active0');
+    // document.getElementById('stocklist').style.display = ""
+    sectordisplay('none');
+    await allstockshow()
 }
 
 const secclick=(event) => {
@@ -506,3 +516,42 @@ const fav = (id) => {
     }
     localStorage.fav = JSON.stringify(favstock);
 }
+
+const showLoading = () =>{
+    console.log('Loading started')
+    document.getElementById('loading-overlay').classList.add('active');
+    new Chartist.Line('.ct-chart', {
+        labels: [1, 2, 3, 4, 5, 6, 7, 8],
+        series: [
+          [11, 12, 15, 11, 12, 8, 17, 16],        //Red
+          [14, 15, 13, 15, 18, 17, 19, 17],           // pitch 
+          [5, 8, 12, 6, 15, 18, 20, 19],            // yellow
+      ]}, 
+      {
+      //   high: 90,
+      //   low: 30,
+        showPoint:false,
+        showArea : true,
+        fullWidth: true,
+        axisX:{  
+              showGrid : false ,
+              showLabel : false , 
+              offset : 15,
+          } ,
+        axisY: {
+          onlyInteger: true,
+          showGrid : false ,
+          showLabel : false , 
+          offset: 20
+        }
+      });
+}
+showLoading();
+
+
+const toggler = document.querySelector('.menu__toggler');
+const menu    = document.querySelector('.menu');
+toggler.addEventListener('click', () => {
+    toggler.classList.toggle('active');
+    menu.classList.toggle('active');
+})

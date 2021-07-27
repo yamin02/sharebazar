@@ -5,8 +5,22 @@ const axios = require('axios')
 const utils = require('./utils')
 const fs = require('fs')
 const path = require('path')
-const puppeteer = require('puppeteer');
 const model = require('./model');
+
+const mongoose = require('mongoose')
+mongoose.connect('mongodb+srv://yamin02:chandanpura@sharebazar.z3hlw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' , {
+    useNewUrlParser: true ,
+    useUnifiedTopology: true ,
+    useCreateIndex : true ,
+    useFindAndModify : false
+}).then(() =>{
+    console.log('connected to MONGO DB');
+}).catch((error) =>{
+    console.log(error);
+    console.log("MONGODB Error");
+});
+
+
 
 const chartdata =  async () =>  {
     const date = utils.dateformat(30) ; 
@@ -38,24 +52,30 @@ const chartdata =  async () =>  {
         }
     }
     // fs.writeFileSync(path.resolve(__dirname, 'chartdata.json'), JSON.stringify(jsonall,null,2));
-    console.log('This is after the write call');
+    console.log('Successfully got the chart data');
     return jsonall
 }
 module.exports.chartdata = chartdata
 
-const dataDse = async () =>  {
 
-    // const chartdat = await chartdata(); 
+
+const dataDse = async (charttrue) =>  {
+    if(charttrue){
+        var chartdat = await chartdata();
+    }
+    var url = `https://www.dse.com.bd/latest_share_price_scroll_l.php?timestamp=${new Date().getSeconds()*(Math.floor(Math.random()*100))}`
     const response = await axios({
-            url : `https://dsebd.org/latest_share_price_scroll_l.php` ,
+            url : url ,
             method : 'GET',
     }); 
+    console.log(url);
     const dom = new JSDOM(response.data) ;
     const stontable =dom.window.document.getElementsByClassName("table table-bordered background-white shares-table fixedHeader");
     const marketstatus = dom.window.document.getElementsByClassName('time col-md-4 col-sm-3 col-xs-6 pull-right')[0].textContent;
-    console.log(`marketstatus : ${marketstatus}`);
+    // console.log(`marketstatus : ${marketstatus}`);
     var length = stontable[0].children.length ;
     var arr = [];
+    console.log(stontable[0].children[2].children[0].children[2].textContent)
     for (var i = 1 ; i <= length-1 ; i++){
         // console.log(price) ;
         var change = ((stontable[0].children[i].children[0].children[7].textContent*100)/(stontable[0].children[i].children[0].children[6].textContent).replace(/,/g, '')).toFixed(2)
@@ -74,138 +94,83 @@ const dataDse = async () =>  {
             trade :  stontable[0].children[i].children[0].children[8].textContent ,
             value :  stontable[0].children[i].children[0].children[9].textContent ,
             volume : stontable[0].children[i].children[0].children[10].textContent ,
-            // last30 : chartdat[name]
+            //last60 : chartdat[name]
+        }
+        if(charttrue){
+            json['last60'] = chartdat[name];
         }
         // jsonAll[`${json.name}`] = json;
         arr.push(json)
     }
-    //console.log(arr)
-    // await model.stockmodel.insertMany(arr)
-    // return jsonAll
-    return arr
+   // console.log(arr)
+    return {'arr':arr , 'marketStatus':marketstatus} 
   }
 //dataDse();
 module.exports.dataDse = dataDse ;
 
 
-const price90 =  async (name) =>  {
-    console.log(name)
-    const now = new Date().toLocaleDateString("en-US").split('/')
-   // console.log(now)
-    // console.log(`https://www.dsebd.org/day_end_archive.php?startDate=2021-06-01&endDate=${now[2]}-${now[0]}-${(now[1] >= 10)? now[1] : `0${now[1]}`}&inst=${name}&archive=data`)
+
+
+const dsex =  async () =>  {
     const response = await axios({
-        url : `https://www.dse.com.bd/day_end_archive.php?startDate=2021-06-01&endDate=${now[2]}-${now[0]}-${(now[1] >= 10)? now[1] : `0${now[1]}`}&inst=${name}&archive=data` ,
+        url : `https://www.dse.com.bd/index.php?timestamp=${new Date().getSeconds()*(Math.floor(Math.random()*100))}` ,
         method : 'GET',
     }); 
-    var arr = []
-    const dom2 = new JSDOM(response.data)
-   // console.log(response.data)
-     var stontable0 =dom2.window.document.getElementsByClassName("table table-bordered background-white shares-table fixedHeader");
-    var i = 0 ;
-    while(stontable0[0].children[1].children[i]){
-        var ltp  = stontable0[0].children[1].children[i].children[3].textContent ;
-        var ycp = stontable0[0].children[1].children[i].children[8].textContent ;
-        var change = (((ltp -ycp )/ycp)*100).toFixed(2)
-        var json = 
-        {
-            date :   stontable0[0].children[1].children[i].children[1].textContent ,
-            ltp:     stontable0[0].children[1].children[i].children[3].textContent ,
-            high :   stontable0[0].children[1].children[i].children[4].textContent ,
-            low :    stontable0[0].children[1].children[i].children[5].textContent,
-            closep : stontable0[0].children[1].children[i].children[7].textContent ,
-            ycp :    stontable0[0].children[1].children[i].children[8].textContent ,
-            change : change,
-            trade :  stontable0[0].children[1].children[i].children[9].textContent ,
-            value :  stontable0[0].children[1].children[i].children[10].textContent ,
-            volume : stontable0[0].children[1].children[i].children[11].textContent
-        }
-        arr.push(stontable0[0].children[1].children[i].children[3].textContent)
-        var p = stontable0[0].children[1].children[i].children[0].textContent ;
-        i=i+1;
-    }
-    //console.log(arr)
-    return arr
+
+    const dom = new JSDOM(response.data);
+    var table = dom.window.document.getElementsByClassName('midrow');
+    var jsondsex = {
+        'marketStatus': dom.window.document.getElementsByClassName('time col-md-4 col-sm-3 col-xs-6 pull-right')[0].textContent ,
+        'dsex' :        parseFloat(table[0].children[1].textContent),
+        'dsexChange' :  parseFloat(table[0].children[2].textContent) ,
+        'dsexChangeP' :  parseFloat(table[0].children[3].textContent.split("%")[0]) ,
+
+        'ds30' :        parseFloat(table[1].children[1].textContent),
+        'ds30Change' :  parseFloat(table[1].children[2].textContent),
+        'ds30ChangeP' : parseFloat(table[1].children[3].textContent.split("%")[0]) ,
+
+        'totaltrade' :  parseFloat(table[4].children[0].textContent),
+        'totalvolume' :  parseFloat(table[4].children[1].textContent),
+        'totalvalue' : parseFloat(table[4].children[2].textContent), 
+
+        'issueAdvance' : parseInt(table[6].children[0].textContent), 
+        'issueDecline' : parseInt(table[6].children[1].textContent), 
+        'issueUnchange' : parseInt(table[6].children[2].textContent), 
+    } ;
+   // console.log(jsondsex);
+    //const p = await dsexModel.dsexmodel.insertMany(jsondsex)
+    return jsondsex
 }
-//price90('ABBANK')
-module.exports.price90 = price90 ;
+//dsex();
+module.exports.dsex = dsex
 
-const marketdepth =  async (stockname) =>  {
-    const browser = await puppeteer.launch({headless: true});
-    const page = await browser.newPage();
-    await page.goto('https://dsebd.org/mkt_depth_3.php');
 
-    const loadmpr = await page.evaluate( async (name) => {
-        const length =  document.getElementsByClassName('inst selectBox text-center')[0].options.length;
-        var arr = []
-        for(var i = 0 ; i<=length-1 ; i++){
-            var stock = document.getElementsByClassName('inst selectBox text-center')[0].options[i].value;
-            arr.push(stock);
-        }
-       let index = arr.findIndex(rank => rank === name);
-       document.getElementsByClassName('inst selectBox text-center')[0].selectedIndex = index ;
-       await loadMPR()
-    } , stockname );
-  
-    await page.waitForSelector('.table .table-stripped');
-    const getdata = await page.evaluate( async () => {
-        // const p = document.getElementsByClassName('table table-stripped')[0].innerText ;
-        var buy = 0 ; var sell = 1 ; var price = 0 ; var volume = 1;
-        var buyrow_num = document.getElementsByClassName('table table-stripped')[0].children[0].children[0].children[buy].children[0].children[0].children.length 
-        var sellrow_num = document.getElementsByClassName('table table-stripped')[0].children[0].children[0].children[sell].children[0].children[0].children.length 
-        var buyarr = [];
-        //  var i = 2 becos first two row title header
-        for(var i = 2 ; i<= buyrow_num-1 ; i=i+1){            
-           var p =  document.getElementsByClassName('table table-stripped')[0].children[0].children[0]
-           buyarr.push({
-             "price" : p.children[buy].children[0].children[0].children[i].children[price].innerText ,
-            "volume" : p.children[buy].children[0].children[0].children[i].children[volume].innerText ,
-           }) 
-        }
-        var sellarr = []
-        for(var i = 2 ; i<= sellrow_num-1 ; i=i+1){            
-            var q =  document.getElementsByClassName('table table-stripped')[0].children[0].children[0]
-            sellarr.push({
-              "price" : q.children[sell].children[0].children[0].children[i].children[price].innerText ,
-             "volume" : q.children[sell].children[0].children[0].children[i].children[volume].innerText ,
-            }) 
-         }
-        return {
-            buyarr , sellarr
-        }
-    });
-  //  console.log(getdata) ;
-    await browser.close();
-    return getdata ;
-}
-// marketdepth("GREENDELT") ;
-module.exports.marketdepth = marketdepth 
 
-const mongoose = require('mongoose')
-mongoose.connect('mongodb+srv://yamin02:chandanpura@sharebazar.z3hlw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' , {
-    useNewUrlParser: true ,
-    useUnifiedTopology: true ,
-    useCreateIndex : true 
-}).then(() =>{
-    console.log('connected to MONGO DB');
-}).catch((error) =>{
-    console.log(error);
-    console.log("MONGODB Error");
-});
-
-const updatedb = async () =>{
-    const dsedata =  await dataDse() ;
-   // var arr = []
-  // var changejson = require('./changestream.json') ;
-  //var changejson = {}
-    for ( var i of dsedata ){
+const updatedb = async () => {
+    const dsexData = await dsex();
+    await model.dsexmodel.findByIdAndUpdate("60fe8fad7b839516b664f296",dsexData) ;
+    const dsedata =  await dataDse(false) ;
+    for ( var i of dsedata['arr'] ){
         const p = await model.stockmodel.updateOne({ "name": `${i.name}` }, {  $set: i  });
-        // const p = await model.stockmodel.updateOne({ "name": "ROBI" }, {  $set: {'ltp':'43.8'}  });
-        // if(p.nModified){
-        //     changejson[`${i.name}`] = i
-        // }
     }
-     //  fs.writeFileSync(path.resolve(__dirname,'changestream.json'), JSON.stringify(changejson,null,2));
-    // return arr
+    return dsedata['marketStatus']
 }
-
+//updatedb();
 module.exports.updatedb = updatedb ;
+
+
+const addDB = async () => {
+    const dsedata =  await dataDse(true) ;
+    await model.stockmodel.insertMany(dsedata['arr']);
+    console.log('Added to the DB ')
+}
+//addDB();
+
+const finalupdate = async() =>{
+    const dsedata =  await dataDse(true) ;
+    for ( var i of dsedata['arr'] ){
+        await model.stockmodel.updateOne({ "name": `${i.name}` }, {  $set: i  });
+    }
+    console.log('Success updated at 4:30pm.Ready for tomorrow');
+}
+module.exports.finalupdate = finalupdate ;

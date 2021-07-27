@@ -46,10 +46,72 @@ const stockschema = new mongoose.Schema(
         type : String,
         required : false , 
     },
-    last30 :{ type : Array },
+    last60 :{ type : Array },
     },
     { 
         versionKey : false
     })
 
 module.exports.stockmodel = mongoose.model('stockdata',stockschema)
+
+
+const stockschema2 = new mongoose.Schema(
+    {
+    marketStatus : {
+        type : String,
+        required : false , 
+    },
+    dsex :   {
+        type : Number,
+        required : false , 
+    }, 
+    dsexChange :   {
+        type : Number,
+        required : false , 
+    },
+    dsexChangeP :{
+        type : Number,
+        required : false , 
+    },
+    ds30 : {
+        type : Number,
+        required : false , 
+    },
+    ds30Change :    {
+        type : Number,
+        required : false , 
+    },
+    ds30ChangeP : {
+        type : Number,
+        required : false , 
+    },
+    totaltrade : {
+        type : Number,
+        required : false , 
+    },
+    totalvolume :  {
+        type : Number,
+        required : false , 
+    },
+    totalvalue :  {
+        type : Number,
+        required : false , 
+    },
+    issueAdvance :{
+        type : Number,
+        required : false , 
+    },
+    issueDecline :{
+        type : Number,
+        required : false , 
+    },
+    issueUnchange :{
+        type : Number,
+        required : false , 
+    },
+    },
+    { 
+        versionKey : false
+    })
+
+module.exports.dsexmodel = mongoose.model('dsexdata',stockschema2)
