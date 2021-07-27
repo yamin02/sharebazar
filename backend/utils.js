@@ -1,4 +1,4 @@
-module.exports.dateformat = (daysNum) =>{
+module.exports.dateformat = (daysNum) => {
     const now = new Date().toLocaleDateString("en-US").split('/');
     var startday = new Date()
     startday.setDate(startday.getDate() - daysNum);

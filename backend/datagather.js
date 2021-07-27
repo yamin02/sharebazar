@@ -172,6 +172,6 @@ const finalupdate = async() =>{
     for ( var i of dsedata['arr'] ){
         await model.stockmodel.updateOne({ "name": `${i.name}` }, {  $set: i  });
     }
-    console.log('Success updated at 4:30pm.Ready for tomorrow');
+    console.log('Success updated at 4:30pm. Ready for tomorrow');
 }
 module.exports.finalupdate = finalupdate ;

@@ -1,4 +1,3 @@
-const { response } = require('express');
 const express = require('express');
 const app = express();
 const path = require("path")
@@ -48,76 +47,12 @@ app.post('/eachstock/:id',async (req,res)=>{
      })
 })
 
-app.get('/dsex2',async (req,res)=>{
+app.get('/dsex',async (req,res)=>{
     var json = await model.dsexmodel.find({});
     res.send(json[0])
-})
-
-app.get('/dsex',async (req,res)=>{
-    // var json = await model.dsexmodel.find({});
-    res.send(dsexjson)
 })
 
 app.listen(config.default.PORT,()=>{
     console.log("Serving at Port 5000")
 });
 
-
-const updatestart = async () =>{
-    var update0 = setInterval(async ()=> {
-    const marketStatus = await datagather.updatedb();
-
-    console.log('updated DB');
-    console.log(marketStatus)
-    if(marketStatus.toUpperCase()=="CLOSED"){
-        clearInterval(update0);
-        }
-    },7000);
-}
-
-let rule = new schedule.RecurrenceRule();
-rule.dayOfWeek = [0,1,2,3,4]
-rule.hour = [10];
-rule.minute = [02];
-rule.tz = 'Asia/Dhaka';
-const job2 = schedule.scheduleJob( rule , async function(triggerDate){
-    console.log(`Today is ${triggerDate}`);
-    var times = 0
-    var checkopen =  setInterval(async () =>{
-        const dsex = await datagather.dsex();
-        console.log(dsex)
-        if(!(dsex['marketStatus'].toUpperCase()=='CLOSED')){
-            console.log("Started the Stock market")
-            console.log(`Today is ${triggerDate}`);
-            updatestart();
-            clearInterval(checkopen);
-        } else { times=times+1 }
-        if(times==10){
-            console.log(`Market is closed today : ${triggerDate}`)
-            clearInterval(checkopen)
-        }
-    },4000)
-    console.log("Started the Stock market")
-});
-
-
-let rule2 = new schedule.RecurrenceRule();
-rule2.dayOfWeek = [0,1,2,3,4]
-rule2.hour = [14,16,18,20];
-rule2.minute = [5];
-rule2.tz = 'Asia/Dhaka';
-const jobFinalUpdate = schedule.scheduleJob( rule2 , async function(triggerDate){
-    await datagather.finalupdate();
-    console.log(`Final Update of Chartdata and All stocks done at : ${triggerDate}`)
-});
-
-
-
-var update0 = setInterval(async ()=> {
-    const marketStatus = await datagather.updatedb();
-    console.log('updated DB');
-    console.log(marketStatus)
-    // if(marketStatus.toUpperCase()=="CLOSED"){
-    //     clearInterval(update0);
-    //     }
-    },50*1000);
