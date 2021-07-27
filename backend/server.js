@@ -35,7 +35,7 @@ app.get('/getupdate', async(req,res)=>{
 });
 
 app.get('/preload',async (req,res)=>{
-    const dsedata = await model.stockmodel.find({})
+    const dsedata = await model.stockmodel.find({},{name:1,trade:1,volume:1,value:1,_id:0,ltp:1,change:1,changeP:1,last60:1})
     res.send(dsedata);
 })
 
@@ -107,12 +107,12 @@ const jobFinalUpdate = schedule.scheduleJob( rule2 , async function(triggerDate)
 
 
 
-var update0 = setInterval(async ()=> {
-    const marketStatus = await datagather.updatedb();
+// var update0 = setInterval(async ()=> {
+//     const marketStatus = await datagather.updatedb();
 
-    console.log('updated DB');
-    console.log(marketStatus)
-    if(marketStatus.toUpperCase()=="CLOSED"){
-        clearInterval(update0);
-        }
-    },7000);
+//     console.log('updated DB');
+//     console.log(marketStatus)
+//     if(marketStatus.toUpperCase()=="CLOSED"){
+//         clearInterval(update0);
+//         }
+//     },7000);
