@@ -8,6 +8,7 @@ const schedule = require('node-schedule');
 const fs = require('fs')
 const mongoose = require('mongoose')
 const model = require('./model');
+const dsexjson = require('./dsex.json')
 
 mongoose.connect('mongodb+srv://yamin02:chandanpura@sharebazar.z3hlw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' , {
     useNewUrlParser: true ,
@@ -47,9 +48,14 @@ app.post('/eachstock/:id',async (req,res)=>{
      })
 })
 
-app.get('/dsex',async (req,res)=>{
+app.get('/dsex2',async (req,res)=>{
     var json = await model.dsexmodel.find({});
     res.send(json[0])
+})
+
+app.get('/dsex',async (req,res)=>{
+    // var json = await model.dsexmodel.find({});
+    res.send(dsexjson)
 })
 
 app.listen(config.default.PORT,()=>{
@@ -107,12 +113,12 @@ const jobFinalUpdate = schedule.scheduleJob( rule2 , async function(triggerDate)
 
 
 
-// var update0 = setInterval(async ()=> {
-//     const marketStatus = await datagather.updatedb();
+var update0 = setInterval(async ()=> {
+    const marketStatus = await datagather.updatedb();
 
-//     console.log('updated DB');
-//     console.log(marketStatus)
-//     if(marketStatus.toUpperCase()=="CLOSED"){
-//         clearInterval(update0);
-//         }
-//     },7000);
+    console.log('updated DB');
+    console.log(marketStatus)
+    if(marketStatus.toUpperCase()=="CLOSED"){
+        clearInterval(update0);
+        }
+    },50*1000);

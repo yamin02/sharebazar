@@ -1,0 +1,15 @@
+{
+  "marketStatus": "Open",
+  "dsex": 6377.8689,
+  "dsexChange": -26.16383,
+  "dsexChangeP": -0.40855,
+  "ds30": 1388.1748,
+  "ds30Change": -2.09099,
+  "ds30ChangeP": -0.1504,
+  "totaltrade": 233337,
+  "totalvolume": 434950745,
+  "totalvalue": 13410.817,
+  "issueAdvance": 151,
+  "issueDecline": 191,
+  "issueUnchange": 31
+}

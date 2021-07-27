@@ -148,7 +148,8 @@ module.exports.dsex = dsex
 
 const updatedb = async () => {
     const dsexData = await dsex();
-    await model.dsexmodel.findByIdAndUpdate("60fe8fad7b839516b664f296",dsexData) ;
+    // await model.dsexmodel.findByIdAndUpdate("60fe8fad7b839516b664f296",dsexData) ;
+    fs.writeFileSync(path.resolve(__dirname,'dsex.json'), JSON.stringify(dsexData,null,2));
     const dsedata =  await dataDse(false) ;
     for ( var i of dsedata['arr'] ){
         const p = await model.stockmodel.updateOne({ "name": `${i.name}` }, {  $set: i  });
