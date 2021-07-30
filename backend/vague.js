@@ -137,3 +137,76 @@ const sortchange = async () =>{
 }
 //dataDse2();
 module.exports.dataDse = dataDse ;
+
+
+// const sortArr = (points,decending)=>{
+//     var oldpoint = points.slice(0);
+//     var result = [];
+//     console.log(decending)
+//     points.sort((a,b) => decending=='true'? b-a : a-b );
+//     for(var i = 0 ; i<=100 ; i++){
+//         result.push(oldpoint.indexOf(points[i]))
+//     }
+//     return result
+// }
+
+// const sort = async (criteria) =>{ 
+//     var points = []
+
+//     var query = criteria.split('/')[0];
+//     var pos = criteria.split('/')[1];
+//     var trow = document.querySelectorAll('.flex');
+//     switch(query) {
+//         case 'change':
+//             for(var i of trow){
+//                 var p = i.querySelector(`.change`).innerText.split(",")[1].split("%")[0] ; 
+//                 i.style.order = "";
+//                 points.push(p)
+//             }
+//           break;
+//         case 'trade':
+//             for(var i of trow){
+//                 var p = i.querySelector(".trade").innerText.split(":")[1].replace(/,/g,''); 
+//                 i.style.order = "";
+//                 points.push(p)
+//             }
+//           break;
+//           case 'value':
+//             for(var i of trow){
+//                 var p = i.querySelector(".value").innerText.split(":")[1].replace(/,/g,'').split("cr")[0]; 
+//                 i.style.order = "";
+//                 points.push(p)
+//             }
+//           break;
+//           case 'volume':
+//             for(var i of trow){
+//                 var p = i.querySelector(".volume").innerText.split(":")[1].replace(/,/g,'').replace('K','000'); 
+//                 i.style.order = "";
+//                 points.push(p)
+//             }
+//           break;
+//       }
+//     var result = sortArr(points,pos)
+//     var num = 100
+//     for(var op of result){
+//         trow[op].style.order = `-${num}`;
+//         trow[op].style.display = "";
+//         trow[op].querySelector('.chart').__chartist__.update();
+//         num = num - 1;
+//     }
+//     return '1' ;
+// }
+
+
+
+// const sort2 = async (criteria) =>{ 
+//     var query = criteria.split('/')[0];
+//     var pos = criteria.split('/')[1];
+//     var trow = document.querySelectorAll('.flex');
+//     for(var i of trow){
+//         var p = Math.round(-1*pos*i.querySelector(`.${query}`).innerText.split(":")[1]*100) ; 
+//         i.style.order=`${p}` ;
+//         // i.style.display = ""
+//     }
+//     return '1' ;
+//     }

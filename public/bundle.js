@@ -1924,7 +1924,6 @@ rend : ()=>{
 var tableget = require('./table');
 var eachstockdata = require('./eachstock');
 var utils = require('./utils');
-
 const screenurl = {
   '/' : tableget.tableReal ,
   '/home' :tableget.tableReal ,
@@ -1937,16 +1936,13 @@ const loader = async () => {
   const request = utils.parseurl()
   const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
   console.log(parseUrl)
-
   var screen = screenurl[parseUrl];
-  content.innerHTML = await screen.rend()
+  content.innerHTML = await screen.rend();
 
-  const marketStatus = await screen.afterRend()
+  var marketStatus = await screen.afterRend()
   utils.hideloading();
   var arr = JSON.parse(localStorage.fav);
-  console.log(arr)
   for(var i of arr) {document.getElementById(`fav${i}`).classList.add('checked');}
-
 
   if(!(marketStatus == "CLOSED")){
     console.log("Starting to update data");
@@ -1956,11 +1952,25 @@ const loader = async () => {
         await screen.repeatRend();
     }, 70*1000)
   }
-
 }
-
 window.addEventListener('load' , loader) ;
 window.addEventListener('hashchange' , loader);
+
+
+window.sort = async (criteria) =>{ 
+  var topChange = localStorage.getItem(criteria);
+  topChange = topChange.split(",")
+  var num = 100;
+  var trow = document.querySelectorAll('.flex');
+  for(var i of trow){i.style.order="0"}
+  for(var op of topChange) {
+      trow[op].style.order = `-${num}`;
+      trow[op].style.display = "";
+      trow[op].querySelector('.chart').__chartist__.update();
+      num = num - 1;
+  }
+  return '1' ;
+}
 },{"./eachstock":5,"./table":34,"./utils":35}],7:[function(require,module,exports){
 module.exports = require('./lib/axios');
 },{"./lib/axios":9}],8:[function(require,module,exports){
@@ -3556,10 +3566,23 @@ module.exports = {
 },{"./helpers/bind":23}],34:[function(require,module,exports){
 const { set } = require('mongoose');
 var api = require('./api');
+var utils = require('./utils');
+var sort_change= [];
+var sort_change2= [];
+var sort_trade= [];
+var sort_volume= [];
+var sort_value= [];
+
 const tab =  {
     repeatRend : async () => {
         const data = await api.getupdate() ;
+
         for(var i in data){
+            sort_change.push(data[i].changeP)
+            sort_change2.push(data[i].changeP)
+            sort_value.push(data[i].value.replace(/,/g,''))
+            sort_volume.push(data[i].volume.replace(/,/g,''))
+            sort_trade.push(data[i].trade.replace(/,/g,''))
             //  console.log(data[i].name)
             var trow = document.getElementById(`${data[i].name}`) 
             if(trow.classList.contains('highlight-red')){trow.classList.remove('highlight-red')} 
@@ -3582,19 +3605,19 @@ const tab =  {
 
            trow.querySelector('#name').innerHTML = `
                 <p>${data[i].name}</p>
-                <p>Trade: ${data[`${i}`].trade}</p>
-                <p>Volume: ${volume}</p>
-                <p>Value: ${(data[`${i}`].value * 0.1).toFixed(3)} cr</p>`
+                <p class="trade">Trade: ${data[`${i}`].trade}</p>
+                <p class="volume">Volume: ${volume}</p>
+                <p class="value">Value: ${(data[`${i}`].value * 0.1).toFixed(3)} cr</p>`
 
             trow.querySelector('#data').innerHTML = `
-            <p class="${color}">${data[`${i}`].ltp}</p><p style="color:${color};">${changeval} , ${data[`${i}`].changeP}%</p>`
+            <p class="${color}">${data[`${i}`].ltp}</p><p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>`
 
         }
-
+        utils.topsetLocalstorage(sort_change,sort_change2,sort_trade,sort_value,sort_volume);
     } ,
     afterRend : async () =>  {
         var status = await api.dsex();
-        console.log('GOT DSEX DATA')
+        console.log('GOT DSEX DATA');
         var marketStatus = status['marketStatus'].toUpperCase()
         if(marketStatus == "CLOSED"){
             document.getElementById('marketstatus').innerHTML=`<i class="fa fa-times-circle"></i><br>Market<br>Closed`,
@@ -3604,31 +3627,35 @@ const tab =  {
             document.getElementById('marketstatus').style.color = "#0ff153"
         }
         const stocklist = document.getElementById('stocklist');
-        console.log('running after render') ;
-        const data = await api.getpreload() ;
-        console.log('GOT DSE DATA FROM DB');
+        const data0 = await api.getpreload() ;
+        var data = data0['dsedata']
         stocklist.innerHTML = "" ;
+
+        console.log(data)
         var count = 0
         for (var i in data)
         {
+            console.log(i)
             var trow = document.createElement('div');
             trow.classList.add('flex') ;
             trow.id = data[i].name ; 
+            stocklist.appendChild(trow);
+
             var changeval = (data[`${i}`].change < 0)? `${data[`${i}`].change}` : `+${data[`${i}`].change}`
             var color = data[`${i}`].changeP < 0 ? 'red' : 'green' ;
             if(data[`${i}`].changeP==0){color ="blue"}
-            stocklist.appendChild(trow);
             var volume = data[`${i}`].volume.replace(/,/g,'') > 99999 ? `${Math.floor(data[`${i}`].volume.replace(/,/g,'')/1000)}K` : data[`${i}`].volume ;
+            
             trow.innerHTML = `
             <div id="name" class="name"><p>${data[i].name}</p>
-                <p>Trade: ${data[`${i}`].trade}</p>
-                <p>Volume: ${volume}</p>
-                <p>Value: ${(data[`${i}`].value * 0.1).toFixed(3)} cr</p>
+                <p class="trade">Trade: ${data[`${i}`].trade}</p>
+                <p class="volume">Volume: ${volume}</p>
+                <p class="value">Value: ${(data[`${i}`].value * 0.1).toFixed(3)} cr</p>
             </div>
             <div class="chart" id="chart${count}"></div>
-            <div id="icon"><i id="fav${data[i].name}" class="fa fa-star" onclick="fav('${data[i].name}')"></i></div>
+            <div id="icon"><i id="fav${data[i].name}" class="fas fa-star" onclick="fav('${data[i].name}')"></i></div>
             <div id="data">
-                <p class="${color}">${data[`${i}`].ltp}</p><p style="color:${color};">${changeval} , ${data[`${i}`].changeP}%</p>
+                <p class="${color}">${data[`${i}`].ltp}</p><p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
             </div>`
      
             var myarr = Array(data[i].last60.length).fill().map((x,i)=>i)
@@ -3650,30 +3677,17 @@ const tab =  {
                     }
                 });
                 count = count +1 ;
-               }
-
-        const selectFunc = () => {
-           var input = document.getElementById("myInput").value.toUpperCase();
-            var row = document.getElementsByClassName("name");
-            for(var i of row){
-                var stonk = i.innerHTML.toUpperCase()
-                if (stonk.indexOf(input)>-1){
-                    i.parentElement.style.display = "" ;
-                    i.parentElement.querySelector('.chart').__chartist__.update();
-                } else {
-                    i.parentElement.style.display ="none" ;
-                }
             }
-        }
-        if(document.getElementById("myInput").value){selectFunc()}
-        document.getElementById("myInput").addEventListener("input",selectFunc);
 
+
+        if(document.getElementById("myInput").value){utils.selectFunc()}
+        document.getElementById("myInput").addEventListener("input",utils.selectFunc);
+        utils.topsetLocalstorage(data0.sort_change,data0.sort_change_asc,data0.sort_trade,data0.sort_value,data0.sort_volume);
         return marketStatus;
         },
 
 rend : async () => {
     return `
-    <div><input type="text" id="myInput" placeholder="Search for Stocks.." title="Type in a name"></div>
     <div class="topnav">
         <a class="active0" onclick="allstock(event)" id="allstock">All Stocks</a>
         <a onclick="starred(event)">Starred</a>
@@ -3706,9 +3720,7 @@ rend : async () => {
             <a onclick="secwise('others')">Others</a>
         </div>
     <p class="spacing"></p>
-    <div id="stocklist">
-        <div id="sector"></div>
-    </div>`
+    <div id="stocklist"></div>`
   }
 
 }
@@ -3718,7 +3730,7 @@ module.exports.tableReal = tab
 
 
 
-},{"./api":3,"mongoose":1}],35:[function(require,module,exports){
+},{"./api":3,"./utils":35,"mongoose":1}],35:[function(require,module,exports){
 module.exports.parseurl = () => {
     const url = document.location.hash.toLowerCase();
     const request = url.split('/');
@@ -3770,4 +3782,25 @@ module.exports.hideloading = () =>{
 }
 
 
+module.exports.selectFunc = () => {
+  var input = document.getElementById("myInput").value.toUpperCase();
+   var row = document.getElementsByClassName("name");
+   for(var i of row){
+       var stonk = i.innerHTML.toUpperCase()
+       if (stonk.indexOf(input)>-1){
+           i.parentElement.style.display = "" ;
+           i.parentElement.querySelector('.chart').__chartist__.update();
+       } else {
+           i.parentElement.style.display ="none" ;
+       }
+   }
+}
+
+module.exports.topsetLocalstorage = (sort_change,sort_change2,sort_trade,sort_value,sort_volume) =>{
+    localStorage.setItem('changeDec',sort_change)
+    localStorage.setItem('changeAsc',sort_change2)   
+    localStorage.setItem('valueAsc',sort_value)
+    localStorage.setItem('volumeAsc',sort_volume)
+    localStorage.setItem('tradeAsc',sort_trade)
+}
 },{}]},{},[6]);

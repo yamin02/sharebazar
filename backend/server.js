@@ -1,19 +1,16 @@
 const express = require('express');
 const app = express();
 const path = require("path")
-const datagather = require('./datagather')
 const config = require('./config')
-const schedule = require('node-schedule');
 const fs = require('fs')
 const mongoose = require('mongoose')
 const model = require('./model');
-const dsexjson = require('./dsex.json')
+const utils = require('./utils')
 
 mongoose.connect('mongodb+srv://yamin02:chandanpura@sharebazar.z3hlw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' , {
     useNewUrlParser: true ,
     useUnifiedTopology: true ,
     useCreateIndex : true ,
-    useFindAndModify : false ,
 }).then(() =>{
     console.log('connected to MONGO DB');
 }).catch((error) =>{
@@ -35,16 +32,33 @@ app.get('/getupdate', async(req,res)=>{
 });
 
 app.get('/preload',async (req,res)=>{
+    var [change,value,trade,volume]=[[],[],[],[]]
     const dsedata = await model.stockmodel.find({},{name:1,trade:1,volume:1,value:1,_id:0,ltp:1,change:1,changeP:1,last60:1})
-    res.send(dsedata);
+    for(var i of dsedata){
+        change.push(i.changeP);
+        trade.push(i.trade)
+        value.push(i.value)
+        volume.push(i.volume)
+    }
+    var change2 =  change.slice('kolla')
+    var json = {
+        dsedata :dsedata ,
+        sort_change : utils.sortArr(change,true),
+        sort_change_asc : utils.sortArr(change2,false),
+        sort_value : utils.sortArr(value,true),
+        sort_volume : utils.sortArr(volume,true),
+        sort_trade : utils.sortArr(trade,true),
+    }
+    // console.log(json)
+    res.send(json);
 })
 
 app.post('/eachstock/:id',async (req,res)=>{
      console.log(req.params.id)
      console.log(req.body)
-     datagather.price90(req.params.id).then(dara =>{
-        res.send(dara)
-     })
+    //  datagather.price90(req.params.id).then(dara =>{
+        // res.send(dara)
+    //  })
 })
 
 app.get('/dsex',async (req,res)=>{

@@ -48,3 +48,25 @@ module.exports.hideloading = () =>{
     document.getElementById('loading-overlay').classList.remove('active');
 }
 
+
+module.exports.selectFunc = () => {
+  var input = document.getElementById("myInput").value.toUpperCase();
+   var row = document.getElementsByClassName("name");
+   for(var i of row){
+       var stonk = i.innerHTML.toUpperCase()
+       if (stonk.indexOf(input)>-1){
+           i.parentElement.style.display = "" ;
+           i.parentElement.querySelector('.chart').__chartist__.update();
+       } else {
+           i.parentElement.style.display ="none" ;
+       }
+   }
+}
+
+module.exports.topsetLocalstorage = (sort_change,sort_change2,sort_trade,sort_value,sort_volume) =>{
+    localStorage.setItem('changeDec',sort_change)
+    localStorage.setItem('changeAsc',sort_change2)   
+    localStorage.setItem('valueAsc',sort_value)
+    localStorage.setItem('volumeAsc',sort_volume)
+    localStorage.setItem('tradeAsc',sort_trade)
+}

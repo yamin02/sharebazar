@@ -469,10 +469,11 @@ const starred = async (event) => {
 
 const allstockshow = async () =>{
     var row = document.querySelectorAll(".flex");
-        for(var i = 0 ; i<=row.length/5 ; i=i+1){
+        for(var i = 0 ; i<=row.length/6 ; i=i+1){
             row[i].style.display = "" ;
             row[i].querySelector('.chart').__chartist__.update();
         }
+        console.log('Kolla life')
         return '1'
 }
 
@@ -555,3 +556,14 @@ toggler.addEventListener('click', () => {
     toggler.classList.toggle('active');
     menu.classList.toggle('active');
 })
+
+
+document.querySelector('.fa-sort-amount-up').addEventListener('click',()=>{
+    var sorting = document.querySelector('.sorting')
+    if(sorting.style.display=="flex"){
+        sorting.style.display = "none"
+    }else{
+        sorting.style.display="flex"
+    }
+})
+

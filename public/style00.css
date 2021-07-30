@@ -1,0 +1,133 @@
+body{
+    background-color: black;
+}
+
+
+
+.name p:first-child{
+    color: yellow;
+}
+.name p:nth-child(2),.name p:nth-child(3),.name p:nth-child(4){
+    color: white;
+}
+
+
+
+/* This are chart color  */
+.strokegreen{
+    stroke: rgb(49, 206, 49);
+}
+.strokered{
+    stroke: rgb(212, 75, 75);
+}
+.strokeblue{
+    stroke: rgb(24, 24, 235);
+}
+.ct-label{
+    color: rgb(179, 175, 127) !important;
+}
+.ct-grids line{
+    stroke: white !important;
+}
+
+
+/* The LTP(red) , Price change(red1) */
+.red{
+    background-color: rgb(236, 52, 52);
+}
+.green{
+    background-color: rgb(21, 214, 82);
+}
+.blue{
+    background-color: rgb(81, 130, 235);
+}
+.red1{
+    background-color: rgb(236, 52, 52);
+}
+.green1{
+    background-color: rgb(21, 214, 82);
+}
+.blue1{
+    background-color: rgb(81, 130, 235);
+}
+
+
+/* Star checked */
+.checked{
+    color: orange;
+    text-shadow: none;
+}
+
+
+/* TOP NAVBAR  */
+.topnav a {
+    color: black ;
+    border: 1px  solid rgb(101, 108, 109);
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.topnav a.active0 {
+    background-color: #72f7c6;
+    color: black;
+    font-weight: bold;
+}
+
+
+/* Sector Names */
+.sectrwise a {
+    background-color: rgb(37, 37, 37);
+    color: #19e499;
+    border: 1px  solid rgb(0, 0, 0);
+}
+
+.sectrwise a:hover {
+    background-color: rgb(73, 68, 68);
+    color: rgb(255, 253, 253);
+    cursor: pointer;
+    font-weight: bold;
+}
+.sectrwise a.active0 {
+    background-color: rgb(71, 65, 65);
+    color: white;
+    font-weight: bold;
+}
+
+/* The progress bar at the top */
+.progress .color{
+    background-color: #72f7c6;
+}
+
+/* The loading overlay */
+.overlay {
+    background-color: rgba(107, 102, 102, 0.658);
+}
+
+
+/* The side menu */
+.menu__toggler span,
+.menu__toggler span::before,
+.menu__toggler span::after {
+    background: #ebdede;
+}
+.menu{
+    color: #005c9c;
+    background: rgba(215, 226, 211, 0.603);
+}
+.sidemenu1{
+     background-color: rgb(0, 0, 0);
+    color: rgb(231, 114, 114);
+}
+
+/* The two icons sort , theme change at topright */
+.one1{
+    right: 45px;
+    color: #19e499;
+}
+.two2{
+    right: 15px;
+    color: yellow;
+}

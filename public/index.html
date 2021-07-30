@@ -1,14 +1,23 @@
 <html>
 <head>
     <title>sharebazar.tech</title>
-    <link rel="shortcut icon" href="./icon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css" id="style-link">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <script src="https://kit.fontawesome.com/172b7a97ab.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style00.css"> -->
+    <link rel="stylesheet" href="chartist.min.css">
+    <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"> -->
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
 <body>
+        <input type="text" id="myInput" placeholder="Search for Stocks.." title="Type in a name">
+        <i class="topright fas fa-sort-amount-up one1"></i><i class="topright fas fa-adjust two2"></i>
+    <!-- <i class="topright">Switch</i> -->
     <div class="menu">
         <div>
             <div class='sidemenu1'><p>DSEX</p><p>6405.04496</p><p> 39.92729</p><p>0.62728%</p> </div>
@@ -38,12 +47,21 @@
     <!-- <div class="overlay" id="message-overlay"></div> -->
     <div id="contents"></div>
     <br>
+    <div class="sorting">
+        <a onclick="sort('changeDec')">Top<br>Gainer</a>
+        <a onclick="sort('changeAsc')">Top<br>Loser</a>
+        <a onclick="sort('valueAsc')">Top<br>Value</a>
+        <a onclick="sort('volumeAsc')">Top<br>Volume</a>
+        <a onclick="sort('tradeAsc')">Top<br>Trade</a>
+    </div>
+
     <div class="navbar">
         <a href="#/home" class="active">Home</a>
         <a href="#/news">News</a>
         <a href="#/fav">Analysis</a>
         <p id="marketstatus"></p>
     </div>
+
     <script src="prerender.js"></script>
     <script src="bundle.js"></script>
 </body>
