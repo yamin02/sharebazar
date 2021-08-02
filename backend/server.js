@@ -28,7 +28,24 @@ app.use(express.json({limit : '1mb'}));   //remember to use , as for express to 
 
 app.get('/getupdate', async(req,res)=>{
     const dsedata = await model.stockmodel.find({},{name:1,trade:1,volume:1,value:1,_id:0,ltp:1,change:1,changeP:1})
-    res.send(dsedata);
+    for(var i of dsedata){
+        change.push(i.changeP);
+        trade.push(i.trade)
+        value.push(i.value)
+        volume.push(i.volume)
+    }
+    var change2 =  change.slice('kolla')
+    var json = {
+        dsedata :dsedata ,
+        sort_change : utils.sortArr(change,true),
+        sort_change_asc : utils.sortArr(change2,false),
+        sort_value : utils.sortArr(value,true),
+        sort_volume : utils.sortArr(volume,true),
+        sort_trade : utils.sortArr(trade,true),
+    }
+    // console.log(json)
+    res.send(json);
+    // res.send(dsedata);
 });
 
 app.get('/preload',async (req,res)=>{
@@ -69,4 +86,5 @@ app.get('/dsex',async (req,res)=>{
 app.listen(config.default.PORT,()=>{
     console.log("Serving at Port 5000")
 });
+
 
