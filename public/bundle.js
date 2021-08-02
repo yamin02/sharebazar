@@ -3567,22 +3567,12 @@ module.exports = {
 const { set } = require('mongoose');
 var api = require('./api');
 var utils = require('./utils');
-var sort_change= [];
-var sort_change2= [];
-var sort_trade= [];
-var sort_volume= [];
-var sort_value= [];
 
 const tab =  {
     repeatRend : async () => {
-        const data = await api.getupdate() ;
-
+        const data0 = await api.getupdate() ;
+        var data = data0['dsedata']
         for(var i in data){
-            sort_change.push(data[i].changeP)
-            sort_change2.push(data[i].changeP)
-            sort_value.push(data[i].value.replace(/,/g,''))
-            sort_volume.push(data[i].volume.replace(/,/g,''))
-            sort_trade.push(data[i].trade.replace(/,/g,''))
             //  console.log(data[i].name)
             var trow = document.getElementById(`${data[i].name}`) 
             if(trow.classList.contains('highlight-red')){trow.classList.remove('highlight-red')} 
@@ -3611,10 +3601,10 @@ const tab =  {
 
             trow.querySelector('#data').innerHTML = `
             <p class="${color}">${data[`${i}`].ltp}</p><p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>`
-
         }
-        utils.topsetLocalstorage(sort_change,sort_change2,sort_trade,sort_value,sort_volume);
+        utils.topsetLocalstorage(data0.sort_change,data0.sort_change_asc,data0.sort_trade,data0.sort_value,data0.sort_volume);
     } ,
+    
     afterRend : async () =>  {
         var status = await api.dsex();
         console.log('GOT DSEX DATA');
@@ -3635,7 +3625,6 @@ const tab =  {
         var count = 0
         for (var i in data)
         {
-            console.log(i)
             var trow = document.createElement('div');
             trow.classList.add('flex') ;
             trow.id = data[i].name ; 

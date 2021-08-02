@@ -27,6 +27,7 @@ app.use(express.json({limit : '1mb'}));   //remember to use , as for express to 
 
 
 app.get('/getupdate', async(req,res)=>{
+    var [change,value,trade,volume]=[[],[],[],[]]
     const dsedata = await model.stockmodel.find({},{name:1,trade:1,volume:1,value:1,_id:0,ltp:1,change:1,changeP:1})
     for(var i of dsedata){
         change.push(i.changeP);

@@ -35,7 +35,6 @@ const tab =  {
 
             trow.querySelector('#data').innerHTML = `
             <p class="${color}">${data[`${i}`].ltp}</p><p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>`
-
         }
         utils.topsetLocalstorage(data0.sort_change,data0.sort_change_asc,data0.sort_trade,data0.sort_value,data0.sort_volume);
     } ,

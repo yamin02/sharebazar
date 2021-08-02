@@ -338,7 +338,7 @@ body {
   width: 0px;
   height: 3px;
   border-radius: 15px;
-  animation: progres 10s infinite linear;    
+  animation: progres 70s infinite linear;    
 }
 @keyframes progres{
   0%{
