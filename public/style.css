@@ -1,4 +1,4 @@
-                          /* Input at Table page */
+/* Input at Table page */
 
 #myInput{
     padding: 10px;
@@ -101,6 +101,45 @@ body {
   height: 90px;
   padding: 0;
 }
+
+@media screen and (max-width:1200px) and (min-width:500px) {
+    #stocklist {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      background-color: rgba(255, 248, 248, 0.651);
+      margin: 0 auto;
+    }  
+    
+    .flex {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap; 
+      height: 90px;
+      padding: 0;
+      width: 48%;
+      margin: 7px;
+    }
+  }
+  
+  
+  @media screen and (min-width : 1300px) {
+    #stocklist {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      margin: 0 auto;
+    }  
+    
+    .flex {
+      flex-wrap: nowrap; 
+      height: 90px;
+      padding: 0;
+      width: 31.5%;
+      margin: 7px;
+    }
+  }
 
 .flex div {
   background-color: #e9f1f0ce;
