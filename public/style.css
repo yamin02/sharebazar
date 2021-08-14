@@ -1,25 +1,50 @@
-/* Input at Table page */
+.example {
+  padding: 13px;
+  margin-left: 20%;
+  text-align: center;
+}
+.example #myInput {
+  padding: 10px;
+  font-size: 13px;
+  float: left;
+  text-align: center;
+  width: 54%;
+  border: 2px solid #19e499;
+  /* background: #f1f1f1; */
+}
 
-#myInput{
-    padding: 10px;
-    font-size: 17px;
-    border: 1px solid grey;
-    text-align: center;
-    display: block;
-    margin : 10px auto;
-    width: 50%; 
-    /* float: left; */
-    /* width: 80%; */
-    background: #f1f1f1;
-  }
+.example button {
+  float: left;
+  font-size: 13px;
+  padding: 11px;
+  border: 2px solid #19e499;
+  /* border-radius:0px 3px 3px 0px; */
+  background: #19e499;
+  color: white;
+  border-left: none;
+  cursor: pointer;
+}
+
+.example button:hover {
+  background: #020300;
+}
+
+.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
 
   @media screen and (max-width: 1000px) {
     #myInput{
-      width: 50%; 
+      width: 40%; 
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
     }
 }
-  
-                    
+                     
     /* Each stock data page */
 
 #stocknameh3 {
@@ -128,7 +153,6 @@ body {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-
       margin: 0 auto;
     }  
     
@@ -183,16 +207,27 @@ body {
 }
 .strokegreen{
   stroke: rgb(49, 206, 49);
+  fill: rgb(6, 255, 6);
   /* stroke-dasharray: 10px 20px; */
 }
 .strokered{
   stroke: rgb(212, 75, 75);
+  fill: rgb(255, 23, 23);
+  opacity: 100;
   /* stroke-dasharray: 10px 20px; */
 }
 .strokeblue{
-  stroke: rgb(61, 61, 247);
+  stroke: rgb(87, 87, 235);
+  fill: rgb(0, 17, 255);
 }
 
+.ct-line{
+  stroke-width: 3px !important ;
+}
+
+.ct-area{
+  opacity: 100% !important;
+}
 
 
 
@@ -641,8 +676,8 @@ button{
 /* Top value , volume , gainer , loser */
 .sorting {
   /* overflow: auto; */
-  /* display: flex; */
-  display: none;
+  display: flex;
+  /* display: none; */
   position: fixed;
   bottom: 7.5%;
   left: 5%;

@@ -457,50 +457,25 @@ for(var i of row){
   return '1'
 }
 
-const starred = async (event) => {
-    var active0 = document.getElementsByClassName('active0')[0];
-    active0.classList.remove('active0');
-    sectordisplay('none')
+const starred = function (event) {
+    $(".active0").removeClass("active0");
+    $('.sectrwise').css('display', 'none');
     event.target.classList.add('active0');
-    await showstarrred();
+     showstarrred();
 }
 
 
-
-const allstockshow = async () =>{
-    var row = document.querySelectorAll(".flex");
-        for(var i = 0 ; i<=row.length/6 ; i=i+1){
-            row[i].style.display = "" ;
-            row[i].querySelector('.chart').__chartist__.update();
-        }
-        console.log('Kolla life')
-        return '1'
+const allstock = function (event){
+    $('.sectrwise').css('display', 'none');
+    $(".active0").removeClass("active0");
+    $("#allstock").addClass("active0");
+    $('.flex').show()
+return 0
 }
-
-const allstock = async (event) =>{
-    var active0 = document.getElementsByClassName('active0')[0] ;
-    active0.classList.remove('active0');
-    document.getElementById('allstock').classList.add('active0')
-    // event.target.classList.add('active0');
-    // document.getElementById('stocklist').style.display = ""
-    sectordisplay('none');
-    await allstockshow()
-}
-
-const secclick=(event) => {
-        var active0 = document.getElementsByClassName('active0')[0] ;
-        active0.classList.remove('active0');
+const secclick= function (event) {
+        $(".active0").removeClass("active0");
         event.target.classList.add('active0');
-        sectordisplay('flex');
-    // const sector = document.getElementById('sector');
-    // sector.style.display = ""
-    // sector.innerHTML = "insurance will pump up"
-  //  document.getElementById('stocklist').style.display = "none"
-    //     var row = document.getElementsByClassName("name");
-
-    // for(var i of row){
-    //         i.parentElement.style.display = "none" ;
-    //     }  
+        $('.sectrwise').css('display', 'flex');
     }
 
 const fav = (id) => {
@@ -519,8 +494,8 @@ const fav = (id) => {
 }
 
 const showLoading = () =>{
-    console.log('Loading started')
-    document.getElementById('loading-overlay').classList.add('active');
+    console.log('Loading started from Prerender')
+    $('#loading-overlay').addClass('active') ;
     new Chartist.Line('.ct-chart', {
         labels: [1, 2, 3, 4, 5, 6, 7, 8],
         series: [
@@ -557,13 +532,23 @@ toggler.addEventListener('click', () => {
     menu.classList.toggle('active');
 })
 
-
-document.querySelector('.fa-sort-amount-up').addEventListener('click',()=>{
-    var sorting = document.querySelector('.sorting')
-    if(sorting.style.display=="flex"){
-        sorting.style.display = "none"
-    }else{
-        sorting.style.display="flex"
-    }
+$('.sorting').hide();
+$('.fa-sort-amount-up').click(function(){
+    $('.sorting').toggle();
+    $('#ROBI').css('order','3') 
 })
 
+
+const selectFunc = function()  {
+    var input = document.getElementById("myInput").value.toUpperCase();
+     var row = document.getElementsByClassName("name");
+     for(var i of row){
+         var stonk = i.innerHTML.toUpperCase()
+         if (stonk.indexOf(input)>-1){
+             i.parentElement.style.display = "" ;
+             i.parentElement.querySelector('.chart').__chartist__.update();
+         } else {
+             i.parentElement.style.display ="none" ;
+         }
+     }
+  }

@@ -18,6 +18,7 @@ const loader = async () => {
 
   var marketStatus = await screen.afterRend()
   utils.hideloading();
+  
   var arr = JSON.parse(localStorage.fav);
   for(var i of arr) {document.getElementById(`fav${i}`).classList.add('checked');}
 
@@ -34,17 +35,3 @@ window.addEventListener('load' , loader) ;
 window.addEventListener('hashchange' , loader);
 
 
-window.sort = async (criteria) =>{ 
-  var topChange = localStorage.getItem(criteria);
-  topChange = topChange.split(",")
-  var num = 100;
-  var trow = document.querySelectorAll('.flex');
-  for(var i of trow){i.style.order="0"}
-  for(var op of topChange) {
-      trow[op].style.order = `-${num}`;
-      trow[op].style.display = "";
-      trow[op].querySelector('.chart').__chartist__.update();
-      num = num - 1;
-  }
-  return '1' ;
-}

@@ -5,17 +5,23 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
     <script src="https://kit.fontawesome.com/172b7a97ab.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <!-- <link rel="stylesheet" href="style00.css"> -->
     <link rel="stylesheet" href="chartist.min.css">
     <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"> -->
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
 <body>
-        <input type="text" id="myInput" placeholder="Search for Stocks.." title="Type in a name">
+    <div class="example">
+        <input id="myInput" placeholder="Search for Stocks..">
+        <button onclick="selectFunc()"><i class="fa fa-search"></i></button>
+    </div>
+
         <i class="topright fas fa-sort-amount-up one1"></i><i class="topright fas fa-adjust two2"></i>
     <!-- <i class="topright">Switch</i> -->
     <div class="menu">
@@ -48,11 +54,11 @@
     <div id="contents"></div>
     <br>
     <div class="sorting">
-        <a onclick="sort('changeDec')">Top<br>Gainer</a>
-        <a onclick="sort('changeAsc')">Top<br>Loser</a>
-        <a onclick="sort('valueAsc')">Top<br>Value</a>
-        <a onclick="sort('volumeAsc')">Top<br>Volume</a>
-        <a onclick="sort('tradeAsc')">Top<br>Trade</a>
+        <a onclick="sortchange('changeDec')">Top<br>Gainer</a>
+        <a onclick="sortchange('changeAsc')">Top<br>Loser</a>
+        <a onclick="sortchange('valueAsc')">Top<br>Value</a>
+        <a onclick="sortchange('volumeAsc')">Top<br>Volume</a>
+        <a onclick="sortchange('tradeAsc')">Top<br>Trade</a>
     </div>
 
     <div class="navbar">
@@ -61,8 +67,43 @@
         <a href="#/fav">Analysis</a>
         <p id="marketstatus"></p>
     </div>
+    <script>
+    const pp = function (a,b,order) { 
+        switch (order) {
+            case 'changeDec':
+                var p1 = parseFloat(a.querySelector('.change').innerText.split(",")[1].replace(/%/g,""));
+                var p2 = parseFloat(b.querySelector('.change').innerText.split(",")[1].replace(/%/g,""));
+                break;
+            case 'changeAsc':
+                var p1 = parseFloat(b.querySelector('.change').innerText.split(",")[1].replace(/%/g,""));
+                var p2 = parseFloat(a.querySelector('.change').innerText.split(",")[1].replace(/%/g,""));
+                break;
+            case 'valueAsc':
+                var p1 = parseInt(a.querySelector('.value').innerText.split(":")[1].replace(/cr/g,""));
+                var p2 = parseInt(b.querySelector('.value').innerText.split(":")[1].replace(/cr/g,""));
+                break;
+            case 'tradeAsc':
+                var p1 = parseInt(a.querySelector('.trade').innerText.split(":")[1].replace(/,/g,""));
+                var p2 = parseInt(b.querySelector('.trade').innerText.split(":")[1].replace(/,/g,""));
+                break;
+            case 'volumeAsc':
+                var p1 = parseInt(a.querySelector('.volume').innerText.split(":")[1].replace(/,/g,"").replace(/K/g,"000"));
+                var p2 = parseInt(b.querySelector('.volume').innerText.split(":")[1].replace(/,/g,"").replace(/K/g,"000"));
+                break;
+        }
+        return [p1,p2]
+    }
+     
+    const sortchange = async (order) =>{ 
+        console.log('sorttting')
+        $('.flex').sort(function(a, b) {
+            [p1,p2] = pp(a,b,order);
+            return (p1 > p2) ?  - 1 : 1}).appendTo('#stocklist');
+    }
 
+   </script>
     <script src="prerender.js"></script>
     <script src="bundle.js"></script>
 </body>
 </html>
+

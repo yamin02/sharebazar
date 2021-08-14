@@ -139,6 +139,33 @@ const sortchange = async () =>{
 module.exports.dataDse = dataDse ;
 
 
+
+
+
+<div class="chart" id="chart${count}"></div>
+
+var myarr = Array(data[i].last60.length).fill().map((x,i)=>i)
+var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: data[i].last60 } ]}
+new Chartist.Line(`#chart${count}`, datachart , {
+    width: 140,
+    showPoint:false,
+    axisX:{  
+        showGrid : false ,
+        showLabel : false , 
+        offset : 15,
+        labelInterpolationFnc: function(value, index) {
+            return index % 10 === 0 ? value : null;
+          }
+    } ,
+    axisY : {
+        showGrid : true ,
+        showLabel : true ,
+        }
+    });
+    count = count +1 ;
+
+
+
 // const sortArr = (points,decending)=>{
 //     var oldpoint = points.slice(0);
 //     var result = [];
@@ -210,3 +237,116 @@ module.exports.dataDse = dataDse ;
 //     }
 //     return '1' ;
 //     }
+
+
+Chart.defaults.global.legend.display = false;
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+	// The type of chart we want to create
+	type: 'line', // also try bar or other graph types
+
+	// The data for our dataset
+	data: {
+		labels: ["Jun 2016", "Jul 2016", "Aug 2016", "Sep 2016", "Oct 2016", "Nov 2016", "Dec 2016", "Jan 2017", "Feb 2017", "Mar 2017", "Apr 2017", "May 2017"],
+		// Information about the dataset
+    datasets: [{
+			label: "Rainfall",
+			backgroundColor: 'lightblue',
+			borderColor: 'royalblue',
+			data: [186.4, 39.8, 66.8, 66.4, 40.6, 55.2, 77.4, 69.8, 57.8, 76, 110.8, 142.6],
+		}]
+	},
+
+	// Configuration options
+        options: {
+        layout: {
+        padding: 0,
+        },
+            legend: {
+                position: 'bottom',
+            },
+            title: {
+                display: false,
+                text: 'Precipitation in Toronto'
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'Precipitation in mm'
+                    }
+                }],
+                xAxes: [{display: false,
+            ticks: {display: false},
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'Month of the Year',
+                    }
+                }]
+            }
+        }
+    });
+
+
+    window.sort = async (criteria) =>{ 
+      var topChange = localStorage.getItem(criteria);
+      topChange = topChange.split(",")
+      var num = 100;
+      var trow = document.querySelectorAll('.flex');
+      for(var i of trow){i.style.order="0"}
+      for(var op of topChange) {
+          trow[op].style.order = `-${num}`;
+          trow[op].style.display = "";
+          trow[op].querySelector('.chart').__chartist__.update();
+          num = num - 1;
+      }
+      return '1' ;
+    }
+
+
+
+    <div class="chart">
+      <canvas id="chart${count}" width="95" height="50"></canvas>
+  </div>
+    var ctx = document.getElementById(`chart${count}`);
+    var chart = new Chart(ctx, {
+      type: 'line', 
+      data: {
+         labels: Array(data[i].last60.length).fill().map((x,i)=>i),
+        datasets: [{
+          backgroundColor: `light${color}`,
+          borderColor: `${color}`,
+           data: data[i].last60,
+                pointRadius: 0,
+        }]
+      },
+    
+        options: {
+            events: [],
+            animation: false,
+            layout: {
+            padding: 0,
+            },
+                title: {
+                    display: false,
+                },
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: false,
+                        },
+                        ticks: {
+                            fontSize: 10
+                        }
+                    }],
+                    xAxes: [{
+                        display: false,
+                        ticks: {display: false},
+                        scaleLabel: {
+                                display: false,
+                        }
+                    }],
+    
+                }
+            }
+        });

@@ -1,6 +1,7 @@
 const { set } = require('mongoose');
 var api = require('./api');
 var utils = require('./utils');
+// var Chart = require('chart.js')
 
 const tab =  {
     repeatRend : async () => {
@@ -26,12 +27,11 @@ const tab =  {
                 console.log('yakka bun bun');
                 // setTimeout(()=>{trow.classList.remove('animate');},5000)
             }
-
            trow.querySelector('#name').innerHTML = `
                 <p>${data[i].name}</p>
                 <p class="trade">Trade: ${data[`${i}`].trade}</p>
                 <p class="volume">Volume: ${volume}</p>
-                <p class="value">Value: ${(data[`${i}`].value * 0.1).toFixed(3)} cr</p>`
+                <p class="value">Value: ${(data[`${i}`].value.replace(/,/g,'') * 0.1).toFixed(3)} cr</p>`
 
             trow.querySelector('#data').innerHTML = `
             <p class="${color}">${data[`${i}`].ltp}</p><p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>`
@@ -40,6 +40,7 @@ const tab =  {
     } ,
     
     afterRend : async () =>  {
+        Chart.defaults.global.legend.display = false;
         var status = await api.dsex();
         console.log('GOT DSEX DATA');
         var marketStatus = status['marketStatus'].toUpperCase()
@@ -55,7 +56,7 @@ const tab =  {
         var data = data0['dsedata']
         stocklist.innerHTML = "" ;
 
-        console.log(data)
+        // console.log(data)
         var count = 0
         for (var i in data)
         {
@@ -73,39 +74,40 @@ const tab =  {
             <div id="name" class="name"><p>${data[i].name}</p>
                 <p class="trade">Trade: ${data[`${i}`].trade}</p>
                 <p class="volume">Volume: ${volume}</p>
-                <p class="value">Value: ${(data[`${i}`].value * 0.1).toFixed(3)} cr</p>
+                <p class="value">Value: ${(data[`${i}`].value.replace(/,/g,'') * 0.1).toFixed(3)} cr</p>
             </div>
             <div class="chart" id="chart${count}"></div>
             <div id="icon"><i id="fav${data[i].name}" class="fas fa-star" onclick="fav('${data[i].name}')"></i></div>
             <div id="data">
                 <p class="${color}">${data[`${i}`].ltp}</p><p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
             </div>`
-     
-            var myarr = Array(data[i].last60.length).fill().map((x,i)=>i)
-            var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: data[i].last60 } ]}
-            new Chartist.Line(`#chart${count}`, datachart , {
-                width: 140,
-                showPoint:false,
-                axisX:{  
-                    showGrid : false ,
-                    showLabel : false , 
-                    offset : 15,
-                    labelInterpolationFnc: function(value, index) {
-                        return index % 10 === 0 ? value : null;
-                      }
-                } ,
-                axisY : {
-                    showGrid : true ,
-                    showLabel : true ,
-                    }
-                });
-                count = count +1 ;
+        
+        
+            
+        var myarr = Array(data[i].last60.length).fill().map((x,i)=>i)
+        var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: data[i].last60 } ]}
+        new Chartist.Line(`#chart${count}`, datachart , {
+            showArea: true,
+            width: 140,
+            showPoint:false,
+            axisX:{  
+                showGrid : false ,
+                showLabel : false , 
+                offset : 15,
+                labelInterpolationFnc: function(value, index) {
+                    return index % 10 === 0 ? value : null;
+                }
+            } ,
+            axisY : {
+                showGrid : true ,
+                showLabel : true ,
+                }
+            });
+            count = count +1 ;
+            
             }
 
-
-        if(document.getElementById("myInput").value){utils.selectFunc()}
-        document.getElementById("myInput").addEventListener("input",utils.selectFunc);
-        utils.topsetLocalstorage(data0.sort_change,data0.sort_change_asc,data0.sort_trade,data0.sort_value,data0.sort_volume);
+        // utils.topsetLocalstorage(data0.sort_change,data0.sort_change_asc,data0.sort_trade,data0.sort_value,data0.sort_volume);
         return marketStatus;
         },
 
