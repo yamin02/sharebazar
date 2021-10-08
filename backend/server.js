@@ -6,12 +6,10 @@ const fs = require('fs')
 const mongoose = require('mongoose')
 const model = require('./model');
 const utils = require('./utils')
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-mongoose.connect('mongodb+srv://yamin02:chandanpura@sharebazar.z3hlw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' , {
-    useNewUrlParser: true ,
-    useUnifiedTopology: true ,
-    useCreateIndex : true ,
-}).then(() =>{
+mongoose.connect('mongodb+srv://yamin02:chandanpura@sharebazar.z3hlw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' ).then(() =>{
     console.log('connected to MONGO DB');
 }).catch((error) =>{
     console.log(error);
@@ -67,13 +65,13 @@ app.get('/preload',async (req,res)=>{
         sort_volume : utils.sortArr(volume,true),
         sort_trade : utils.sortArr(trade,true),
     }
-    // console.log(json)
     res.send(json);
 })
 
 app.post('/eachstock/:id',async (req,res)=>{
      console.log(req.params.id)
      console.log(req.body)
+     res.send("life is cool")
     //  datagather.price90(req.params.id).then(dara =>{
         // res.send(dara)
     //  })
@@ -87,5 +85,6 @@ app.get('/dsex',async (req,res)=>{
 app.listen(config.default.PORT,()=>{
     console.log("Serving at Port 5000")
 });
+
 
 
