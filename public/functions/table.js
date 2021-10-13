@@ -36,7 +36,6 @@ const tab =  {
             trow.querySelector('#data').innerHTML = `
             <p class="${color}">${data[`${i}`].ltp}</p><p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>`
         }
-        utils.topsetLocalstorage(data0.sort_change,data0.sort_change_asc,data0.sort_trade,data0.sort_value,data0.sort_volume);
     } ,
     
     afterRend : async () =>  {
@@ -67,7 +66,7 @@ const tab =  {
             </div>
             <div class="chart" id="chart${count}" onclick="alert('This is a chart made from last 15 days')"></div>
             <div id="icon"><i id="fav${data[i].name}" class="fas fa-star ${localStorage.fav? (JSON.parse(localStorage.fav).includes(data[i].name)?'checked':'' ):''}" onclick="fav('${data[i].name}')"></i></div>
-            <div id="data" style="cursor: pointer;" onclick="window.location='#/eachstock/${data[i].name}'">
+            <div id="data">
                 <p class="${color}">${data[`${i}`].ltp}</p>
                 <p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
             </div>
@@ -96,7 +95,6 @@ const tab =  {
 
             count = count +1 ;
             }
-
         },
 
 rend : async () => {

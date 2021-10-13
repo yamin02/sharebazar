@@ -17,12 +17,29 @@ rend : ()=>{
     <div class="search">
         <textarea id="myInput" type="text" class="searchTerm" placeholder="Search for stock"></textarea>
     </div>`).insertBefore("#stocklist");
-    
-        $("#myInput").on("keyup", function() {
+    $("#myInput").focus() ;
+    $(".chart").hide()
+        $("#myInput").delay(600).on("keyup", function() {
           var value = $(this).val().toLowerCase();
           $(".flex").filter( function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)}
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1).find(".chart")[0]
+          }
           );
         });
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

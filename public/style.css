@@ -502,7 +502,7 @@ a{
 
 /* loading progress bar */
 .progress{
-  /* display: none; */
+  display: none;
   background:#00ffa2;
   height: 2px;
   animation: progress 30s infinite ;
@@ -791,6 +791,7 @@ div.scrollmenu {
 }
 
 div.scrollmenu a {
+  cursor: pointer;
   font-family: Arial, Helvetica, sans-serif;
   display: inline-block;
   color: rgb(0, 2, 95);
@@ -801,3 +802,6 @@ div.scrollmenu a {
   text-decoration: none;
 }
 
+.scrollmenu a:hover{
+  color :#579ffb;
+}

@@ -2145,7 +2145,7 @@ $('body').append(`
       <a onclick="sortchange('changeAsc')" class="fas fa-caret-square-down"><br><span>Top Loser</span></a>
       <a onclick="sortchange('valueAsc')" class="fas fa-sort-numeric-up-alt"><br><span>Top Value</span></a>
       <a onclick="SectorWise()" class="fas fa-industry"><br><span>Sector</span></a>
-      <a  class="fas fa-industry"><br><span>Sector</span></a>
+      <a  class="fas fa-industry"><br><span>PE ratio</span></a>
       <a><br><span></span></a>
 </nav>`)
 
@@ -2324,15 +2324,32 @@ rend : ()=>{
     <div class="search">
         <textarea id="myInput" type="text" class="searchTerm" placeholder="Search for stock"></textarea>
     </div>`).insertBefore("#stocklist");
-    
-        $("#myInput").on("keyup", function() {
+    $("#myInput").focus() ;
+    $(".chart").hide()
+        $("#myInput").delay(600).on("keyup", function() {
           var value = $(this).val().toLowerCase();
           $(".flex").filter( function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)}
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1).find(".chart")[0]
+          }
           );
         });
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 },{"./api":3,"./table":10,"./utils":11}],9:[function(require,module,exports){
 var api = require('./api');
@@ -2405,7 +2422,6 @@ const tab =  {
             trow.querySelector('#data').innerHTML = `
             <p class="${color}">${data[`${i}`].ltp}</p><p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>`
         }
-        utils.topsetLocalstorage(data0.sort_change,data0.sort_change_asc,data0.sort_trade,data0.sort_value,data0.sort_volume);
     } ,
     
     afterRend : async () =>  {
@@ -2436,7 +2452,7 @@ const tab =  {
             </div>
             <div class="chart" id="chart${count}" onclick="alert('This is a chart made from last 15 days')"></div>
             <div id="icon"><i id="fav${data[i].name}" class="fas fa-star ${localStorage.fav? (JSON.parse(localStorage.fav).includes(data[i].name)?'checked':'' ):''}" onclick="fav('${data[i].name}')"></i></div>
-            <div id="data" style="cursor: pointer;" onclick="window.location='#/eachstock/${data[i].name}'">
+            <div id="data">
                 <p class="${color}">${data[`${i}`].ltp}</p>
                 <p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
             </div>
@@ -2465,7 +2481,6 @@ const tab =  {
 
             count = count +1 ;
             }
-
         },
 
 rend : async () => {
@@ -2574,7 +2589,7 @@ module.exports.SectorNav = function () {
     <a onclick="scrollSector('Mutual-Fund')">Mutual-Fund</a>
     <a onclick="scrollSector('Paper')">Paper</a>
     <a onclick="scrollSector('Pharmaceutical')">Pharma</a>
-    <a onclick="scrollSector('Serivice')">Service</a>
+    <a onclick="scrollSector('Service')">Service</a>
     <a onclick="scrollSector('Tannery')">Tannery</a>
     <a onclick="scrollSector('Textile')">Textile</a>
     <a onclick="scrollSector('Telecom')">Telecom</a>
@@ -2628,7 +2643,7 @@ const loader = async () => {
   await screen.afterRend()
   utils.hideloading();
   
-  if(!(marketStatus == "CLOSED")){
+  if(!(marketStatus === "CLOSED")){
     console.log("Starting to update data");
     $(".progress").css("display", "");
     setInterval(async()=> {

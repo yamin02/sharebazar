@@ -24,7 +24,7 @@ const loader = async () => {
   await screen.afterRend()
   utils.hideloading();
   
-  if(!(marketStatus == "CLOSED")){
+  if(!(marketStatus === "CLOSED")){
     console.log("Starting to update data");
     $(".progress").css("display", "");
     setInterval(async()=> {
