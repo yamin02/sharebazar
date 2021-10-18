@@ -5,10 +5,10 @@ var utils = require('./utils');
 
 const tab =  {
     repeatRend : async () => {
-        const data0 = await api.getupdate() ;
-        var data = data0['dsedata']
+        // const data0 = await api.getupdate() ;
+        // var data = data0['dsedata']
+        var data = JSON.parse(localStorage.getItem('dsedata'))
         for(var i in data){
-            //  console.log(data[i].name)
             var trow = document.getElementById(`${data[i].name}`) 
             if(trow.classList.contains('highlight-red')){trow.classList.remove('highlight-red')} 
             if(trow.classList.contains('highlight-green')){trow.classList.remove('highlight-green')}
@@ -40,12 +40,11 @@ const tab =  {
     
     afterRend : async () =>  {
         const stocklist = document.getElementById('stocklist');
-        const data0 = await api.getpreload() ;
-        sessionStorage.setItem('dsedata',data0['dsedata']);
-        var data = data0['dsedata']
+        // const data0 = await api.getpreload();
+        // sessionStorage.setItem('dsedata',data0['dsedata']);
+        // var data = data0['dsedata']
+        var data = JSON.parse(localStorage.getItem('dsedata'))
         stocklist.innerHTML = "" ;
-
-        // console.log(data)
         var count = 0
         for (var i in data)
         {

@@ -2391,10 +2391,10 @@ var utils = require('./utils');
 
 const tab =  {
     repeatRend : async () => {
-        const data0 = await api.getupdate() ;
-        var data = data0['dsedata']
+        // const data0 = await api.getupdate() ;
+        // var data = data0['dsedata']
+        var data = JSON.parse(localStorage.getItem('dsedata'))
         for(var i in data){
-            //  console.log(data[i].name)
             var trow = document.getElementById(`${data[i].name}`) 
             if(trow.classList.contains('highlight-red')){trow.classList.remove('highlight-red')} 
             if(trow.classList.contains('highlight-green')){trow.classList.remove('highlight-green')}
@@ -2426,12 +2426,11 @@ const tab =  {
     
     afterRend : async () =>  {
         const stocklist = document.getElementById('stocklist');
-        const data0 = await api.getpreload() ;
-        sessionStorage.setItem('dsedata',data0['dsedata']);
-        var data = data0['dsedata']
+        // const data0 = await api.getpreload();
+        // sessionStorage.setItem('dsedata',data0['dsedata']);
+        // var data = data0['dsedata']
+        var data = JSON.parse(localStorage.getItem('dsedata'))
         stocklist.innerHTML = "" ;
-
-        // console.log(data)
         var count = 0
         for (var i in data)
         {
@@ -2531,9 +2530,9 @@ module.exports.marketStatus = async () =>{
     $("#marketstatus")
     .html(`
         <i class="${p2}"></i>
-        <i><br>Market<br>${p1}</i>`)
+        <i id="status001"><br>Market<br>${p1}</i>`)
     .css('color',`${p3}`)
-    return status['marketStatus'].toUpperCase() 
+    return p1;
 }
 
 module.exports.selectFunc = () => {
@@ -2616,6 +2615,18 @@ module.exports.deleteSectorTitle = function () {
     $(".sector-title").remove()
     $(".scrollmenu").remove();
 }
+
+module.exports.dsetoLocalstorage = async function () {
+    const data0 = await api.getpreload()
+    localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
+}
+
+module.exports.updateloca = async function () {
+    const data0 = await api.getpreload()
+    localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
+}
+
+
 },{"../sectordata.json":40,"./api":3,"mongoose":1}],12:[function(require,module,exports){
 var tableget = require('./functions/table');
 var eachstockdata = require('./functions/eachstock');
@@ -2623,6 +2634,7 @@ var utils = require('./functions/utils');
 var search = require('./functions/search');
 var star = require("./functions/starred");
 var livechat = require("./functions/livechat")
+var api = require("./functions/api")
 
 const screenurl = {
   '/' : tableget.tableReal ,
@@ -2633,28 +2645,35 @@ const screenurl = {
   '/chat' :  livechat.stars , 
 }
 
+utils.dsetoLocalstorage();
+utils.marketStatus();
+
 const loader = async () => {
   utils.showloading();
-  var marketStatus = utils.marketStatus();
-  const request = utils.parseurl()
+  const request = utils.parseurl();
+  // var marketStatus = await utils.marketStatus();
   const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
   var screen = screenurl[parseUrl];
   await screen.rend();
-  await screen.afterRend()
+  await screen.afterRend();
   utils.hideloading();
-  
-  if(!(marketStatus === "CLOSED")){
+  var marketStatus = $("#status001").length ?  $("#status001").html().split("<br>")[2]  : await utils.marketStatus();
+  console.log(marketStatus)
+  if(!(marketStatus == "Closed")){
     console.log("Starting to update data");
-    $(".progress").css("display", "");
+    $(".progress").show();
     setInterval(async()=> {
+        utils.dsetoLocalstorage();
+        utils.marketStatus();
         await screen.repeatRend();
     }, 70*1000)
   }
 } 
+
 window.addEventListener('load', loader) ;
 window.addEventListener('hashchange' , loader);
 
-},{"./functions/eachstock":5,"./functions/livechat":6,"./functions/search":8,"./functions/starred":9,"./functions/table":10,"./functions/utils":11}],13:[function(require,module,exports){
+},{"./functions/api":3,"./functions/eachstock":5,"./functions/livechat":6,"./functions/search":8,"./functions/starred":9,"./functions/table":10,"./functions/utils":11}],13:[function(require,module,exports){
 module.exports = require('./lib/axios');
 },{"./lib/axios":15}],14:[function(require,module,exports){
 'use strict';

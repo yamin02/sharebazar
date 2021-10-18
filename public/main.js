@@ -4,6 +4,7 @@ var utils = require('./functions/utils');
 var search = require('./functions/search');
 var star = require("./functions/starred");
 var livechat = require("./functions/livechat")
+var api = require("./functions/api")
 
 const screenurl = {
   '/' : tableget.tableReal ,
@@ -14,23 +15,30 @@ const screenurl = {
   '/chat' :  livechat.stars , 
 }
 
+utils.dsetoLocalstorage();
+utils.marketStatus();
+
 const loader = async () => {
   utils.showloading();
-  var marketStatus = utils.marketStatus();
-  const request = utils.parseurl()
+  const request = utils.parseurl();
+  // var marketStatus = await utils.marketStatus();
   const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
   var screen = screenurl[parseUrl];
   await screen.rend();
-  await screen.afterRend()
+  await screen.afterRend();
   utils.hideloading();
-  
-  if(!(marketStatus === "CLOSED")){
+  var marketStatus = $("#status001").length ?  $("#status001").html().split("<br>")[2]  : await utils.marketStatus();
+  console.log(marketStatus)
+  if(!(marketStatus == "Closed")){
     console.log("Starting to update data");
-    $(".progress").css("display", "");
+    $(".progress").show();
     setInterval(async()=> {
+        utils.dsetoLocalstorage();
+        utils.marketStatus();
         await screen.repeatRend();
     }, 70*1000)
   }
 } 
+
 window.addEventListener('load', loader) ;
 window.addEventListener('hashchange' , loader);

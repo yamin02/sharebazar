@@ -30,9 +30,9 @@ module.exports.marketStatus = async () =>{
     $("#marketstatus")
     .html(`
         <i class="${p2}"></i>
-        <i><br>Market<br>${p1}</i>`)
+        <i id="status001"><br>Market<br>${p1}</i>`)
     .css('color',`${p3}`)
-    return status['marketStatus'].toUpperCase() 
+    return p1;
 }
 
 module.exports.selectFunc = () => {
@@ -115,3 +115,14 @@ module.exports.deleteSectorTitle = function () {
     $(".sector-title").remove()
     $(".scrollmenu").remove();
 }
+
+module.exports.dsetoLocalstorage = async function () {
+    const data0 = await api.getpreload()
+    localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
+}
+
+module.exports.updateloca = async function () {
+    const data0 = await api.getpreload()
+    localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
+}
+

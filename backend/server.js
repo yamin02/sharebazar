@@ -48,22 +48,9 @@ app.get('/getupdate', async(req,res)=>{
 });
 
 app.get('/preload',async (req,res)=>{
-    var [change,value,trade,volume]=[[],[],[],[]]
     const dsedata = await model.stockmodel.find({},{name:1,trade:1,volume:1,value:1,_id:0,ltp:1,change:1,changeP:1,last60:1}).sort({_id:1})
-    for(var i of dsedata){
-        change.push(i.changeP);
-        trade.push(i.trade)
-        value.push(i.value)
-        volume.push(i.volume)
-    }
-    var change2 =  change.slice('kolla')
     var json = {
         dsedata :dsedata ,
-        sort_change : utils.sortArr(change,true),
-        sort_change_asc : utils.sortArr(change2,false),
-        sort_value : utils.sortArr(value,true),
-        sort_volume : utils.sortArr(volume,true),
-        sort_trade : utils.sortArr(trade,true),
     }
     res.send(json);
 })
@@ -72,9 +59,6 @@ app.post('/eachstock/:id',async (req,res)=>{
      console.log(req.params.id)
      console.log(req.body)
      res.send("life is cool")
-    //  datagather.price90(req.params.id).then(dara =>{
-        // res.send(dara)
-    //  })
 })
 
 app.get('/dsex',async (req,res)=>{
