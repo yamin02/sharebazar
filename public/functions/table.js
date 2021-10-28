@@ -38,12 +38,16 @@ const tab =  {
         }
     } ,
     
-    afterRend : async () =>  {
+    afterRend : async (data0) =>  {
         const stocklist = document.getElementById('stocklist');
         // const data0 = await api.getpreload();
         // sessionStorage.setItem('dsedata',data0['dsedata']);
         // var data = data0['dsedata']
-        var data = JSON.parse(localStorage.getItem('dsedata'))
+        // var data = JSON.parse(localStorage.getItem('dsedata'))
+        
+        var data = (data0) ? JSON.parse(data0) : JSON.parse(localStorage.getItem('dsedata')) ;
+        console.log("THIS IS AFTER REND DNDND")
+        console.log(data)
         stocklist.innerHTML = "" ;
         var count = 0
         for (var i in data)

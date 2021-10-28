@@ -1,6 +1,11 @@
 const utils = require('./utils')
 var sectordata = require('../sectordata.json');
 
+(async () => {
+    await utils.dsetoLocalstorage();
+    await utils.marketStatus();
+})();
+
 $('#TopNavs').html(`<nav class="topnav nav-one">
 <a href="/"><img src="./resource/apple-touch-icon.png" style="width: 35px;"></a>
 <a id="page-name">Home</a>

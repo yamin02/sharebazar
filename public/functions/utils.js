@@ -25,8 +25,10 @@ module.exports.hideloading = () =>{
 module.exports.marketStatus = async () =>{
     var status = await api.dsex();
     [p1,p2,p3] = (status['marketStatus'].toUpperCase() == "CLOSED") ? ["Closed","far fa-times-circle","rgb(96, 95, 93)"] : [`${status['marketStatus']}`,"far fa-check-circle", "#175500"]
+    var p4 = (status["dsexChange"] > 0) ? 'green' : 'red' ;
     $("#dsex-info-navbar")
-        .html(`${status["dsex"]} <i class="fas fa-caret-up"></i><br> ${status["dsexChange"]},${status["dsexChangeP"]}%</a>`)
+        .html(`${status["dsex"]} <i class="fas fa-caret-up"></i><br> ${status["dsexChange"]},${status["dsexChangeP"]}%`)
+        .css('color', p4);
     $("#marketstatus")
     .html(`
         <i class="${p2}"></i>
@@ -119,10 +121,7 @@ module.exports.deleteSectorTitle = function () {
 module.exports.dsetoLocalstorage = async function () {
     const data0 = await api.getpreload()
     localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
+    return JSON.stringify(data0['dsedata']) ;
 }
 
-module.exports.updateloca = async function () {
-    const data0 = await api.getpreload()
-    localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
-}
 

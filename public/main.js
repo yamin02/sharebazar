@@ -15,8 +15,6 @@ const screenurl = {
   '/chat' :  livechat.stars , 
 }
 
-utils.dsetoLocalstorage();
-utils.marketStatus();
 
 const loader = async () => {
   utils.showloading();
@@ -40,5 +38,11 @@ const loader = async () => {
   }
 } 
 
-window.addEventListener('load', loader) ;
+window.addEventListener('load', async function () { 
+  utils.showloading();
+  var data  = await utils.dsetoLocalstorage();
+  await utils.marketStatus();
+  await loader(data);
+}) ;
+
 window.addEventListener('hashchange' , loader);

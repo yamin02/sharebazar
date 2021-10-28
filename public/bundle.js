@@ -2123,6 +2123,11 @@ $("#contents").html(`
 const utils = require('./utils')
 var sectordata = require('../sectordata.json');
 
+(async () => {
+    await utils.dsetoLocalstorage();
+    await utils.marketStatus();
+})();
+
 $('#TopNavs').html(`<nav class="topnav nav-one">
 <a href="/"><img src="./resource/apple-touch-icon.png" style="width: 35px;"></a>
 <a id="page-name">Home</a>
@@ -2424,12 +2429,16 @@ const tab =  {
         }
     } ,
     
-    afterRend : async () =>  {
+    afterRend : async (data0) =>  {
         const stocklist = document.getElementById('stocklist');
         // const data0 = await api.getpreload();
         // sessionStorage.setItem('dsedata',data0['dsedata']);
         // var data = data0['dsedata']
-        var data = JSON.parse(localStorage.getItem('dsedata'))
+        // var data = JSON.parse(localStorage.getItem('dsedata'))
+        
+        var data = (data0) ? JSON.parse(data0) : JSON.parse(localStorage.getItem('dsedata')) ;
+        console.log("THIS IS AFTER REND DNDND")
+        console.log(data)
         stocklist.innerHTML = "" ;
         var count = 0
         for (var i in data)
@@ -2525,8 +2534,10 @@ module.exports.hideloading = () =>{
 module.exports.marketStatus = async () =>{
     var status = await api.dsex();
     [p1,p2,p3] = (status['marketStatus'].toUpperCase() == "CLOSED") ? ["Closed","far fa-times-circle","rgb(96, 95, 93)"] : [`${status['marketStatus']}`,"far fa-check-circle", "#175500"]
+    var p4 = (status["dsexChange"] > 0) ? 'green' : 'red' ;
     $("#dsex-info-navbar")
-        .html(`${status["dsex"]} <i class="fas fa-caret-up"></i><br> ${status["dsexChange"]},${status["dsexChangeP"]}%</a>`)
+        .html(`${status["dsex"]} <i class="fas fa-caret-up"></i><br> ${status["dsexChange"]},${status["dsexChangeP"]}%`)
+        .css('color', p4);
     $("#marketstatus")
     .html(`
         <i class="${p2}"></i>
@@ -2619,12 +2630,9 @@ module.exports.deleteSectorTitle = function () {
 module.exports.dsetoLocalstorage = async function () {
     const data0 = await api.getpreload()
     localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
+    return JSON.stringify(data0['dsedata']) ;
 }
 
-module.exports.updateloca = async function () {
-    const data0 = await api.getpreload()
-    localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
-}
 
 
 },{"../sectordata.json":40,"./api":3,"mongoose":1}],12:[function(require,module,exports){
@@ -2645,10 +2653,38 @@ const screenurl = {
   '/chat' :  livechat.stars , 
 }
 
-utils.dsetoLocalstorage();
-utils.marketStatus();
+// async function getit() {
+//   await utils.dsetoLocalstorage();
+//   await utils.marketStatus();
+// }
 
-const loader = async () => {
+
+const loader  = async () => {
+  utils.showloading();
+  var data  = await utils.dsetoLocalstorage();
+  await utils.marketStatus();
+  // utils.showloading();
+  const request = utils.parseurl();
+  // var marketStatus = await utils.marketStatus();
+  const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
+  var screen = screenurl[parseUrl];
+  await screen.rend();
+  await screen.afterRend(data);
+  utils.hideloading();
+  var marketStatus = $("#status001").length ?  $("#status001").html().split("<br>")[2]  : await utils.marketStatus();
+  console.log(marketStatus)
+  if(!(marketStatus == "Closed")){
+    console.log("Starting to update data");
+    $(".progress").show();
+    setInterval(async()=> {
+        utils.dsetoLocalstorage();
+        utils.marketStatus();
+        await screen.repeatRend();
+    }, 70*1000)
+  }
+} 
+
+const loader2  = async () => {
   utils.showloading();
   const request = utils.parseurl();
   // var marketStatus = await utils.marketStatus();
@@ -2670,8 +2706,12 @@ const loader = async () => {
   }
 } 
 
-window.addEventListener('load', loader) ;
-window.addEventListener('hashchange' , loader);
+window.addEventListener('load', async function () { 
+  var data  = await utils.dsetoLocalstorage();
+  await utils.marketStatus();
+  await loader2(data);
+}) ;
+window.addEventListener('hashchange' , loader2);
 
 },{"./functions/api":3,"./functions/eachstock":5,"./functions/livechat":6,"./functions/search":8,"./functions/starred":9,"./functions/table":10,"./functions/utils":11}],13:[function(require,module,exports){
 module.exports = require('./lib/axios');
