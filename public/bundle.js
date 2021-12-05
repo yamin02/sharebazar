@@ -2365,29 +2365,39 @@ module.exports.stars =  {
 repeatRend : ()=>{
     table.tableReal.repeatRend()
 },
+
 afterRend : ()=>{
-},
-rend : ()=>{
     $(".nav-two a").removeClass("navactive");
     $(".fa-star").addClass("navactive");
-    var row = document.getElementsByClassName("name");
+    
     if(localStorage.fav){
-    var arr = JSON.parse(localStorage.fav);
-    for(var i of row){
-        var stonk = i.children[0].innerHTML.toUpperCase()
-        if (arr.includes(stonk)){
-             i.parentElement.style.display = "" ;
-        // i.parentElement.querySelector('.chart').__chartist__.update();
-        } else {
-            i.parentElement.style.display ="none" ;
-                }
+        var arr = JSON.parse(localStorage.fav);
+        var dsedata = JSON.parse(localStorage.dsedata) ;
+        var localstoragedatam  = []
+        for(var i of dsedata){
+            if(arr.includes(i.name)){
+                localstoragedatam.push(i);
+                
             }
-    }else{
+        }
+        console.log(localstoragedatam)
+        table.tableReal.afterRend(JSON.stringify(localstoragedatam))
+    }
+    else{
     $("#contents").html('<p>Add to starred list by touching the star button</p>')
         }
+
+},
+rend : ()=>{
+    
+    $("#BottomSlider").show();
+    $(".nav-two a").removeClass("navactive");
+    $(".fa-star").addClass("navactive");
+    $("#contents").html(`
+    <div id="stocklist"></div>`)
+
     }
 }
-
 },{"./api":3,"./table":10,"./utils":11}],10:[function(require,module,exports){
 const { set } = require('mongoose');
 var api = require('./api');
@@ -2430,16 +2440,22 @@ const tab =  {
     } ,
     
     afterRend : async (data0) =>  {
-        const stocklist = document.getElementById('stocklist');
         // const data0 = await api.getpreload();
         // sessionStorage.setItem('dsedata',data0['dsedata']);
         // var data = data0['dsedata']
         // var data = JSON.parse(localStorage.getItem('dsedata'))
         
-        var data = (data0) ? JSON.parse(data0) : JSON.parse(localStorage.getItem('dsedata')) ;
+        // var data = (data0) ? ( JSON.parse(data0) ): JSON.parse(localStorage.getItem('dsedata')) ;
         console.log("THIS IS AFTER REND DNDND")
+        if(data0){
+            console.log('trueeee');
+            var data = JSON.parse(data0) 
+        }else {
+            var data = JSON.parse(localStorage.getItem('dsedata'))
+        }
+        // console.log(JSON.parse(data0))
         console.log(data)
-        stocklist.innerHTML = "" ;
+        $("#stocklist").html('')
         var count = 0
         for (var i in data)
         {
@@ -2459,13 +2475,16 @@ const tab =  {
                 <p class="sector" style="display:none">${sectr}</p>
             </div>
             <div class="chart" id="chart${count}" onclick="alert('This is a chart made from last 15 days')"></div>
+            
             <div id="icon"><i id="fav${data[i].name}" class="fas fa-star ${localStorage.fav? (JSON.parse(localStorage.fav).includes(data[i].name)?'checked':'' ):''}" onclick="fav('${data[i].name}')"></i></div>
             <div id="data">
                 <p class="${color}">${data[`${i}`].ltp}</p>
                 <p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
             </div>
             </div>`)
+       
         var myarr = Array(data[i].last60.length).fill().map((x,i)=>i)
+       
         var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: utils.removeZero(data[i].last60) } ]}
           
         new Chartist.Line(`#chart${count}`, datachart , 
@@ -2653,38 +2672,8 @@ const screenurl = {
   '/chat' :  livechat.stars , 
 }
 
-// async function getit() {
-//   await utils.dsetoLocalstorage();
-//   await utils.marketStatus();
-// }
 
-
-const loader  = async () => {
-  utils.showloading();
-  var data  = await utils.dsetoLocalstorage();
-  await utils.marketStatus();
-  // utils.showloading();
-  const request = utils.parseurl();
-  // var marketStatus = await utils.marketStatus();
-  const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
-  var screen = screenurl[parseUrl];
-  await screen.rend();
-  await screen.afterRend(data);
-  utils.hideloading();
-  var marketStatus = $("#status001").length ?  $("#status001").html().split("<br>")[2]  : await utils.marketStatus();
-  console.log(marketStatus)
-  if(!(marketStatus == "Closed")){
-    console.log("Starting to update data");
-    $(".progress").show();
-    setInterval(async()=> {
-        utils.dsetoLocalstorage();
-        utils.marketStatus();
-        await screen.repeatRend();
-    }, 70*1000)
-  }
-} 
-
-const loader2  = async () => {
+const loader = async () => {
   utils.showloading();
   const request = utils.parseurl();
   // var marketStatus = await utils.marketStatus();
@@ -2707,11 +2696,13 @@ const loader2  = async () => {
 } 
 
 window.addEventListener('load', async function () { 
+  utils.showloading();
   var data  = await utils.dsetoLocalstorage();
   await utils.marketStatus();
-  await loader2(data);
+  await loader(data);
 }) ;
-window.addEventListener('hashchange' , loader2);
+
+window.addEventListener('hashchange' , loader);
 
 },{"./functions/api":3,"./functions/eachstock":5,"./functions/livechat":6,"./functions/search":8,"./functions/starred":9,"./functions/table":10,"./functions/utils":11}],13:[function(require,module,exports){
 module.exports = require('./lib/axios');

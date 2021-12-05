@@ -39,16 +39,22 @@ const tab =  {
     } ,
     
     afterRend : async (data0) =>  {
-        const stocklist = document.getElementById('stocklist');
         // const data0 = await api.getpreload();
         // sessionStorage.setItem('dsedata',data0['dsedata']);
         // var data = data0['dsedata']
         // var data = JSON.parse(localStorage.getItem('dsedata'))
         
-        var data = (data0) ? JSON.parse(data0) : JSON.parse(localStorage.getItem('dsedata')) ;
+        // var data = (data0) ? ( JSON.parse(data0) ): JSON.parse(localStorage.getItem('dsedata')) ;
         console.log("THIS IS AFTER REND DNDND")
+        if(data0){
+            console.log('trueeee');
+            var data = JSON.parse(data0) 
+        }else {
+            var data = JSON.parse(localStorage.getItem('dsedata'))
+        }
+        // console.log(JSON.parse(data0))
         console.log(data)
-        stocklist.innerHTML = "" ;
+        $("#stocklist").html('')
         var count = 0
         for (var i in data)
         {
@@ -68,13 +74,16 @@ const tab =  {
                 <p class="sector" style="display:none">${sectr}</p>
             </div>
             <div class="chart" id="chart${count}" onclick="alert('This is a chart made from last 15 days')"></div>
+            
             <div id="icon"><i id="fav${data[i].name}" class="fas fa-star ${localStorage.fav? (JSON.parse(localStorage.fav).includes(data[i].name)?'checked':'' ):''}" onclick="fav('${data[i].name}')"></i></div>
             <div id="data">
                 <p class="${color}">${data[`${i}`].ltp}</p>
                 <p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
             </div>
             </div>`)
+       
         var myarr = Array(data[i].last60.length).fill().map((x,i)=>i)
+       
         var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: utils.removeZero(data[i].last60) } ]}
           
         new Chartist.Line(`#chart${count}`, datachart , 
