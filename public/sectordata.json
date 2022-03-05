@@ -1,5 +1,6 @@
 {
-    "bank" : [
+    "Bank" : [
+        "ABBANK",
         "ICBIBANK",
         "FIRSTSBANK",
         "UTTARABANK",
@@ -29,26 +30,25 @@
         "BRACBANK",
         "MTB",
         "IFIC",
-        "RUPALIBANK",
-        "ABBANK"
+        "RUPALIBANK"
     ] ,
-    "cement" : [
+    "Cement" : [
         "ARAMITCEM",
         "CONFIDCEM",
         "HEIDELBCEM",
         "LHBL",
         "MEGHNACEM",
         "MICEMENT",
-        "PREMIERCE"
+        "PREMIERCEM"
     ] ,
-    "ceramic" : [
+    "Ceramic" : [
         "FUWANGCER",
         "MONNOCERA",
         "RAKCERAMIC",
         "SPCERAMICS",
-        "STANCERA"
+        "STANCERAM"
     ] ,
-    "engr" : [
+    "Engineering" : [
         "AFTABAUTO",
         "ANWARGALV",
         "APOLOISPAT",
@@ -90,9 +90,9 @@
         "SSSTEEL",
         "WALTONHIL",
         "WMSHIPYARD",
-        "YP"
+        "YPL"
     ] ,
-    "fin" : [
+    "Finance" : [
         "BAYLEASING",
         "BDFINANCE",
         "BIFC",
@@ -115,11 +115,11 @@
         "PRIMEFIN",
         "UNIONCAP",
         "UNITEDFIN",
-        "UTTARAFI"
+        "UTTARAFIN"
     ] ,
-    "food" : [
+    "Food" : [
+         "APEXFOODS",
         "AMCL(PRAN)",
-        "APEXFOODS",
         "BANGAS",
         "BATBC",
         "BEACHHATCH",
@@ -137,9 +137,9 @@
         "SHYAMPSUG",
         "TAUFIKA",
         "UNILEVERCL",
-        "ZEALBANGL"
+        "ZEALBANGLA"
     ] ,
-    "power" : [
+    "Power" : [
         "AOL",
         "BARKAPOWER",
         "BDWELDING",
@@ -161,9 +161,10 @@
         "SPCL",
         "SUMITPOWER",
         "TITASGAS",
-        "UPGDC"
+        "UPGDCL",
+        "BPPL"
     ] ,
-    "insu" : [
+    "General-Insurance" : [
         "AGRANINS",
         "ASIAINS",
         "ASIAPACINS",
@@ -201,7 +202,10 @@
         "SONARBAINS",
         "STANDARINS",
         "TAKAFULINS",
-        "UNITEDIN",
+        "UNITEDINS"
+    ],
+    "Life-Insurance":[
+        "DELTALIFE",
         "FAREASTLIF",
         "MEGHNALIFE",
         "NATLIFEINS",
@@ -213,9 +217,9 @@
         "RUPALILIFE",
         "SANDHANINS",
         "SONALILIFE",
-        "SUNLIFEIN"
+        "SUNLIFEINS"
     ] ,
-    "it" : [
+    "IT" : [
         "AAMRANET",
         "AAMRATECH",
         "ADNTEL",
@@ -226,14 +230,14 @@
         "GENEXIL",
         "INTECH",
         "ISNLTD",
-        "IT"
+        "ITC"
     ] ,
-    "jute" : [
+    "JUTE" : [
         "JUTESPINN",	
         "NORTHERN",
         "SONALIANSH"
     ] ,
-    "mf" : [
+    "Mutual-Fund" : [
         "1JANATAMF",
         "1STPRIMFMF",
         "ABB1STMF",
@@ -270,17 +274,17 @@
         "SEMLLECMF",
         "TRUSTB1MF",
         "VAMLBDMF1",
-        "VAMLRBB"
+        "VAMLRBBF"
     ] ,
-    "paper" : [
+    "Paper" : [
+        "BPML",	
         "MONOSPOOL",	
         "PAPERPROC",
-        "BPML",	
         "HAKKANIPUL",
         "KPPL",
         "SONALIPAPR"
     ] ,
-    "pharma" : [
+    "Pharmaceutical" : [
         "ACI",
         "ACIFORMULA",
         "ACMELAB",
@@ -311,23 +315,24 @@
         "SILCOPHL",
         "SILVAPHL",
         "SQURPHARMA",
-        "WATACHE"
+        "WATACHEM"
     ] ,
-    "service" : [
+    "Service" : [
         "EHL",
         "SAIFPOWER",
         "SAMORITA",
-        "SAPORT"
+        "SAPORTL",
+        "BDSERVICE"
     ] ,
-    "tannery" : [
+    "Tannery" : [
         "APEXFOOT",
         "APEXTANRY",
         "BATASHOE",
         "FORTUNE",
         "LEGACYFOOT",
-        "SAMATALET"
+        "SAMATALETH"
     ] ,
-    "tex" : [
+    "Textile" : [
         "ACFL",
         "AIL",
         "AL-HAJTEX",
@@ -386,20 +391,20 @@
         "TUNGHAI",
         "VFSTDL",
         "ZAHEENSPIN",
-        "ZAHINTE"
+        "ZAHINTEX"
     ] ,
-    "telecom" : [
+    "Telecom" : [
         "BSCCL",
         "GP",
         "ROBI"
     ],
-    "travel" : [
+    "Travel" : [
         "PENINSULA",
         "SEAPEARL",
         "UNIQUEHRL",
         "UNITEDAI"
     ] ,
-    "others" : [
+    "Others" : [
         "AMANFEED",
         "ARAMIT",
         "BERGERPBL",
@@ -412,6 +417,6 @@
         "NFML",
         "SAVAREFR",
         "SINOBANGLA",
-        "USMANIAG"
+        "USMANIAGL"
     ] 
 }
