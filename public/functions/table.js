@@ -81,10 +81,11 @@ const tab =  {
                 <p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
             </div>
             </div>`)
+       var dataDSE_forChart = data[i].last60 ? data[i].last60 : [1,1,1,1,1] 
+
+        var myarr = Array(dataDSE_forChart.length).fill().map((x,i)=>i) ;
        
-        var myarr = Array(data[i].last60.length).fill().map((x,i)=>i)
-       
-        var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: utils.removeZero(data[i].last60) } ]}
+        var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: utils.removeZero(dataDSE_forChart) } ]}
           
         new Chartist.Line(`#chart${count}`, datachart , 
         {
