@@ -26,8 +26,9 @@ module.exports.marketStatus = async () =>{
     var status = await api.dsex();
     [p1,p2,p3] = (status['marketStatus'].toUpperCase() == "CLOSED") ? ["Closed","far fa-times-circle","rgb(96, 95, 93)"] : [`${status['marketStatus']}`,"far fa-check-circle", "#175500"]
     var p4 = (status["dsexChange"] > 0) ? 'green' : 'red' ;
+    [dsexValue,dsexchange, dsexchangeP] = [status["dsex"].toFixed(3),status["dsexChange"].toFixed(3),status["dsexChangeP"].toFixed(2)] ;
     $("#dsex-info-navbar")
-        .html(`${status["dsex"]} <i class="fas fa-caret-up"></i><br> ${status["dsexChange"]},${status["dsexChangeP"]}%`)
+        .html(`${dsexValue} <i class="fas fa-caret-${p4=='green'?'up' : 'down' }"></i><br>${dsexchange},${dsexchangeP}%`)
         .css('color', p4);
     $("#marketstatus")
     .html(`
