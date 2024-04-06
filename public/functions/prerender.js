@@ -14,9 +14,9 @@ $('#TopNavs').html(`<nav class="topnav nav-one">
 </nav>
 <nav class="topnav nav-two">
     <a href="#/home" class="fas fa-house-user navactive"></a>
-    <a href="#/analysis" class="fas fa-chart-line"></a>
+    <a href="#/stocks" class="fas fa-chart-line"></a>
     <a href="#/starred" class="fas fa-star"></a>
-    <a href="#/chat" class="fas fa-comments"></a>
+    <a href="#/forum" class="fas fa-comments"></a>
     <a href="#/search" class="fas fa-search"></a>
 </nav>
 <div class="progress"></div>`

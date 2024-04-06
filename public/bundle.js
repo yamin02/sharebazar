@@ -2286,151 +2286,115 @@ $("#contents").html(`
 }
 
  
-},{"./api":33,"./utils":41}],36:[function(require,module,exports){
+},{"./api":33,"./utils":42}],36:[function(require,module,exports){
 var api = require('./api');
 var utils = require('./utils')
 var table = require('./table')
 
-module.exports.stars =  {
+module.exports.forum =  {
+    rend : ()=>
+    {
+      $("#contents").html(`
+      <div class="tweet">
+       <div class="tweet-header">
+          <div class="profile-info">
+              <img src="https://yaminulhoque.web.app/mypic.png" alt="Profile Picture">
+              <div>
+                  <h3>Yaminul Hoque</h3> 
+                  <span>@yamx02</span>
+              </div>
+          </div>
+          <button class="follow-button"># Featured </button>
+      </div>
+      <br>
+      <p>This is a tweet! 🔥</p>
+      <br>
+      <div class="tweet-image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Agriculture_of_Bangladesh_11.jpg/220px-Agriculture_of_Bangladesh_11.jpg" alt="Sample Image" class="tweet-image">
+      </div>
+      <br>
+      <div class="tweet-interactions">
+          <i class="fa fa-heart-o" > 12</i>
+          <i class="fa fa-comment-o" > 12</i>
+          <i class="fa fa-bookmark-o"> 12</i>
+          <i class="fa fa-external-link"> 12</i>
+      </div>
+      </div>`)          
+    },
+
     repeatRend : async function () {  },
-    afterRend : async function(){
-        const msgerForm = $(".msger-inputarea")[0];
-        const msgerInput = $(".msger-input")[0];
-        const msgerChat = $(".msger-chat")[0];
+    afterRend : async function(){} ,
+}
+},{"./api":33,"./table":41,"./utils":42}],37:[function(require,module,exports){
+const { set } = require('mongoose');
+var api = require('./api');
+var utils = require('./utils');
 
-const BOT_MSGS = [
-  "Hi, how are you?",
-  "Ohh... I can't understand what you trying to say. Sorry!",
-  "I like to play games... But I don't know how to play!",
-  "Sorry if my answers are not relevant. :))",
-  "I feel sleepy! :("
-];
+module.exports.infotab =  {
+    repeatRend : async () => { } ,
+    
+    afterRend : async (data0) =>  {
+        
+        console.log("THIS IS AFTER REND DNDND")
+        // if(data0){
+        //     console.log('trueeee');
+        //     var data = JSON.parse(data0) 
+        // }else {
+        //     var data = JSON.parse(localStorage.getItem('dsedata'))
+        // }
+        // console.log(JSON.parse(data0))
+        // console.log(data)
 
-// Icons made by Freepik from www.flaticon.com
-const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
-const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
-const BOT_NAME = "BOT";
-const PERSON_NAME = "Sajad";
+        data = [
+        { 'name' : 'GOLD' , 'change' : 45 , 'trade' : 340  , 'ltp' : 45 , 'changeP' : 3  } ,
+        {'name' : 'Sanchay Patra' , 'change' : 45 , 'trade' : 340  , 'ltp' : 45 , 'changeP' : 3  } ,
+        {'name' : 'BOND' , 'change' : 45 , 'trade' : 340  , 'ltp' : 45 , 'changeP' : 3  } ,
+        {'name' : 'MUTUAL FUND' , 'change' : 45 , 'trade' : 340  , 'ltp' : 45 , 'changeP' : 15  },
+        {'name' : 'DSEX' , 'change' : 45 , 'trade' : 340  , 'ltp' : 45 , 'changeP' : -13  } ] 
+        $("#stocklist").html('<div data-tf-live="01HTQPX2J1G2949SDM3MKFNRF5"></div><script src="//embed.typeform.com/next/embed.js"></script>')
+        var count = 0
+        for (var i in data)
+        {
+            var changeval = (data[`${i}`].change < 0)? `${data[`${i}`].change}` : `+${data[`${i}`].change}`
+            var color = data[`${i}`].changeP < 0 ? 'red' : 'green' ;
+            if(data[`${i}`].changeP==0){color ="blue"} ;
 
-msgerForm.addEventListener("submit", (event) => {
-  // event.preventDefault();
+            $("#stocklist").append(`
+            <div class="flex main" id="${data[i].name}">
+            <div id="name" class="name" style="cursor: pointer;" onclick="window.location='#/eachstock/${data[i].name}'">
+                <p>${data[i].name}</p>
+            </div>
+            
+             <div class="image-mainpage" onclick="alert('This is a chart made from last 15 days')">
+             <img src="https://image.similarpng.com/very-thumbnail/2021/05/Gold-bar-isolated-on-transparent-background-PNG.png">
+             </div>
+            
+            <div id="icon"><i id="fav${data[i].name}" class="fas fa-star ${localStorage.fav? (JSON.parse(localStorage.fav).includes(data[i].name)?'checked':'' ):''}" onclick="fav('${data[i].name}')"></i></div>
+            <div id="data">
+                <p class="${color}">${data[`${i}`].ltp}</p>
+                <p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
+            </div>
+            </div>            
+            `)
+            count = count +1 ;
+            }
+        },
 
-  const msgText = msgerInput.value;
-  if (!msgText) return;
+    rend : async () => {
+    $("#BottomSlider").show();
+    $(".nav-two a").removeClass("navactive");
+    $(".fa-house-user").addClass("navactive");
+    $("#contents").html(`
+    <div id="stocklist"></div>`)
+  }
 
-  appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
-  msgerInput.value = "";
-
-  botResponse();
-});
-
-function appendMessage(name, img, side, text) {
-  //   Simple solution for small apps
-  const msgHTML = `
-    <div class="msg ${side}-msg">
-      <div class="msg-img" style="background-image: url(${img})"></div>
-
-      <div class="msg-bubble">
-        <div class="msg-info">
-          <div class="msg-info-name">${name}</div>
-          <div class="msg-info-time">${formatDate(new Date())}</div>
-        </div>
-
-        <div class="msg-text">${text}</div>
-      </div>
-    </div>
-  `;
-
-  msgerChat.insertAdjacentHTML("beforeend", msgHTML);
-  msgerChat.scrollTop += 500;
 }
 
-function botResponse() {
-  const r = random(0, BOT_MSGS.length - 1);
-  const msgText = BOT_MSGS[r];
-  const delay = msgText.split(" ").length * 100;
-
-  setTimeout(() => {
-    appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
-  }, delay);
-}
-
-// Utils
-
-function formatDate(date) {
-  const h = "0" + date.getHours();
-  const m = "0" + date.getMinutes();
-  return `${h.slice(-2)}:${m.slice(-2)}`;
-}
-
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
-    }
- }
-    ,
-rend : ()=>{
-$("#contents").html(`
-<div class="chat-container">
-<section class="msger">
-<header class="msger-header">
-  <div class="msger-header-title">
-    <i class="fas fa-comment-alt"></i> SimpleChat
-  </div>
-  <div class="msger-header-options">
-    <span><i class="fas fa-cog"></i></span>
-  </div>
-</header>
-
-<main class="msger-chat">
-  <div class="msg left-msg">
-    <div
-     class="msg-img"
-     style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
-    ></div>
-
-    <div class="msg-bubble">
-      <div class="msg-info">
-        <div class="msg-info-name">BOT</div>
-        <div class="msg-info-time">12:45</div>
-      </div>
-
-      <div class="msg-text">
-        Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
-      </div>
-    </div>
-  </div>
-
-  <div class="msg right-msg">
-    <div
-     class="msg-img"
-     style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
-    ></div>
-
-    <div class="msg-bubble">
-      <div class="msg-info">
-        <div class="msg-info-name">Sajad</div>
-        <div class="msg-info-time">12:46</div>
-      </div>
-
-      <div class="msg-text">
-        You can change your name in JS section!
-      </div>
-    </div>
-  </div>
-</main>
-
-<form class="msger-inputarea">
-  <input type="text" class="msger-input" placeholder="Enter your message...">
-  <button type="submit" class="msger-send-btn">Send</button>
-</form>
-</section>
-</div>
-`)
 
 
-    }
-}
-},{"./api":33,"./table":40,"./utils":41}],37:[function(require,module,exports){
+
+
+},{"./api":33,"./utils":42,"mongoose":30}],38:[function(require,module,exports){
 const utils = require('./utils')
 var sectordata = require('../sectordata.json');
 
@@ -2447,9 +2411,9 @@ $('#TopNavs').html(`<nav class="topnav nav-one">
 </nav>
 <nav class="topnav nav-two">
     <a href="#/home" class="fas fa-house-user navactive"></a>
-    <a href="#/analysis" class="fas fa-chart-line"></a>
+    <a href="#/stocks" class="fas fa-chart-line"></a>
     <a href="#/starred" class="fas fa-star"></a>
-    <a href="#/chat" class="fas fa-comments"></a>
+    <a href="#/forum" class="fas fa-comments"></a>
     <a href="#/search" class="fas fa-search"></a>
 </nav>
 <div class="progress"></div>`
@@ -2620,7 +2584,7 @@ window.scrollSector = function (div) {
     }, 2000);
 }
 
-},{"../sectordata.json":43,"./utils":41}],38:[function(require,module,exports){
+},{"../sectordata.json":44,"./utils":42}],39:[function(require,module,exports){
 var api = require('./api');
 var utils = require('./utils')
 var table = require('./table')
@@ -2667,7 +2631,7 @@ rend : ()=>{
 
 
 
-},{"./api":33,"./table":40,"./utils":41}],39:[function(require,module,exports){
+},{"./api":33,"./table":41,"./utils":42}],40:[function(require,module,exports){
 var api = require('./api');
 var utils = require('./utils')
 var table = require('./table')
@@ -2709,7 +2673,7 @@ rend : ()=>{
 
     }
 }
-},{"./api":33,"./table":40,"./utils":41}],40:[function(require,module,exports){
+},{"./api":33,"./table":41,"./utils":42}],41:[function(require,module,exports){
 const { set } = require('mongoose');
 var api = require('./api');
 var utils = require('./utils');
@@ -2837,7 +2801,7 @@ module.exports.tableReal = tab
 
 
 
-},{"./api":33,"./utils":41,"mongoose":30}],41:[function(require,module,exports){
+},{"./api":33,"./utils":42,"mongoose":30}],42:[function(require,module,exports){
 const { model } = require("mongoose");
 var sectorjson = require('../sectordata.json')
 var api = require('./api')
@@ -2967,22 +2931,23 @@ module.exports.dsetoLocalstorage = async function () {
 
 
 
-},{"../sectordata.json":43,"./api":33,"mongoose":30}],42:[function(require,module,exports){
+},{"../sectordata.json":44,"./api":33,"mongoose":30}],43:[function(require,module,exports){
 var tableget = require('./functions/table');
 var eachstockdata = require('./functions/eachstock');
 var utils = require('./functions/utils');
 var search = require('./functions/search');
 var star = require("./functions/starred");
-var livechat = require("./functions/livechat")
+var tweet = require("./functions/forum")
 var api = require("./functions/api")
+var mainpage =require("./functions/mainpage")
 
 const screenurl = {
-  '/' : tableget.tableReal ,
-  '/home' :tableget.tableReal ,
-  '/eachstock/:id' : eachstockdata.eachstock ,
+  '/' : mainpage.infotab ,
+  '/home' :  mainpage.infotab ,
+  '/stocks' : tableget.tableReal ,
   '/search' : search.search ,
   '/starred' : star.stars ,
-  '/chat' :  livechat.stars , 
+  '/forum' :  tweet.forum , 
 }
 
 
@@ -2992,6 +2957,7 @@ const loader = async () => {
   // var marketStatus = await utils.marketStatus();
   const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
   var screen = screenurl[parseUrl];
+  // Navs and other things added in prerender.js
   await screen.rend();
   await screen.afterRend();
   utils.hideloading();
@@ -3017,7 +2983,7 @@ window.addEventListener('load', async function () {
 
 window.addEventListener('hashchange' , loader);
 
-},{"./functions/api":33,"./functions/eachstock":35,"./functions/livechat":36,"./functions/search":38,"./functions/starred":39,"./functions/table":40,"./functions/utils":41}],43:[function(require,module,exports){
+},{"./functions/api":33,"./functions/eachstock":35,"./functions/forum":36,"./functions/mainpage":37,"./functions/search":39,"./functions/starred":40,"./functions/table":41,"./functions/utils":42}],44:[function(require,module,exports){
 module.exports={
     "Bank" : [
         "ABBANK",
@@ -3441,4 +3407,4 @@ module.exports={
     ] 
 }
 
-},{}]},{},[42,37]);
+},{}]},{},[43,38]);

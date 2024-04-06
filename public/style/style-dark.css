@@ -3,9 +3,12 @@
 
 /* BODY and Global tags */
 body {
-    margin: 0;
     padding-top: 105px;
   }
+  /* Reset any browser default style  */
+  body, h1, h2, h3, p, input, button {
+    margin: 0;
+}
   a{
     text-decoration: none;
     color: inherit;
@@ -30,11 +33,11 @@ body {
     text-align: center;
   }
   .nav-one {
-    background-color: #96fad5;
-    color: black;
+    background-color: #18212a;
+    color: white;
   }
   .nav-two {
-    color: rgb(129, 116, 116);
+    color: #18212a ;
     border-bottom: 1px solid rgb(224, 219, 219);
     font-size: 22px;
     background-color: white;
@@ -62,7 +65,7 @@ body {
     font-size: 9px;
   }
   .navactive {
-    color: #10ce88;
+    color: #17ca3b;
   }
   /* BOTTOM SLIDER FOR SORTING */
   #sorter{
@@ -120,6 +123,13 @@ body {
         opacity: 100%;
     }
     
+
+    /* Main Page  */
+    .image-mainpage img{
+      width: 70px;
+    }
+
+
   /* Input search */
   .example {
     padding: 13px;
@@ -796,3 +806,79 @@ body {
   .scrollmenu a:hover{
     color :#579ffb;
   }
+
+
+
+
+  /* Tweet or forum feature  */
+
+  .tweet {
+    font-family: Arial, sans-serif;
+    padding: 1rem;
+    background-color: #151414;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem ;
+    margin-bottom: 1rem ;
+}
+
+/* this is the image in the tweet */
+.tweet-image{
+    display: block;
+    border-radius: 5%;
+    margin: 0 auto;
+}
+
+.tweet-header h3 {
+    margin: 0;
+}
+
+.tweet-header span {
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.tweet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Aligning items evenly */
+    margin-bottom: 0.5rem;
+}
+
+.tweet-header .profile-info {
+    display: flex;
+    align-items: center;
+}
+
+.tweet-header .profile-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 30%;
+    margin-right: 0.5rem;
+}
+
+.tweet-header .profile-info div {
+    display: flex;
+    flex-direction: column;
+}
+
+.tweet-header .follow-button {
+    background-color: #1c7ac2;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5%;
+    cursor: pointer;
+}
+
+/* this are the  */
+.tweet .tweet-interactions{
+    font-size: 15px;
+    color: #72787c;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 0.5rem;        
+}

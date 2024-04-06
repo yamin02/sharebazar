@@ -3,16 +3,17 @@ var eachstockdata = require('./functions/eachstock');
 var utils = require('./functions/utils');
 var search = require('./functions/search');
 var star = require("./functions/starred");
-var livechat = require("./functions/livechat")
+var tweet = require("./functions/forum")
 var api = require("./functions/api")
+var mainpage =require("./functions/mainpage")
 
 const screenurl = {
-  '/' : tableget.tableReal ,
-  '/home' :tableget.tableReal ,
-  '/eachstock/:id' : eachstockdata.eachstock ,
+  '/' : mainpage.infotab ,
+  '/home' :  mainpage.infotab ,
+  '/stocks' : tableget.tableReal ,
   '/search' : search.search ,
   '/starred' : star.stars ,
-  '/chat' :  livechat.stars , 
+  '/forum' :  tweet.forum , 
 }
 
 
@@ -22,6 +23,7 @@ const loader = async () => {
   // var marketStatus = await utils.marketStatus();
   const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
   var screen = screenurl[parseUrl];
+  // Navs and other things added in prerender.js
   await screen.rend();
   await screen.afterRend();
   utils.hideloading();
