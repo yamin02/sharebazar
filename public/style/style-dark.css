@@ -4,6 +4,7 @@
 /* BODY and Global tags */
 body {
     padding-top: 105px;
+    background-color: #18212a;
   }
   /* Reset any browser default style  */
   body, h1, h2, h3, p, input, button {
@@ -813,14 +814,15 @@ body {
   /* Tweet or forum feature  */
 
   .tweet {
+    margin-left: 3px;
+    margin-right: 3px;
     font-family: Arial, sans-serif;
     padding: 1rem;
     background-color: #151414;
     color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #2e2d2d;
     border-radius: 10px;
     padding: 1rem ;
-    margin-bottom: 1rem ;
 }
 
 /* this is the image in the tweet */
@@ -828,6 +830,7 @@ body {
     display: block;
     border-radius: 5%;
     margin: 0 auto;
+    width: 100%;
 }
 
 .tweet-header h3 {
@@ -875,8 +878,8 @@ body {
 
 /* this are the  */
 .tweet .tweet-interactions{
-    font-size: 15px;
-    color: #72787c;
+    font-size: 17px;
+    color: #8c9296;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
