@@ -1,9 +1,9 @@
 {
     "name": "Binyog.com",
-    "short_name": "binyog",
+    "short_name": "Binyog.com",
     "icons": [
        {
-          "src": "/android-icon-192x192.png",
+          "src": "./resource/android-icon-192x192.png",
           "sizes": "192x192",
           "type": "image/png"
        }

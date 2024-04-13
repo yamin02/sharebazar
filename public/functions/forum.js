@@ -62,7 +62,7 @@ module.exports.forum =  {
       
       `)          
     },
-
-    repeatRend : async function () {  },
     afterRend : async function(){} ,
+    repeatRend : async function () {  },
+
 }

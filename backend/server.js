@@ -9,12 +9,12 @@ const utils = require('./utils')
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-mongoose.connect('mongodb+srv://yamin02:chandanpura@sharebazar.z3hlw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' ).then(() =>{
-    console.log('connected to MONGO DB');
-}).catch((error) =>{
-    console.log(error);
-    console.log("MONGODB Error");
-});
+// mongoose.connect('mongodb+srv://yamin02:chandanpura@sharebazar.z3hlw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' ).then(() =>{
+//     console.log('connected to MONGO DB');
+// }).catch((error) =>{
+//     console.log(error);
+//     console.log("MONGODB Error");
+// });
 
 
 
@@ -48,11 +48,12 @@ app.get('/getupdate', async(req,res)=>{
 });
 
 app.get('/preload',async (req,res)=>{
-    const dsedata = await model.stockmodel.find({},{name:1,trade:1,volume:1,value:1,_id:0,ltp:1,change:1,changeP:1,last60:1}).sort({_id:1})
-    var json = {
-        dsedata :dsedata ,
-    }
-    res.send(json);
+    // const dsedata = await model.stockmodel.find({},{name:1,trade:1,volume:1,value:1,_id:0,ltp:1,change:1,changeP:1,last60:1}).sort({_id:1})
+    // var json = {
+    //     dsedata :dsedata ,
+    // }
+    // res.send(json);
+    res.send({})
 })
 
 app.post('/eachstock/:id',async (req,res)=>{
@@ -62,8 +63,9 @@ app.post('/eachstock/:id',async (req,res)=>{
 })
 
 app.get('/dsex',async (req,res)=>{
-    var json = await model.dsexmodel.find({});
-    res.send(json[0])
+    // var json = await model.dsexmodel.find({});
+    // res.send(json[0])
+    res.send({})
 })
 
 app.listen(config.default.PORT,()=>{

@@ -1,5 +1,4 @@
 var tableget = require('./functions/table');
-var eachstockdata = require('./functions/eachstock');
 var utils = require('./functions/utils');
 var search = require('./functions/search');
 var star = require("./functions/starred");
@@ -27,24 +26,26 @@ const loader = async () => {
   await screen.rend();
   await screen.afterRend();
   utils.hideloading();
-  var marketStatus = $("#status001").length ?  $("#status001").html().split("<br>")[2]  : await utils.marketStatus();
-  console.log(marketStatus)
-  if(!(marketStatus == "Closed")){
-    console.log("Starting to update data");
-    $(".progress").show();
-    setInterval(async()=> {
-        utils.dsetoLocalstorage();
-        utils.marketStatus();
-        await screen.repeatRend();
-    }, 70*1000)
-  }
+
+  // var marketStatus = $("#status001").length ?  $("#status001").html().split("<br>")[2]  : await utils.marketStatus();
+  // console.log(marketStatus)
+  // if(!(marketStatus == "Closed")){
+  //   console.log("Starting to update data");
+  //   $(".progress").show();
+  //   setInterval(async()=> {
+  //       utils.dsetoLocalstorage();
+  //       utils.marketStatus();
+  //       await screen.repeatRend();
+  //   }, 70*1000)
+  // }
+
 } 
 
 window.addEventListener('load', async function () { 
   utils.showloading();
-  var data  = await utils.dsetoLocalstorage();
-  await utils.marketStatus();
-  await loader(data);
+  // var data  = await utils.dsetoLocalstorage();
+  // await utils.marketStatus();
+  await loader();
 }) ;
 
 window.addEventListener('hashchange' , loader);

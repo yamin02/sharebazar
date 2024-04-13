@@ -1,190 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Twitter Clone</title>
-    <style>
-        /* Reset some default browser styles */
-        body, h1, h2, h3, p, input, button {
-            margin: 0;
-            padding: 0;
-        }
-/* 
-        header {
-            background-color: #1DA1F2;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        } */
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Divs Sideways Movement</title>
+  <style>
+    .container {
+      display: flex;
+      overflow-x: hidden; /* Hide horizontal overflow */
+      position: absolute; /* Required for absolute positioning */
+    }
 
-        main {
-            padding: 1rem;
-        }
+    .tweet {
+      flex: 0 0 100%; /* Each tweet occupies the full width of the container */
+    }
 
-        .tweet {
-            font-family: Arial, sans-serif;
-            padding: 1rem;
-            background-color: #151414;
-            color: white;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 1rem ;
-            margin-bottom: 1rem ;
-        }
+    .tweet-image {
+      text-align: center;
+    }
 
-        /* the image in the tweet */
-        .tweet-image{
-            display: block;
-            border-radius: 5%;
-            margin: 0 auto;
-        }
+    .tweet-image img {
+      width: 100%;
+      height: auto;
+    }
 
-        .tweet-header h3 {
-            margin: 0;
-        }
+    h4, p {
+      text-align: center;
+    }
 
-        .tweet-header span {
-            font-size: 0.8rem;
-            color: gray;
-        }
+    /* CSS animation for sliding effect */
+    @keyframes slideIn {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
 
-        .tweet-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* Aligning items evenly */
-            margin-bottom: 0.5rem;
-        }
-
-        .tweet-header .profile-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .tweet-header .profile-info img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-        }
-
-        .tweet-header .profile-info div {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .tweet-header .follow-button {
-            background-color: #1DA1F2;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        .tweet .tweet-interactions{
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-            margin-top: 0.5rem;        
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #151414;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-        }
-
-        footer input {
-            flex: 1;
-            padding: 0.5rem;
-            border-radius: 20px;
-            border: 1px solid #ccc;
-        }
-
-        footer button {
-            background-color: #1DA1F2;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 20px;
-            margin-left: 0.5rem;
-            cursor: pointer;
-        }
-
-    </style>
+    .slide-in {
+      animation: slideIn 0.5s ease forwards;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Twitter Clone</h1>
-    </header>
-    <main>
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="profile-info">
-                    <img src="https://yaminulhoque.web.app/mypic.png" alt="Profile Picture">
-                    <div>
-                        <h3>@yamx02</h3> 
-                        <span>Yaminul Hoque</span>
-                    </div>
-                </div>
-                <button class="follow-button">Follow</button>
-            </div>
-            <br>
-            <p>This is a tweet! 🔥</p>
-            <br>
-            <div class="tweet-image">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Agriculture_of_Bangladesh_11.jpg/220px-Agriculture_of_Bangladesh_11.jpg" alt="Sample Image" class="tweet-image">
-            </div>
-            <br>
-            <div class="tweet-interactions">
-                <i class="fa fa-heart-o" style="font-size:20px"> 12</i>
-                <i class="fa fa-comment-o" style="font-size:22px"> 12</i>
-                <i class="fa fa-bookmark-o" style="font-size:22px"> 12</i>
-                <i class="fa fa-external-link" style="font-size: 23px"> 12</i>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <input type="text" placeholder="Write a new tweet..." style="flex: 1;">
-        <button>Send</button>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // When the send button is clicked
-            $('button').click(function() {
-                var tweetText = $('footer input').val();
-                if(tweetText.trim() !== '') {
-                    var newTweet = '<div class="tweet">' +
-                                        '<div class="tweet-header">' +
-                                            '<div class="profile-info">' +
-                                                '<img src="profile-pic.jpg" alt="Profile Picture">' +
-                                                '<div>' +
-                                                    '<h3>Username</h3>' +
-                                                    '<span>Name</span>' +
-                                                '</div>' +
-                                            '</div>' +
-                                            '<button class="follow-button">Follow</button>' +
-                                        '</div>' +
-                                        '<p>' + tweetText + '</p>' +
-                                        '<div class="tweet-interactions">' +
-                                            '<button><img src="like-icon.png" alt="Like"></button>' +
-                                            '<button><img src="comment-icon.png" alt="Comment"></button>' +
-                                            '<button><img src="share-icon.png" alt="Share"></button>' +
-                                        '</div>' +
-                                    '</div>';
-                    $('main').prepend(newTweet);
-                    $('footer input').val('');
-                }
-            });
+  <div class="container">
+    <div class="tweet" id="offers1">
+      <div class="tweet-image">
+        <img src="https://www.jagoinvestor.com/wp-content/uploads/files/investing-for-future.jpg" alt="Sample Image" class="tweet-image">
+      </div>
+      <br>
+      <h4>🔥 One App, Thousands of Investment Opportunities</h4>
+      <p>Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app</p>
+    </div>
+    <div class="tweet" id="offers2">
+      <div class="tweet-image">
+        <img src="https://www.jagoinvestor.com/wp-content/uploads/files/investing-for-future.jpg" alt="Sample Image" class="tweet-image">
+      </div>
+      <br>
+      <h4>🔥 One App, Thousands of Investment Opportunities</h4>
+      <p>Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app</p>
+    </div>
+    <div class="tweet" id="offers3">
+      <div class="tweet-image">
+        <img src="https://www.jagoinvestor.com/wp-content/uploads/files/investing-for-future.jpg" alt="Sample Image" class="tweet-image">
+      </div>
+      <br>
+      <h4>🔥 One App, Thousands of Investment Opportunities</h4>
+      <p>Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app</p>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const container = document.querySelector('.container');
+
+      container.addEventListener('scroll', () => {
+        const tweets = document.querySelectorAll('.tweet');
+        tweets.forEach((tweet) => {
+          if (isFullyVisible(tweet)) {
+            tweet.classList.add('slide-in');
+          } else {
+            tweet.classList.remove('slide-in');
+          }
         });
-    </script>
+      });
+
+      function isFullyVisible(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+          rect.left >= 0 &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+      }
+    });
+  </script>
 </body>
 </html>

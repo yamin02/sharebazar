@@ -130,6 +130,21 @@ body {
       width: 70px;
     }
 
+    #initials{  
+      font-family: "Be Vietnam Pro", sans-serif;
+      line-height: 230%;
+      font-weight: 400;
+      font-size: 12px;
+      padding-left: 30px;
+      padding-top: 10px;
+      padding-bottom: 12px;
+      color: white;
+      border-bottom: 0.5px solid grey;
+    }
+    #initials p{
+      color: rgb(207, 206, 206);
+    }
+
 
   /* Input search */
   .example {
@@ -178,7 +193,7 @@ body {
     }
   }
   
-  /* Contents */
+                              /* Contents */
   
   
   
@@ -808,30 +823,115 @@ body {
     color :#579ffb;
   }
 
+  
+/*  Offers  In the main page */
 
+.offers{
+  font-family: "Be Vietnam Pro", sans-serif !important;
+  font-weight: 400;
+  padding: 1rem;
+  border-radius: 2%;
+  color: white;
+  background-color: #a2a1a116;
+  margin: 6px !important;
+  flex: 0 0 100%; /* Each tweet occupies the full width of the container */
+  max-width: calc(100% - 50px);
+}
+.offers h4 {  
+  line-height: 24px;
+}
+.offers p{
+  font-size: 13px;
+  color: rgb(195, 195, 195);
+}
+
+/* THIS ARE FOR THE SLIDING EFFECT OF THE OFFERS DIV */
+.All-offers {
+  margin-left: 10px;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.All-offers::-webkit-scrollbar {
+  width: 10px;
+  height: 4px;
+}
+.All-offers::-webkit-scrollbar-thumb {
+  background: rgba(199, 196, 196, 0.511);
+  border-radius: 5px;
+}
+.All-offers::-webkit-scrollbar-track {
+  background: transparent;
+}
+.offers {
+  scroll-snap-align: start;
+  /* flex-shrink: 0; */
+  transform-origin: center center;
+  transition: transform 0.3s;
+  
+}
+
+/* THis is main page Typeform */
+.typeform{
+  font-family: "Be Vietnam Pro", sans-serif;
+  line-height: 230%;
+  font-weight: 400;
+  font-size: 12px;
+  color: white;
+  border-bottom: 0.5px solid grey;
+  text-align: center ;
+  line-height: 150% ;
+  margin: 30px ;
+  padding: 20px;
+}
+.typeform p{
+  color: rgb(207, 206, 206);
+}
+
+#fin-advise-btn{
+
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 14px 24px;
+  border: none;
+  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+  background: linear-gradient(to right, rgb(40, 104, 22) 0%, rgb(52, 124, 27) 50%, rgb(69, 146, 14) 100%);
+  color: #fff;
+
+}
 
 
   /* Tweet or forum feature  */
 
+  
   .tweet {
     margin-left: 3px;
     margin-right: 3px;
     font-family: Arial, sans-serif;
     padding: 1rem;
-    background-color: #151414;
+    /* background-color: #151414; */
     color: white;
-    border: 1px solid #2e2d2d;
-    border-radius: 10px;
+    border-bottom: 0.5px solid #6c6c6c64;
+    /* border-radius: 10px; */
     padding: 1rem ;
 }
 
 /* this is the image in the tweet */
 .tweet-image{
     display: block;
-    border-radius: 5%;
+    border-radius: 2%;
     margin: 0 auto;
     width: 100%;
 }
+
+
 
 .tweet-header h3 {
     margin: 0;
