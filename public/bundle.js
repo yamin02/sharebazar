@@ -2286,7 +2286,7 @@ const { set } = require('mongoose');
 var api = require('./api');
 var utils = require('./utils');
 
-//             <div data-tf-live="01HTQPX2J1G2949SDM3MKFNRF5"></div><script src="//embed.typeform.com/next/embed.js"></script>           
+//<div data-tf-live="01HTQPX2J1G2949SDM3MKFNRF5"></div><script src="//embed.typeform.com/next/embed.js"></script>           
 module.exports.infotab =  {
     repeatRend : async () => { } ,
     
@@ -2332,7 +2332,7 @@ module.exports.infotab =  {
             <div>
                 <h2>Know Your Financials Better </h2>
                 <br>
-                <p> Take this survey and get a financial Advice from our speicalized AI </p> 
+                <p> Take this survey and get a financial Advice from our speicalized AI designed right for You.</p> 
                 <br>
                 <button id="fin-advise-btn">GET FINANCIAL ADVISE</button>
             </div>
@@ -2340,6 +2340,12 @@ module.exports.infotab =  {
 
         `)
         console.log("THIS IS AFTER REND DNDND")
+        $("#fin-advise-btn").click(function () { 
+            $(".overlay").addClass("active")
+            .html(`<div data-tf-live="01HTQPX2J1G2949SDM3MKFNRF5">
+            </div><script src="//embed.typeform.com/next/embed.js"></script>
+            <button id="close-typeform" onclick="closeOverlay()">Close</button>`);       
+        });
         // if(data0){
         //     console.log('trueeee');
         //     var data = JSON.parse(data0) 
@@ -2589,6 +2595,10 @@ window.scrollSector = function (div) {
     }, 2000);
 }
 
+
+window.closeOverlay = function (param) { 
+        $(".overlay").removeClass("active").html("");
+ }
 },{"../sectordata.json":43,"./utils":41}],38:[function(require,module,exports){
 var api = require('./api');
 var utils = require('./utils')
@@ -2933,7 +2943,6 @@ module.exports.dsetoLocalstorage = async function () {
     localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
     return JSON.stringify(data0['dsedata']) ;
 }
-
 
 
 },{"../sectordata.json":43,"./api":33,"mongoose":30}],42:[function(require,module,exports){

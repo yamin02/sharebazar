@@ -186,3 +186,8 @@ window.scrollSector = function (div) {
         scrollTop: $(`#${div}`).offset().top - 200
     }, 2000);
 }
+
+
+window.closeOverlay = function (param) { 
+        $(".overlay").removeClass("active").html("");
+ }

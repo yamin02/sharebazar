@@ -477,7 +477,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(159, 236, 188, 0.315);
+    background-color: #c8c9caa4;
   }
   .overlay.active {
     display: flex;
@@ -869,8 +869,7 @@ body {
   scroll-snap-align: start;
   /* flex-shrink: 0; */
   transform-origin: center center;
-  transition: transform 0.3s;
-  
+  transition: transform 0.3s; 
 }
 
 /* THis is main page Typeform */
@@ -904,7 +903,22 @@ body {
   transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
   background: linear-gradient(to right, rgb(40, 104, 22) 0%, rgb(52, 124, 27) 50%, rgb(69, 146, 14) 100%);
   color: #fff;
+}
 
+#close-typeform{
+  margin-top: 10px;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 14px 24px;
+  border: none;
+  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+  background: linear-gradient(to right, rgb(32, 34, 32) 0%, rgb(24, 26, 24) 50%, rgb(30, 31, 30) 100%);
+  color: #fff;
 }
 
 
