@@ -19,7 +19,7 @@ const screenurl = {
 const loader = async () => {
   utils.showloading();
   const request = utils.parseurl();
-  // var marketStatus = await utils.marketStatus();
+  var marketStatus = await utils.marketStatus();
   const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
   var screen = screenurl[parseUrl];
   // Navs and other things added in prerender.js
@@ -43,8 +43,8 @@ const loader = async () => {
 
 window.addEventListener('load', async function () { 
   utils.showloading();
-  // var data  = await utils.dsetoLocalstorage();
-  // await utils.marketStatus();
+  var data  = await utils.dsetoLocalstorage();
+  await utils.marketStatus();
   await loader();
 }) ;
 
