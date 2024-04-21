@@ -581,14 +581,14 @@ body {
     width: 140px;
     height: 140px;
     /* background: #19e499; */
-    background: #c1dacb;
+    background: #d8d8d8;
   }
   .ldio-tur5clbaxg > div > div:nth-child(2) {
     top: 39.800000000000004px;
     left: 79px;
     width: 12px;
     height: 12px;
-    background: #00ffa2;
+    background: #2c2d2d;
     /* background: #3a3939; */
     animation: ldio-tur5clbaxg 1s linear infinite;
     transform-origin: 21px 60.199999999999996px;

@@ -42,9 +42,7 @@ app.get('/getupdate', async(req,res)=>{
         sort_volume : utils.sortArr(volume,true),
         sort_trade : utils.sortArr(trade,true),
     }
-    // console.log(json)
     res.send(json);
-    // res.send(dsedata);
 });
 
 app.get('/preload',async (req,res)=>{

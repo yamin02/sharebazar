@@ -73,6 +73,7 @@ const tab =  {
                 <p class="value">Value: ${(data[`${i}`].value.replace(/,/g,'') * 0.1).toFixed(3)} cr</p>
                 <p class="sector" style="display:none">${sectr}</p>
             </div>
+
             <div class="chart" id="chart${count}" onclick="alert('This is a chart made from last 15 days')"></div>
             
             <div id="icon"><i id="fav${data[i].name}" class="fas fa-star ${localStorage.fav? (JSON.parse(localStorage.fav).includes(data[i].name)?'checked':'' ):''}" onclick="fav('${data[i].name}')"></i></div>
@@ -81,10 +82,9 @@ const tab =  {
                 <p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
             </div>
             </div>`)
-       var dataDSE_forChart = data[i].last60 ? data[i].last60 : [1,1,1,1,1] 
 
+       var dataDSE_forChart = data[i].last60 ? data[i].last60 : [1,1,1,1,1] 
         var myarr = Array(dataDSE_forChart.length).fill().map((x,i)=>i) ;
-       
         var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: utils.removeZero(dataDSE_forChart) } ]}
           
         new Chartist.Line(`#chart${count}`, datachart , 
