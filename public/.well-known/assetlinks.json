@@ -1,0 +1,8 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "net.azurewebsites.sharebazar.twa",
+      "sha256_cert_fingerprints": ["C0:B2:89:10:83:F8:D3:DD:14:16:15:5D:7A:7A:70:3A:03:24:02:17:32:E8:46:74:23:69:04:6A:51:A4:1C:44"]
+    }
+  }]
