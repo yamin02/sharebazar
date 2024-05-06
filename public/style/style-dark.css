@@ -218,6 +218,7 @@ body {
 
   }
   
+  
   @media screen and (max-width: 1200px) and (min-width: 500px) {
     /* For screens like ipad */
     #stocklist {
@@ -239,8 +240,8 @@ body {
     }
   }
   
-  @media screen and (min-width: 1300px) {
-    /* This are for large screens e.g. laptop */
+  /* This are for large screens e.g. laptop */
+  /* @media screen and (min-width: 1300px) {
     #stocklist {
       display: flex;
       flex-direction: row;
@@ -255,7 +256,9 @@ body {
       width: 31.5%;
       margin: 7px;
     }
-  }
+  } */
+
+  
   
   .flex div {
     background-color: 	#18212a ;
