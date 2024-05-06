@@ -23,6 +23,11 @@
     <div id="sorter" class="fas fa-sort-amount-up-alt"></div>
     <div id="contents"></div>
     <script src="bundle.js"></script>
+    <script>
+        if (typeof navigator.serviceWorker !== 'undefined') {
+          navigator.serviceWorker.register('sw.js')
+        }
+      </script>
 </body>
 </html>
 
