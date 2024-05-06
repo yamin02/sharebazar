@@ -22,7 +22,8 @@
   "theme_color": "#18212a",
   "background_color": "#18212a",
   "display": "standalone",
-  "start_url": "https://sharebazar.azurewebsites.net/#/home",
+  "start_url": "/#/home",
   "lang": "en",
-  "scope" : "https://sharebazar.azurewebsites.net/#/"
+  "scope" : "/"
 }
+
