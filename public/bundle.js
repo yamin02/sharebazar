@@ -3021,6 +3021,8 @@ window.addEventListener('load', async function () {
 
 window.addEventListener('hashchange' , loader);
 
+
+
 },{"./functions/api":33,"./functions/forum":35,"./functions/mainpage":36,"./functions/search":38,"./functions/starred":39,"./functions/table":40,"./functions/utils":41}],43:[function(require,module,exports){
 module.exports={
     "Bank" : [

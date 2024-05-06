@@ -22,6 +22,5 @@
   "background_color": "#18212a",
   "display": "standalone",
   "start_url": "/",
-  "lang": "en",
-  "scope": "."
+  "lang": "en"
 }

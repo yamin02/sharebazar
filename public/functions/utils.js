@@ -1,5 +1,5 @@
 const { model } = require("mongoose");
-var sectorjson = require('../../public/sectordata.json')
+var sectorjson = require('../sectordata.json')
 var api = require('./api')
 
 module.exports.parseurl = () => {
@@ -107,7 +107,7 @@ module.exports.SectorSort = function () {
 }
 
 module.exports.SectorTitle = function () {
-    var sectorjson = require('../../public/sectordata.json');
+    var sectorjson = require('../sectordata.json');
     for(var i in sectorjson){
         $(`<p id="${i}" class='flex sector-title'>${i}</p>`).insertBefore($(`#${sectorjson[i][0]}`));  
     }
