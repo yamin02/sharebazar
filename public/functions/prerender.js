@@ -7,7 +7,7 @@ var sectordata = require('../sectordata.json');
 })();
 
 $('#TopNavs').html(`<nav class="topnav nav-one">
-<a href="/"><img src="./resource/apple-icon.png" style="width: 25px;"></a>
+<a href="/#/home"><img src="./resource/apple-icon.png" style="width: 25px;"></a>
 <a id="page-name">Home</a>
 <a id="dsex-info-navbar"></a>
 <a id="marketstatus"></a>
