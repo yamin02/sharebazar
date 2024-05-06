@@ -21,7 +21,8 @@
   ],
   "theme_color": "#18212a",
   "background_color": "#18212a",
-  "display": "fullscreen",
+  "display": "standalone",
   "start_url": "/",
-  "lang": "en"
+  "lang": "en",
+  "scope" : "/"
 }
