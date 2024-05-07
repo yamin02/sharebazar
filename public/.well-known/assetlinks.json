@@ -1,8 +1,10 @@
 [{
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "net.azurewebsites.sharebazar.twa",
-      "sha256_cert_fingerprints": ["C0:B2:89:10:83:F8:D3:DD:14:16:15:5D:7A:7A:70:3A:03:24:02:17:32:E8:46:74:23:69:04:6A:51:A4:1C:44"]
-    }
-  }]
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "net.azurewebsites.sharebazar.twa",
+    "sha256_cert_fingerprints": [
+      "48:76:5D:08:4D:D8:7C:B7:C6:8A:1C:3C:85:1E:CC:7D:F3:D5:59:BE:2D:A6:58:06:F9:8E:AD:92:85:5E:C3:5F"
+    ]
+  }
+}]
