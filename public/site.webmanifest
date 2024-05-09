@@ -12,11 +12,6 @@
           "src": "./resource/512.png",
           "sizes": "512x512",
           "type": "image/png"
-       },
-		 {
-          "src": "./resource/1024.png",
-          "sizes": "1024x1024",
-          "type": "image/png"
        }
   ],
   "theme_color": "#18212a",
