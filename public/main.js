@@ -1,15 +1,17 @@
-var tableget = require('./functions/table');
 var utils = require('./functions/utils');
 var search = require('./functions/search');
 var star = require("./functions/starred");
-var tweet = require("./functions/forum")
 var api = require("./functions/api")
-var mainpage =require("./functions/mainpage")
+
+var mainpage =require("./pages/mainpage")
+var tweet = require("./pages/forum")
+var stocks = require('./pages/stock');
+
 
 const screenurl = {
   '/' : mainpage.infotab ,
   '/home' :  mainpage.infotab ,
-  '/stocks' : tableget.tableReal ,
+  '/stocks' : stocks.tableReal ,
   '/search' : search.search ,
   '/starred' : star.stars ,
   '/forum' :  tweet.forum , 

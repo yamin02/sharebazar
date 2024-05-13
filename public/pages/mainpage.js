@@ -1,6 +1,6 @@
 const { set } = require('mongoose');
-var api = require('./api');
-var utils = require('./utils');
+var api = require('../functions/api');
+var utils = require('../functions/utils');
 
 //<div data-tf-live="01HTQPX2J1G2949SDM3MKFNRF5"></div><script src="//embed.typeform.com/next/embed.js"></script>           
 module.exports.infotab =  {
@@ -132,8 +132,10 @@ module.exports.infotab =  {
     rend : async () => 
 {
     $("#BottomSlider").show();
+
     $(".nav-two a").removeClass("navactive");
     $(".fa-house-user").addClass("navactive");
+    
     $("#contents").html(`
     <div id="stocklist"></div>`)
   }

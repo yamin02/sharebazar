@@ -1,20 +1,20 @@
 var api = require('./api');
 var utils = require('./utils')
-var table = require('./table')
+// var table = require('./table')
 
 module.exports.search =  {
 repeatRend : ()=>{
-    table.tableReal.repeatRend()
+    // table.tableReal.repeatRend()
 },
 afterRend : ()=>{
 },
 rend : ()=>{
   $(".nav-two a").removeClass("navactive");
   $(".fa-search").addClass("navactive");
+
   $("#BottomSlider").hide();
     $("#sorter").hide();
-    $(`    
-    <div class="search">
+    $(`<div class="search">
         <textarea id="myInput" type="text" class="searchTerm" placeholder="Search for stock"></textarea>
     </div>`).insertBefore("#stocklist");
     $("#myInput").focus() ;

@@ -1,10 +1,10 @@
 var api = require('./api');
 var utils = require('./utils')
-var table = require('./table')
+// var table = require('./table')
 
 module.exports.stars =  {
 repeatRend : ()=>{
-    table.tableReal.repeatRend()
+    // table.tableReal.repeatRend()
 },
 
 afterRend : ()=>{
@@ -30,10 +30,11 @@ afterRend : ()=>{
 
 },
 rend : ()=>{
-    
+
     $("#BottomSlider").show();
     $(".nav-two a").removeClass("navactive");
     $(".fa-star").addClass("navactive");
+   
     $("#contents").html(`
     <div id="stocklist"></div>`)
 

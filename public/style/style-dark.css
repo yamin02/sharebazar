@@ -221,11 +221,10 @@ body {
   
   @media screen and (max-width: 1200px) and (min-width: 500px) {
     /* For screens like ipad */
-    #stocklist {
+    /* #stocklist {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      background-color: rgba(255, 248, 248, 0.651);
       margin: 0 auto;
     }
   
@@ -237,12 +236,15 @@ body {
       padding: 0;
       width: 48%;
       margin: 7px;
-    }
+    } */
   }
   
   /* This are for large screens e.g. laptop */
-  /* @media screen and (min-width: 1300px) {
-    #stocklist {
+  @media screen and (min-width: 500px) {
+    body {
+      max-width: 400px !important;
+    }
+    /* #stocklist {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -255,8 +257,8 @@ body {
       padding: 0;
       width: 31.5%;
       margin: 7px;
-    }
-  } */
+    } */
+  }
 
   
   
@@ -1002,3 +1004,6 @@ body {
     justify-content: space-evenly;
     margin-top: 0.5rem;        
 }
+
+
+

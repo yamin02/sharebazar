@@ -1,11 +1,14 @@
-var api = require('./api');
-var utils = require('./utils')
-var table = require('./table')
+var api = require('../functions/api');
+var utils = require('../functions/utils')
+var table = require('./stock')
 
 module.exports.forum =  {
-    rend : ()=>
-    {
-      $("#contents").html(`
+    rend : ()=> {
+
+    $(".nav-two a").removeClass("navactive");
+    $(".fa-comments").addClass("navactive");  
+      
+    $("#contents").html(`
       <div class="tweet">
        <div class="tweet-header">
           <div class="profile-info">
@@ -21,7 +24,7 @@ module.exports.forum =  {
       <p>This is a tweet! 🔥</p>
       <br>
       <div class="tweet-image">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Agriculture_of_Bangladesh_11.jpg/220px-Agriculture_of_Bangladesh_11.jpg" alt="Sample Image" class="tweet-image">
+          <img src="https://businesspostbd.com/files/media/daily-media/2023/02/11/32.png" alt="Sample Image" class="tweet-image">
       </div>
       <br>
       <div class="tweet-interactions">
@@ -49,7 +52,7 @@ module.exports.forum =  {
       <p>This is a tweet! 🔥</p>
       <br>
       <div class="tweet-image">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Agriculture_of_Bangladesh_11.jpg/220px-Agriculture_of_Bangladesh_11.jpg" alt="Sample Image" class="tweet-image">
+          <img src="https://businesspostbd.com/files/media/daily-media/2023/02/11/32.png" alt="Sample Image" class="tweet-image">
       </div>
       <br>
       <div class="tweet-interactions">

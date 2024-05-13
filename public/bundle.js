@@ -2213,222 +2213,6 @@ module.exports.price90  = async(stock) =>{
 },{"./config":34,"axios":1}],34:[function(require,module,exports){
 module.exports.apiUrl = document.location.href.startsWith('http://localhost') ? 'http://localhost:5000' : "";
 },{}],35:[function(require,module,exports){
-var api = require('./api');
-var utils = require('./utils')
-var table = require('./table')
-
-module.exports.forum =  {
-    rend : ()=>
-    {
-      $("#contents").html(`
-      <div class="tweet">
-       <div class="tweet-header">
-          <div class="profile-info">
-              <img src="https://yaminulhoque.web.app/mypic.png" alt="Profile Picture">
-              <div>
-                  <h3>Yaminul Hoque</h3> 
-                  <span>@yamx02</span>
-              </div>
-          </div>
-          <button class="follow-button"># Featured </button>
-      </div>
-      <br>
-      <p>This is a tweet! 🔥</p>
-      <br>
-      <div class="tweet-image">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Agriculture_of_Bangladesh_11.jpg/220px-Agriculture_of_Bangladesh_11.jpg" alt="Sample Image" class="tweet-image">
-      </div>
-      <br>
-      <div class="tweet-interactions">
-          <i class="fa fa-heart-o" > 12</i>
-          <i class="fa fa-comment-o" > 12</i>
-          <i class="fa fa-bookmark-o"> 12</i>
-          <i class="fa fa-external-link"> 12</i>
-      </div>
-      </div>
-      
-
-
-      <div class="tweet">
-       <div class="tweet-header">
-          <div class="profile-info">
-              <img src="https://yaminulhoque.web.app/mypic.png" alt="Profile Picture">
-              <div>
-                  <h3>Yaminul Hoque</h3> 
-                  <span>@yamx02</span>
-              </div>
-          </div>
-          <button class="follow-button"># Featured </button>
-      </div>
-      <br>
-      <p>This is a tweet! 🔥</p>
-      <br>
-      <div class="tweet-image">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Agriculture_of_Bangladesh_11.jpg/220px-Agriculture_of_Bangladesh_11.jpg" alt="Sample Image" class="tweet-image">
-      </div>
-      <br>
-      <div class="tweet-interactions">
-          <i class="fa fa-heart-o" > 12</i>
-          <i class="fa fa-comment-o" > 12</i>
-          <i class="fa fa-bookmark-o"> 12</i>
-          <i class="fa fa-external-link"> 12</i>
-      </div>
-      </div>
-      
-      `)          
-    },
-    afterRend : async function(){} ,
-    repeatRend : async function () {  },
-
-}
-},{"./api":33,"./table":40,"./utils":41}],36:[function(require,module,exports){
-const { set } = require('mongoose');
-var api = require('./api');
-var utils = require('./utils');
-
-//<div data-tf-live="01HTQPX2J1G2949SDM3MKFNRF5"></div><script src="//embed.typeform.com/next/embed.js"></script>           
-module.exports.infotab =  {
-    repeatRend : async () => { } ,
-    
-    afterRend : async (data0) =>  
-    {
-        
-        $("#stocklist").html(`
-        <div class="main" id="initials">
-            <div>
-                <h2>Hey There</h2>
-                <p> Welcome to the BinYog.com </p> 
-            </div>
-        </div>
-
-        <div class="All-offers">
-            <div class="offers">
-                <div class="tweet-image">
-                    <img src="https://www.jagoinvestor.com/wp-content/uploads/files/investing-for-future.jpg" alt="Sample Image" class="tweet-image">
-                </div>
-                <br>
-                <h4>🔥 One App : Thousands of Investment Opportunity </h4>
-                <p> Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app </p>
-            </div>
-            <div class="offers">
-                <div class="tweet-image">
-                    <img src="https://media.licdn.com/dms/image/D4D12AQGO8MRZH1BlwA/article-cover_image-shrink_720_1280/0/1682610497839?e=1719446400&v=beta&t=KT_1WQXL3QQh68uhKTg8-ehQ787sUJVH2uvXcw1QcZw" alt="Sample Image" class="tweet-image">
-                </div>
-                <br>
-                <h4>📈 One App, Thousands of Investment Opportunity </h4>
-                <p> Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app </p>
-            </div>
-            <div class="offers">
-                <div class="tweet-image">
-                    <img src="https://cdn.idropnews.com/wp-content/uploads/2020/10/21142712/Investing-Apps.jpg" alt="Sample Image" class="tweet-image">
-                </div>
-                <br>
-                <h4>📢 One App, Thousands of Investment Opportunity </h4>
-                <p> Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app </p>
-            </div>
-        </div>
-
-        <div class="typeform" id="typeforms">
-            <div>
-                <h2>Know Your Financials Better </h2>
-                <br>
-                <p> Take this survey and get a financial Advice from our speicalized AI designed right for You.</p> 
-                <br>
-                <button id="fin-advise-btn">GET FINANCIAL ADVISE</button>
-            </div>
-        </div>
-
-        `)
-        console.log("THIS IS AFTER REND DNDND")
-        $("#fin-advise-btn").click(function () { 
-            $(".overlay").addClass("active")
-            .html(`<div data-tf-live="01HTQPX2J1G2949SDM3MKFNRF5">
-            </div><script src="//embed.typeform.com/next/embed.js"></script>
-            <button id="close-typeform" onclick="closeOverlay()">Close</button>`);       
-        });
-        // if(data0){
-        //     console.log('trueeee');
-        //     var data = JSON.parse(data0) 
-        // }else {
-        //     var data = JSON.parse(localStorage.getItem('dsedata'))
-        // }
-        // console.log(JSON.parse(data0))
-        // console.log(data)
-
-        data = [
-        { 'name' : 'GOLD' , 'change' : 45 , 'trade' : 340  , 'ltp' : '10,185' , 'changeP' : 3  } ,
-        {'name' : 'SanchayPatra' , 'change' : 45 , 'trade' : 340  , 'ltp' : '11.5%' , 'changeP' : 3  } ,
-        {'name' : 'BOND' , 'change' : 45 , 'trade' : 340  , 'ltp' : '13%' , 'changeP' : 3  } ,
-        {'name' : 'MutualFund' , 'change' : 45 , 'trade' : 340  , 'ltp' : '7%' , 'changeP' : 15  },
-        {'name' : 'DS30' , 'change' : 45 , 'trade' : 340  , 'ltp' : '17%' , 'changeP' : -13  } ] 
-        var count = 0
-        for (var i in data)
-        {
-            var changeval = (data[`${i}`].change < 0)? `${data[`${i}`].change}` : `+${data[`${i}`].change}`
-            var color = data[`${i}`].changeP < 0 ? 'red' : 'green' ;
-            if(data[`${i}`].changeP==0){color ="blue"} ;
-
-            $("#stocklist").append(`
-
-            <div class="flex main" id="${data[i].name}">
-                <div id="name" class="name" style="cursor: pointer;" onclick="window.location='#/eachstock/${data[i].name}'">
-                <p>${data[i].name}</p>
-                </div>
-            
-                <div class="chart" id="chart${count}" onclick="alert('This is a chart made from last 15 days')"></div>
-
-                <div id="icon"><i id="fav${data[i].name}" class="fas fa-star ${localStorage.fav? (JSON.parse(localStorage.fav).includes(data[i].name)?'checked':'' ):''}" onclick="fav('${data[i].name}')"></i></div>
-                <div id="data">
-                <p class="${color}">${data[`${i}`].ltp}</p>
-                <p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
-                </div>
-            </div>            
-            `)
-
-
-       var dataDSE_forChart = [14,13,11,13,9,8,10,12,11,10,13,12,10,9,11,13,14,15,17]
-       var myarr = Array(dataDSE_forChart.length).fill().map((x,i)=>i) ;
-       var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: utils.removeZero(dataDSE_forChart) } ]}
-         
-       new Chartist.Line(`#chart${count}`, datachart , 
-       {
-           showArea: true,
-           width: 140,
-           showPoint:false,
-           axisX:{  
-               showGrid : false ,
-               showLabel : false , 
-               offset : 15,
-               labelInterpolationFnc: function(value, index) {
-                   return index % 10 === 0 ? value : null;
-               }
-           } ,
-           axisY : {
-               showGrid : true ,
-               showLabel : true ,
-               }
-           });
-
-            count = count +1 ;
-        }
-    },
-
-    rend : async () => 
-{
-    $("#BottomSlider").show();
-    $(".nav-two a").removeClass("navactive");
-    $(".fa-house-user").addClass("navactive");
-    $("#contents").html(`
-    <div id="stocklist"></div>`)
-  }
-
-}
-
-
-
-
-
-},{"./api":33,"./utils":41,"mongoose":30}],37:[function(require,module,exports){
 const utils = require('./utils')
 var sectordata = require('../sectordata.json');
 
@@ -2622,24 +2406,24 @@ window.scrollSector = function (div) {
 window.closeOverlay = function (param) { 
         $(".overlay").removeClass("active").html("");
  }
-},{"../sectordata.json":43,"./utils":41}],38:[function(require,module,exports){
+},{"../sectordata.json":43,"./utils":38}],36:[function(require,module,exports){
 var api = require('./api');
 var utils = require('./utils')
-var table = require('./table')
+// var table = require('./table')
 
 module.exports.search =  {
 repeatRend : ()=>{
-    table.tableReal.repeatRend()
+    // table.tableReal.repeatRend()
 },
 afterRend : ()=>{
 },
 rend : ()=>{
   $(".nav-two a").removeClass("navactive");
   $(".fa-search").addClass("navactive");
+
   $("#BottomSlider").hide();
     $("#sorter").hide();
-    $(`    
-    <div class="search">
+    $(`<div class="search">
         <textarea id="myInput" type="text" class="searchTerm" placeholder="Search for stock"></textarea>
     </div>`).insertBefore("#stocklist");
     $("#myInput").focus() ;
@@ -2669,14 +2453,14 @@ rend : ()=>{
 
 
 
-},{"./api":33,"./table":40,"./utils":41}],39:[function(require,module,exports){
+},{"./api":33,"./utils":38}],37:[function(require,module,exports){
 var api = require('./api');
 var utils = require('./utils')
-var table = require('./table')
+// var table = require('./table')
 
 module.exports.stars =  {
 repeatRend : ()=>{
-    table.tableReal.repeatRend()
+    // table.tableReal.repeatRend()
 },
 
 afterRend : ()=>{
@@ -2702,19 +2486,427 @@ afterRend : ()=>{
 
 },
 rend : ()=>{
-    
+
     $("#BottomSlider").show();
     $(".nav-two a").removeClass("navactive");
     $(".fa-star").addClass("navactive");
+   
     $("#contents").html(`
     <div id="stocklist"></div>`)
 
     }
 }
-},{"./api":33,"./table":40,"./utils":41}],40:[function(require,module,exports){
+},{"./api":33,"./utils":38}],38:[function(require,module,exports){
+const { model } = require("mongoose");
+var sectorjson = require('../sectordata.json')
+var api = require('./api')
+
+module.exports.parseurl = () => {
+    const url = document.location.hash.toLowerCase();
+    const request = url.split('/');
+    return {
+        resource: request[1],
+        id: request[2] 
+    }
+}
+
+module.exports.showloading = () =>{ 
+    $(".overlay").addClass("active")
+    .html('<div class="loadingio-spinner-disk-li8jvstzdq8"><div class="ldio-tur5clbaxg"><div><div></div><div></div></div></div></div>')
+}
+
+module.exports.hideloading = () =>{
+    console.log('loading ends');
+    $(".overlay").removeClass("active").html("");
+}
+
+
+module.exports.marketStatus = async () =>{
+    var status = await api.dsex();
+    [p1,p2,p3] = (status['marketStatus'].toUpperCase() == "CLOSED") ? ["Closed","far fa-times-circle","#F4BC1C"] : [`${status['marketStatus']}`,"far fa-check-circle", "#36bd04"]
+    var p4 = (status["dsexChange"] > 0) ? 'green' : 'red' ;
+    [dsexValue,dsexchange, dsexchangeP] = [status["dsex"].toFixed(3),status["dsexChange"].toFixed(3),status["dsexChangeP"].toFixed(2)] ;
+    $("#dsex-info-navbar")
+        .html(`${dsexValue} <i class="fas fa-caret-${p4=='green'?'up' : 'down' }"></i><br>${dsexchange},${dsexchangeP}%`)
+        .css('color', p4);
+    $("#marketstatus")
+    .html(`
+        <i class="${p2}"></i>
+        <i id="status001"><br>Bank<br>${p1}</i>`)
+    .css('color',`${p3}`)
+    return p1;
+}
+
+module.exports.selectFunc = () => {
+  var input = document.getElementById("myInput").value.toUpperCase();
+   var row = document.getElementsByClassName("name");
+   for(var i of row){
+       var stonk = i.innerHTML.toUpperCase()
+       if (stonk.indexOf(input)>-1){
+           i.parentElement.style.display = "" ;
+           i.parentElement.querySelector('.chart').__chartist__.update();
+       } else {
+           i.parentElement.style.display ="none" ;
+       }
+   }
+}
+
+
+module.exports.whichSector = function(stockname){
+    for(var i in sectorjson){
+        if(sectorjson[i].includes(stockname.toUpperCase())){
+            return i
+        }
+    }
+}
+
+// Remove zero from the chart datas. replace zero with previous day values
+module.exports.removeZero = function(priceArray){
+    if(priceArray.includes("0")){
+        var index = priceArray.indexOf("0");
+        priceArray[index] =priceArray[index-1] ;
+        var index2 = priceArray.indexOf("0");
+        priceArray[index2] =priceArray[index2-1] ;  //done twice because often has twice data with zero
+        return priceArray
+    } else {
+        return priceArray
+    }
+}
+
+module.exports.SectorNav = function () { 
+    $('body').css('padding-top','150px');
+    $(`<div class="topnav scrollmenu">
+    <a onclick="scrollSector('Bank')">Bank</a>
+    <a onclick="scrollSector('Cement')">Cement</a>
+    <a onclick="scrollSector('Ceramic')">Ceramic</a>
+    <a onclick="scrollSector('Engineering')">Engineering</a>
+    <a onclick="scrollSector('Finance')">Finance</a>
+    <a onclick="scrollSector('Food')">Food</a>
+    <a onclick="scrollSector('Power')">Power</a>
+    <a onclick="scrollSector('General-Insurance')">Insurance</a>  
+    <a onclick="scrollSector('Life-Insurance')">Life-Ins</a>
+    <a onclick="scrollSector('IT')">IT</a>  
+    <a onclick="scrollSector('Jute')">Jute</a>
+    <a onclick="scrollSector('Mutual-Fund')">Mutual-Fund</a>
+    <a onclick="scrollSector('Paper')">Paper</a>
+    <a onclick="scrollSector('Pharmaceutical')">Pharma</a>
+    <a onclick="scrollSector('Service')">Service</a>
+    <a onclick="scrollSector('Tannery')">Tannery</a>
+    <a onclick="scrollSector('Textile')">Textile</a>
+    <a onclick="scrollSector('Telecom')">Telecom</a>
+    <a onclick="scrollSector('Travel')">Travel</a>
+    <a onclick="scrollSector('Others')" >Others</a>
+        </div>`).appendTo($("#TopNavs"));
+}
+
+module.exports.SectorSort = function () {  
+    $('.flex').sort(function(a, b) {
+        [p1,p2] = [$(a).find('.sector').html().toUpperCase() , $(b).find('.sector').html().toUpperCase() ]
+        return (p1 > p2) ?  1 : -1}).appendTo('#stocklist');
+}
+
+module.exports.SectorTitle = function () {
+    var sectorjson = require('../sectordata.json');
+    for(var i in sectorjson){
+        $(`<p id="${i}" class='flex sector-title'>${i}</p>`).insertBefore($(`#${sectorjson[i][0]}`));  
+    }
+}
+
+module.exports.deleteSectorTitle = function () {
+    $('body').css('padding-top','105px');
+    $(".sector-title").remove()
+    $(".scrollmenu").remove();
+}
+
+module.exports.dsetoLocalstorage = async function () {
+    const data0 = await api.getpreload()
+    localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
+    return JSON.stringify(data0['dsedata']) ;
+}
+
+
+},{"../sectordata.json":43,"./api":33,"mongoose":30}],39:[function(require,module,exports){
+var utils = require('./functions/utils');
+var search = require('./functions/search');
+var star = require("./functions/starred");
+var api = require("./functions/api")
+
+var mainpage =require("./pages/mainpage")
+var tweet = require("./pages/forum")
+var stocks = require('./pages/stock');
+
+
+const screenurl = {
+  '/' : mainpage.infotab ,
+  '/home' :  mainpage.infotab ,
+  '/stocks' : stocks.tableReal ,
+  '/search' : search.search ,
+  '/starred' : star.stars ,
+  '/forum' :  tweet.forum , 
+}
+
+
+const loader = async () => {
+  utils.showloading();
+  const request = utils.parseurl();
+  var marketStatus = await utils.marketStatus();
+  const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
+  var screen = screenurl[parseUrl];
+  // Navs and other things added in prerender.js
+  await screen.rend();
+  await screen.afterRend();
+  utils.hideloading();
+
+  // var marketStatus = $("#status001").length ?  $("#status001").html().split("<br>")[2]  : await utils.marketStatus();
+  // console.log(marketStatus)
+  // if(!(marketStatus == "Closed")){
+  //   console.log("Starting to update data");
+  //   $(".progress").show();
+  //   setInterval(async()=> {
+  //       utils.dsetoLocalstorage();
+  //       utils.marketStatus();
+  //       await screen.repeatRend();
+  //   }, 70*1000)
+  // }
+
+} 
+
+window.addEventListener('load', async function () { 
+  utils.showloading();
+  var data  = await utils.dsetoLocalstorage();
+  await utils.marketStatus();
+  await loader();
+}) ;
+
+window.addEventListener('hashchange' , loader);
+
+
+
+},{"./functions/api":33,"./functions/search":36,"./functions/starred":37,"./functions/utils":38,"./pages/forum":40,"./pages/mainpage":41,"./pages/stock":42}],40:[function(require,module,exports){
+var api = require('../functions/api');
+var utils = require('../functions/utils')
+var table = require('./stock')
+
+module.exports.forum =  {
+    rend : ()=> {
+
+    $(".nav-two a").removeClass("navactive");
+    $(".fa-comments").addClass("navactive");  
+      
+    $("#contents").html(`
+      <div class="tweet">
+       <div class="tweet-header">
+          <div class="profile-info">
+              <img src="https://yaminulhoque.web.app/mypic.png" alt="Profile Picture">
+              <div>
+                  <h3>Yaminul Hoque</h3> 
+                  <span>@yamx02</span>
+              </div>
+          </div>
+          <button class="follow-button"># Featured </button>
+      </div>
+      <br>
+      <p>This is a tweet! 🔥</p>
+      <br>
+      <div class="tweet-image">
+          <img src="https://businesspostbd.com/files/media/daily-media/2023/02/11/32.png" alt="Sample Image" class="tweet-image">
+      </div>
+      <br>
+      <div class="tweet-interactions">
+          <i class="fa fa-heart-o" > 12</i>
+          <i class="fa fa-comment-o" > 12</i>
+          <i class="fa fa-bookmark-o"> 12</i>
+          <i class="fa fa-external-link"> 12</i>
+      </div>
+      </div>
+      
+
+
+      <div class="tweet">
+       <div class="tweet-header">
+          <div class="profile-info">
+              <img src="https://yaminulhoque.web.app/mypic.png" alt="Profile Picture">
+              <div>
+                  <h3>Yaminul Hoque</h3> 
+                  <span>@yamx02</span>
+              </div>
+          </div>
+          <button class="follow-button"># Featured </button>
+      </div>
+      <br>
+      <p>This is a tweet! 🔥</p>
+      <br>
+      <div class="tweet-image">
+          <img src="https://businesspostbd.com/files/media/daily-media/2023/02/11/32.png" alt="Sample Image" class="tweet-image">
+      </div>
+      <br>
+      <div class="tweet-interactions">
+          <i class="fa fa-heart-o" > 12</i>
+          <i class="fa fa-comment-o" > 12</i>
+          <i class="fa fa-bookmark-o"> 12</i>
+          <i class="fa fa-external-link"> 12</i>
+      </div>
+      </div>
+      
+      `)          
+    },
+    afterRend : async function(){} ,
+    repeatRend : async function () {  },
+
+}
+},{"../functions/api":33,"../functions/utils":38,"./stock":42}],41:[function(require,module,exports){
 const { set } = require('mongoose');
-var api = require('./api');
-var utils = require('./utils');
+var api = require('../functions/api');
+var utils = require('../functions/utils');
+
+//<div data-tf-live="01HTQPX2J1G2949SDM3MKFNRF5"></div><script src="//embed.typeform.com/next/embed.js"></script>           
+module.exports.infotab =  {
+    repeatRend : async () => { } ,
+    
+    afterRend : async (data0) =>  
+    {
+        
+        $("#stocklist").html(`
+        <div class="main" id="initials">
+            <div>
+                <h2>Hey There</h2>
+                <p> Welcome to the BinYog.com </p> 
+            </div>
+        </div>
+
+        <div class="All-offers">
+            <div class="offers">
+                <div class="tweet-image">
+                    <img src="https://www.jagoinvestor.com/wp-content/uploads/files/investing-for-future.jpg" alt="Sample Image" class="tweet-image">
+                </div>
+                <br>
+                <h4>🔥 One App : Thousands of Investment Opportunity </h4>
+                <p> Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app </p>
+            </div>
+            <div class="offers">
+                <div class="tweet-image">
+                    <img src="https://media.licdn.com/dms/image/D4D12AQGO8MRZH1BlwA/article-cover_image-shrink_720_1280/0/1682610497839?e=1719446400&v=beta&t=KT_1WQXL3QQh68uhKTg8-ehQ787sUJVH2uvXcw1QcZw" alt="Sample Image" class="tweet-image">
+                </div>
+                <br>
+                <h4>📈 One App, Thousands of Investment Opportunity </h4>
+                <p> Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app </p>
+            </div>
+            <div class="offers">
+                <div class="tweet-image">
+                    <img src="https://cdn.idropnews.com/wp-content/uploads/2020/10/21142712/Investing-Apps.jpg" alt="Sample Image" class="tweet-image">
+                </div>
+                <br>
+                <h4>📢 One App, Thousands of Investment Opportunity </h4>
+                <p> Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app </p>
+            </div>
+        </div>
+
+        <div class="typeform" id="typeforms">
+            <div>
+                <h2>Know Your Financials Better </h2>
+                <br>
+                <p> Take this survey and get a financial Advice from our speicalized AI designed right for You.</p> 
+                <br>
+                <button id="fin-advise-btn">GET FINANCIAL ADVISE</button>
+            </div>
+        </div>
+
+        `)
+        console.log("THIS IS AFTER REND DNDND")
+        $("#fin-advise-btn").click(function () { 
+            $(".overlay").addClass("active")
+            .html(`<div data-tf-live="01HTQPX2J1G2949SDM3MKFNRF5">
+            </div><script src="//embed.typeform.com/next/embed.js"></script>
+            <button id="close-typeform" onclick="closeOverlay()">Close</button>`);       
+        });
+        // if(data0){
+        //     console.log('trueeee');
+        //     var data = JSON.parse(data0) 
+        // }else {
+        //     var data = JSON.parse(localStorage.getItem('dsedata'))
+        // }
+        // console.log(JSON.parse(data0))
+        // console.log(data)
+
+        data = [
+        { 'name' : 'GOLD' , 'change' : 45 , 'trade' : 340  , 'ltp' : '10,185' , 'changeP' : 3  } ,
+        {'name' : 'SanchayPatra' , 'change' : 45 , 'trade' : 340  , 'ltp' : '11.5%' , 'changeP' : 3  } ,
+        {'name' : 'BOND' , 'change' : 45 , 'trade' : 340  , 'ltp' : '13%' , 'changeP' : 3  } ,
+        {'name' : 'MutualFund' , 'change' : 45 , 'trade' : 340  , 'ltp' : '7%' , 'changeP' : 15  },
+        {'name' : 'DS30' , 'change' : 45 , 'trade' : 340  , 'ltp' : '17%' , 'changeP' : -13  } ] 
+        var count = 0
+        for (var i in data)
+        {
+            var changeval = (data[`${i}`].change < 0)? `${data[`${i}`].change}` : `+${data[`${i}`].change}`
+            var color = data[`${i}`].changeP < 0 ? 'red' : 'green' ;
+            if(data[`${i}`].changeP==0){color ="blue"} ;
+
+            $("#stocklist").append(`
+
+            <div class="flex main" id="${data[i].name}">
+                <div id="name" class="name" style="cursor: pointer;" onclick="window.location='#/eachstock/${data[i].name}'">
+                <p>${data[i].name}</p>
+                </div>
+            
+                <div class="chart" id="chart${count}" onclick="alert('This is a chart made from last 15 days')"></div>
+
+                <div id="icon"><i id="fav${data[i].name}" class="fas fa-star ${localStorage.fav? (JSON.parse(localStorage.fav).includes(data[i].name)?'checked':'' ):''}" onclick="fav('${data[i].name}')"></i></div>
+                <div id="data">
+                <p class="${color}">${data[`${i}`].ltp}</p>
+                <p class="${color}1 change">${changeval} , ${data[`${i}`].changeP}%</p>
+                </div>
+            </div>            
+            `)
+
+
+       var dataDSE_forChart = [14,13,11,13,9,8,10,12,11,10,13,12,10,9,11,13,14,15,17]
+       var myarr = Array(dataDSE_forChart.length).fill().map((x,i)=>i) ;
+       var datachart =  { labels: myarr ,  series: [{className:`stroke${color}`,  meta:"OK", data: utils.removeZero(dataDSE_forChart) } ]}
+         
+       new Chartist.Line(`#chart${count}`, datachart , 
+       {
+           showArea: true,
+           width: 140,
+           showPoint:false,
+           axisX:{  
+               showGrid : false ,
+               showLabel : false , 
+               offset : 15,
+               labelInterpolationFnc: function(value, index) {
+                   return index % 10 === 0 ? value : null;
+               }
+           } ,
+           axisY : {
+               showGrid : true ,
+               showLabel : true ,
+               }
+           });
+
+            count = count +1 ;
+        }
+    },
+
+    rend : async () => 
+{
+    $("#BottomSlider").show();
+
+    $(".nav-two a").removeClass("navactive");
+    $(".fa-house-user").addClass("navactive");
+    
+    $("#contents").html(`
+    <div id="stocklist"></div>`)
+  }
+
+}
+
+
+
+
+
+},{"../functions/api":33,"../functions/utils":38,"mongoose":30}],42:[function(require,module,exports){
+const { set } = require('mongoose');
+var api = require('../functions/api');
+var utils = require('../functions/utils');
 // var Chart = require('chart.js')
 
 const tab =  {
@@ -2827,9 +3019,9 @@ const tab =  {
 rend : async () => {
     $("#BottomSlider").show();
     $(".nav-two a").removeClass("navactive");
-    $(".fa-house-user").addClass("navactive");
-    $("#contents").html(`
-    <div id="stocklist"></div>`)
+    $(".fa-chart-line").addClass("navactive");
+
+    $("#contents").html(`<div id="stocklist"></div>`)
   }
 
 }
@@ -2839,191 +3031,7 @@ module.exports.tableReal = tab
 
 
 
-},{"./api":33,"./utils":41,"mongoose":30}],41:[function(require,module,exports){
-const { model } = require("mongoose");
-var sectorjson = require('../sectordata.json')
-var api = require('./api')
-
-module.exports.parseurl = () => {
-    const url = document.location.hash.toLowerCase();
-    const request = url.split('/');
-    return {
-        resource: request[1],
-        id: request[2] 
-    }
-}
-
-module.exports.showloading = () =>{ 
-    $(".overlay").addClass("active")
-    .html('<div class="loadingio-spinner-disk-li8jvstzdq8"><div class="ldio-tur5clbaxg"><div><div></div><div></div></div></div></div>')
-}
-
-module.exports.hideloading = () =>{
-    console.log('loading ends');
-    $(".overlay").removeClass("active").html("");
-}
-
-
-module.exports.marketStatus = async () =>{
-    var status = await api.dsex();
-    [p1,p2,p3] = (status['marketStatus'].toUpperCase() == "CLOSED") ? ["Closed","far fa-times-circle","#F4BC1C"] : [`${status['marketStatus']}`,"far fa-check-circle", "#36bd04"]
-    var p4 = (status["dsexChange"] > 0) ? 'green' : 'red' ;
-    [dsexValue,dsexchange, dsexchangeP] = [status["dsex"].toFixed(3),status["dsexChange"].toFixed(3),status["dsexChangeP"].toFixed(2)] ;
-    $("#dsex-info-navbar")
-        .html(`${dsexValue} <i class="fas fa-caret-${p4=='green'?'up' : 'down' }"></i><br>${dsexchange},${dsexchangeP}%`)
-        .css('color', p4);
-    $("#marketstatus")
-    .html(`
-        <i class="${p2}"></i>
-        <i id="status001"><br>Market<br>${p1}</i>`)
-    .css('color',`${p3}`)
-    return p1;
-}
-
-module.exports.selectFunc = () => {
-  var input = document.getElementById("myInput").value.toUpperCase();
-   var row = document.getElementsByClassName("name");
-   for(var i of row){
-       var stonk = i.innerHTML.toUpperCase()
-       if (stonk.indexOf(input)>-1){
-           i.parentElement.style.display = "" ;
-           i.parentElement.querySelector('.chart').__chartist__.update();
-       } else {
-           i.parentElement.style.display ="none" ;
-       }
-   }
-}
-
-
-module.exports.whichSector = function(stockname){
-    for(var i in sectorjson){
-        if(sectorjson[i].includes(stockname.toUpperCase())){
-            return i
-        }
-    }
-}
-
-// Remove zero from the chart datas. replace zero with previous day values
-module.exports.removeZero = function(priceArray){
-    if(priceArray.includes("0")){
-        var index = priceArray.indexOf("0");
-        priceArray[index] =priceArray[index-1] ;
-        var index2 = priceArray.indexOf("0");
-        priceArray[index2] =priceArray[index2-1] ;  //done twice because often has twice data with zero
-        return priceArray
-    } else {
-        return priceArray
-    }
-}
-
-module.exports.SectorNav = function () { 
-    $('body').css('padding-top','150px');
-    $(`<div class="topnav scrollmenu">
-    <a onclick="scrollSector('Bank')">Bank</a>
-    <a onclick="scrollSector('Cement')">Cement</a>
-    <a onclick="scrollSector('Ceramic')">Ceramic</a>
-    <a onclick="scrollSector('Engineering')">Engineering</a>
-    <a onclick="scrollSector('Finance')">Finance</a>
-    <a onclick="scrollSector('Food')">Food</a>
-    <a onclick="scrollSector('Power')">Power</a>
-    <a onclick="scrollSector('General-Insurance')">Insurance</a>  
-    <a onclick="scrollSector('Life-Insurance')">Life-Ins</a>
-    <a onclick="scrollSector('IT')">IT</a>  
-    <a onclick="scrollSector('Jute')">Jute</a>
-    <a onclick="scrollSector('Mutual-Fund')">Mutual-Fund</a>
-    <a onclick="scrollSector('Paper')">Paper</a>
-    <a onclick="scrollSector('Pharmaceutical')">Pharma</a>
-    <a onclick="scrollSector('Service')">Service</a>
-    <a onclick="scrollSector('Tannery')">Tannery</a>
-    <a onclick="scrollSector('Textile')">Textile</a>
-    <a onclick="scrollSector('Telecom')">Telecom</a>
-    <a onclick="scrollSector('Travel')">Travel</a>
-    <a onclick="scrollSector('Others')" >Others</a>
-        </div>`).appendTo($("#TopNavs"));
-}
-
-module.exports.SectorSort = function () {  
-    $('.flex').sort(function(a, b) {
-        [p1,p2] = [$(a).find('.sector').html().toUpperCase() , $(b).find('.sector').html().toUpperCase() ]
-        return (p1 > p2) ?  1 : -1}).appendTo('#stocklist');
-}
-
-module.exports.SectorTitle = function () {
-    var sectorjson = require('../sectordata.json');
-    for(var i in sectorjson){
-        $(`<p id="${i}" class='flex sector-title'>${i}</p>`).insertBefore($(`#${sectorjson[i][0]}`));  
-    }
-}
-
-module.exports.deleteSectorTitle = function () {
-    $('body').css('padding-top','105px');
-    $(".sector-title").remove()
-    $(".scrollmenu").remove();
-}
-
-module.exports.dsetoLocalstorage = async function () {
-    const data0 = await api.getpreload()
-    localStorage.setItem('dsedata', JSON.stringify(data0['dsedata']));
-    return JSON.stringify(data0['dsedata']) ;
-}
-
-
-},{"../sectordata.json":43,"./api":33,"mongoose":30}],42:[function(require,module,exports){
-var tableget = require('./functions/table');
-var utils = require('./functions/utils');
-var search = require('./functions/search');
-var star = require("./functions/starred");
-var tweet = require("./functions/forum")
-var api = require("./functions/api")
-var mainpage =require("./functions/mainpage")
-
-const screenurl = {
-  '/' : mainpage.infotab ,
-  '/home' :  mainpage.infotab ,
-  '/stocks' : tableget.tableReal ,
-  '/search' : search.search ,
-  '/starred' : star.stars ,
-  '/forum' :  tweet.forum , 
-}
-
-
-const loader = async () => {
-  utils.showloading();
-  const request = utils.parseurl();
-  var marketStatus = await utils.marketStatus();
-  const parseUrl = (request.resource ? `/${request.resource}` : '/' ) + (request.id? '/:id': '')
-  var screen = screenurl[parseUrl];
-  // Navs and other things added in prerender.js
-  await screen.rend();
-  await screen.afterRend();
-  utils.hideloading();
-
-  // var marketStatus = $("#status001").length ?  $("#status001").html().split("<br>")[2]  : await utils.marketStatus();
-  // console.log(marketStatus)
-  // if(!(marketStatus == "Closed")){
-  //   console.log("Starting to update data");
-  //   $(".progress").show();
-  //   setInterval(async()=> {
-  //       utils.dsetoLocalstorage();
-  //       utils.marketStatus();
-  //       await screen.repeatRend();
-  //   }, 70*1000)
-  // }
-
-} 
-
-window.addEventListener('load', async function () { 
-  utils.showloading();
-  var data  = await utils.dsetoLocalstorage();
-  await utils.marketStatus();
-  await loader();
-}) ;
-
-window.addEventListener('hashchange' , loader);
-
-
-
-},{"./functions/api":33,"./functions/forum":35,"./functions/mainpage":36,"./functions/search":38,"./functions/starred":39,"./functions/table":40,"./functions/utils":41}],43:[function(require,module,exports){
+},{"../functions/api":33,"../functions/utils":38,"mongoose":30}],43:[function(require,module,exports){
 module.exports={
     "Bank" : [
         "ABBANK",
@@ -3447,4 +3455,4 @@ module.exports={
     ] 
 }
 
-},{}]},{},[42,37]);
+},{}]},{},[39,35]);

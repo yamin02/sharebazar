@@ -1,6 +1,6 @@
 const { set } = require('mongoose');
-var api = require('./api');
-var utils = require('./utils');
+var api = require('../functions/api');
+var utils = require('../functions/utils');
 // var Chart = require('chart.js')
 
 const tab =  {
@@ -113,9 +113,9 @@ const tab =  {
 rend : async () => {
     $("#BottomSlider").show();
     $(".nav-two a").removeClass("navactive");
-    $(".fa-house-user").addClass("navactive");
-    $("#contents").html(`
-    <div id="stocklist"></div>`)
+    $(".fa-chart-line").addClass("navactive");
+
+    $("#contents").html(`<div id="stocklist"></div>`)
   }
 
 }
