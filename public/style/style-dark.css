@@ -129,12 +129,16 @@ body {
     .image-mainpage img{
       width: 70px;
     }
+ 
+    #initials h2{
+      padding-bottom: 10px ;
+    }
 
     #initials{  
       font-family: "Be Vietnam Pro", sans-serif;
-      line-height: 230%;
+      line-height: 170%;
       font-weight: 400;
-      font-size: 12px;
+      font-size: 14px;
       padding-left: 30px;
       padding-top: 10px;
       padding-bottom: 12px;
@@ -144,6 +148,8 @@ body {
     #initials p{
       color: rgb(207, 206, 206);
     }
+
+
 
 
   /* Input search */
@@ -892,6 +898,21 @@ body {
 }
 .typeform p{
   color: rgb(207, 206, 206);
+}
+#fin-advise-btn1{
+
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 14px 24px;
+  border: none;
+  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+  background: linear-gradient(to right, rgb(40, 104, 22) 0%, rgb(52, 124, 27) 50%, rgb(69, 146, 14) 100%);
+  color: #fff;
 }
 
 #fin-advise-btn{

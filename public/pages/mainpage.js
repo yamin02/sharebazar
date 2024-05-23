@@ -11,12 +11,14 @@ module.exports.infotab =  {
         
         $("#stocklist").html(`
         <div class="main" id="initials">
-            <div>
-                <h2>Hey There</h2>
-                <p> Welcome to the BinYog.com </p> 
+         <div>
+            <h2>Hey There</h2>
+            <p>Welcome to biniyog.app <br> This site is still under construction. To get early access and stay updated about this website click the button below</p>
+            <br>
+            <a href="https://forms.gle/dxSWHp5gpGfSPbWf9" id="fin-advise-btn1">Stay Connected</a>
             </div>
         </div>
-
+    
         <div class="All-offers">
             <div class="offers">
                 <div class="tweet-image">

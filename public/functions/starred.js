@@ -1,6 +1,6 @@
 var api = require('./api');
 var utils = require('./utils')
-// var table = require('./table')
+var table = require('../pages/stock')
 
 module.exports.stars =  {
 repeatRend : ()=>{

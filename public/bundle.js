@@ -2456,7 +2456,7 @@ rend : ()=>{
 },{"./api":33,"./utils":38}],37:[function(require,module,exports){
 var api = require('./api');
 var utils = require('./utils')
-// var table = require('./table')
+var table = require('../pages/stock')
 
 module.exports.stars =  {
 repeatRend : ()=>{
@@ -2496,7 +2496,7 @@ rend : ()=>{
 
     }
 }
-},{"./api":33,"./utils":38}],38:[function(require,module,exports){
+},{"../pages/stock":42,"./api":33,"./utils":38}],38:[function(require,module,exports){
 const { model } = require("mongoose");
 var sectorjson = require('../sectordata.json')
 var api = require('./api')
@@ -2768,12 +2768,14 @@ module.exports.infotab =  {
         
         $("#stocklist").html(`
         <div class="main" id="initials">
-            <div>
-                <h2>Hey There</h2>
-                <p> Welcome to the BinYog.com </p> 
+         <div>
+            <h2>Hey There</h2>
+            <p>Welcome to biniyog.app <br> This site is still under construction. To get early access and stay updated about this website click the button below</p>
+            <br>
+            <a href="https://forms.gle/dxSWHp5gpGfSPbWf9" id="fin-advise-btn1">Stay Connected</a>
             </div>
         </div>
-
+    
         <div class="All-offers">
             <div class="offers">
                 <div class="tweet-image">
