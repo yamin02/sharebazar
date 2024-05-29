@@ -15,7 +15,7 @@ module.exports.infotab =  {
             <h2>Hey There</h2>
             <p>Welcome to biniyog.app <br> This site is still under construction. To get early access and stay updated about this website click the button below</p>
             <br>
-            <a href="https://forms.gle/dxSWHp5gpGfSPbWf9 " id="fin-advise-btn1">Stay Connected</a>
+            <a href="https://forms.gle/dxSWHp5gpGfSPbWf9" id="fin-advise-btn1">Stay Connected</a>
             </div>
         </div>
     

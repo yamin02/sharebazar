@@ -6,6 +6,7 @@ var api = require("./functions/api")
 var mainpage =require("./pages/mainpage")
 var tweet = require("./pages/forum")
 var stocks = require('./pages/stock');
+var eachmf = require("./pages/eachmf")
 
 
 const screenurl = {
@@ -15,6 +16,7 @@ const screenurl = {
   '/search' : search.search ,
   '/starred' : star.stars ,
   '/forum' :  tweet.forum , 
+  '/eachmf': eachmf.infotab ,
 }
 
 

@@ -1,6 +1,11 @@
 const utils = require('./utils')
 var sectordata = require('../sectordata.json');
 
+$('#closePopupBtn').on('click', function () {     
+    document.getElementById('popup').style.display = 'none';
+    document.querySelector('.popup-overlay').style.display = 'none';
+});
+
 (async () => {
     await utils.dsetoLocalstorage();
     await utils.marketStatus();

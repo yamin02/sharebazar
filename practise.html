@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market Trading App</title>
+    <script src="https://kit.fontawesome.com/172b7a97ab.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./public/style/practise.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://via.placeholder.com/30" alt="Logo">
+            <h1>Aditya Birla Sun Life ELSS Tax Saver Fund</h1>
+        </div>
+        <div class="sub-header">Direct | Growth | Equity - ELSS</div>
+        <div class="main-content">
+            <div class="details">
+                <div class="nav-title">Current NAV (24th May 2024)</div>
+                <div class="price">₹60.33</div>
+                <div class="change">-0.13%</div>
+                <br>
+                <div class="row">
+                    <div class="item">CAGR 
+                        <select id="cagr-period">
+                            <option value="3">3 Years</option>
+                            <option value="4">4 Years</option>
+                            <option value="5" selected>5 Years</option>
+                        </select>
+                        <span id="cagr-value">+12.65%</span>
+                    </div>
+                    <div class="item">Min. investment<span>₹500.0</span></div>
+                </div>
+                <div class="row">
+                    <div class="item">Exit load <a class="fas fa-info-circle" data-info="exit-load"></a><span>0.0%</span> </div>
+                    <div class="item">Expense ratio<span>0.91%</span> <span class="info-icon" data-info="expense-ratio">i</span></div>
+                </div>
+                <button class="login">Login to invest</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="myChart" class="chart"></canvas>
+                <div class="nav">
+                    <button data-period="3M" class="active">3M</button>
+                    <button data-period="6M">6M</button>
+                    <button data-period="1Y">1Y</button>
+                    <button data-period="2Y">2Y</button>
+                    <button data-period="3Y">3Y</button>
+                    <button data-period="Max">Max.</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-overlay"></div>
+    <div class="popup" id="popup">
+        <p id="popup-content"></p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="practise.js"></script>
+</body>
+</html>
