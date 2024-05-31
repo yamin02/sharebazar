@@ -22,7 +22,7 @@ $('#TopNavs').html(`<nav class="topnav nav-one">
     <a href="#/stocks" class="fas fa-chart-line"></a>
     <a href="#/starred" class="fas fa-star"></a>
     <a href="#/forum" class="fas fa-comments"></a>
-    <a href="#/search" class="fas fa-search"></a>
+    <a href="#/eachmf" class="fa fa-connectdevelop"></a>
 </nav>
 <div class="progress"></div>`
 )

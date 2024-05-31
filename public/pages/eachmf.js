@@ -110,7 +110,7 @@ module.exports.infotab =  {
     <div class="main-content">
         <div class="details">
             <div class="nav-title">Current NAV (24th May 2024)</div>
-            <div class="price">₹60.33</div>
+            <div class="price">৳ 60.33</div>
             <div class="change">-0.13%</div>
             <br>
             <div class="row">
