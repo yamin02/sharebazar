@@ -1,61 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Market Trading App</title>
+    <title>Binyog.com</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'/>
+    <meta content='yes' name='mobile-web-app-capable'/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#000000">
+
+    <link rel="apple-touch-icon" sizes="192x192" href="./resource/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./resource/favicon-32x32.png">
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="./resource/favicon-16x16.png"> -->
+    <link rel="manifest" href="./site.webmanifest">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/172b7a97ab.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./public/style/practise.css">
+    <link rel="stylesheet" href="./public/style/style-dark.css"> 
+    <link rel="stylesheet" href="./public/style/practise.css">  
+    <!-- Made the style dark mode -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Red+Hat+Text:400,500&display=swap" rel="stylesheet">
+    <script src="//embed.typeform.com/next/embed.js"></script>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="https://via.placeholder.com/30" alt="Logo">
-            <h1>Aditya Birla Sun Life ELSS Tax Saver Fund</h1>
-        </div>
-        <div class="sub-header">Direct | Growth | Equity - ELSS</div>
-        <div class="main-content">
-            <div class="details">
-                <div class="nav-title">Current NAV (24th May 2024)</div>
-                <div class="price">₹60.33</div>
-                <div class="change">-0.13%</div>
-                <br>
-                <div class="row">
-                    <div class="item">CAGR 
-                        <select id="cagr-period">
-                            <option value="3">3 Years</option>
-                            <option value="4">4 Years</option>
-                            <option value="5" selected>5 Years</option>
-                        </select>
-                        <span id="cagr-value">+12.65%</span>
-                    </div>
-                    <div class="item">Min. investment<span>₹500.0</span></div>
-                </div>
-                <div class="row">
-                    <div class="item">Exit load <a class="fas fa-info-circle" data-info="exit-load"></a><span>0.0%</span> </div>
-                    <div class="item">Expense ratio<span>0.91%</span> <span class="info-icon" data-info="expense-ratio">i</span></div>
-                </div>
-                <button class="login">Login to invest</button>
-            </div>
-            <div class="chart-container">
-                <canvas id="myChart" class="chart"></canvas>
-                <div class="nav">
-                    <button data-period="3M" class="active">3M</button>
-                    <button data-period="6M">6M</button>
-                    <button data-period="1Y">1Y</button>
-                    <button data-period="2Y">2Y</button>
-                    <button data-period="3Y">3Y</button>
-                    <button data-period="Max">Max.</button>
-                </div>
-            </div>
+    <div class="overlay" id="loading-overlay"></div>
+    <div id="TopNavs">
+        <nav class="topnav nav-one">
+            <a href="/#/home"><img src="./public/resource/apple-icon.png" style="width: 30px;"></a>
+            <a id="page-name">eBiniyog</a>
+            <a id="marketstatus"><a href="#/eachmf" class="fa fa-connectdevelop"></a></a>
+        </nav>
+    </div>    
+
+    <div id="contents">
+        <div id="stocklist">
+            <div class="main" id="initials">
+           
+               <div class="All-offers">
+                   <div class="offers">
+                       <div class="tweet-image">
+                           <img src="https://as1.ftcdn.net/v2/jpg/03/13/18/98/1000_F_313189896_QyuLogiCyOnjJHMSyPWcPg9vqp5qIHGY.jpg" alt="Sample Image" class="tweet-image">
+                       </div>
+                       <!-- <br> -->
+                       <h4>🔥 One App : Thousands of Investment Opportunity </h4>
+                       <p> Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app </p>
+                   </div>
+                   <div class="offers">
+                       <div class="tweet-image">
+                           <img src="https://media.licdn.com/dms/image/D4D12AQGO8MRZH1BlwA/article-cover_image-shrink_720_1280/0/1682610497839?e=1719446400&v=beta&t=KT_1WQXL3QQh68uhKTg8-ehQ787sUJVH2uvXcw1QcZw" alt="Sample Image" class="tweet-image">
+                       </div>
+                       <br>
+                       <h4>📈 One App, Thousands of Investment Opportunity </h4>
+                       <p> Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app </p>
+                   </div>
+                   <div class="offers">
+                       <div class="tweet-image">
+                           <img src="https://cdn.idropnews.com/wp-content/uploads/2020/10/21142712/Investing-Apps.jpg" alt="Sample Image" class="tweet-image">
+                       </div>
+                       <br>
+                       <h4>📢 One App, Thousands of Investment Opportunity </h4>
+                       <p> Invest in Bonds, Mutual Funds, Stocks, Sanchaya Patra, FDR from the app </p>
+                   </div>
+               </div>
+       
+               <div class="typeform" id="typeforms">
+                   <div>
+                       <h2>Learn Earn and Grow </h2>
+                       <p>Login to get access to thousands of resource</p>
+                       <br>
+                       <button id="fin-advise-btn">Login</button>
+                       <br>
+                       <p>Don't have an account ? Sign Up <a>Here</a></p> 
+
+                   </div>
+               </div>
+
         </div>
     </div>
-    <div class="popup-overlay"></div>
-    <div class="popup" id="popup">
-        <p id="popup-content"></p>
-        <button onclick="closePopup()">Close</button>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="practise.js"></script>
+    <!-- <script src="bundle.js"></script> -->
+    <script>
+        if (typeof navigator.serviceWorker !== 'undefined') {
+          navigator.serviceWorker.register('sw.js')
+        }
+      </script>
 </body>
 </html>
+

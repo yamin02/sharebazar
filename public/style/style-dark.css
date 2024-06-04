@@ -3,7 +3,7 @@
 
 /* BODY and Global tags */
 body {
-    padding-top: 105px;
+    padding-top: 50px;
     background-color: #18212a;
   }
   /* Reset any browser default style  */
@@ -46,8 +46,13 @@ body {
   #page-name {
     flex: 5;
     font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Be Vietnam Pro", sans-serif;
+    font-size:23px ;
+    text-align: left;
   }
+
+
+
   #dsex-info-navbar {
     flex: 2;
     font-size: 13px;
@@ -139,8 +144,8 @@ body {
       line-height: 170%;
       font-weight: 400;
       font-size: 14px;
-      padding-left: 30px;
-      padding-top: 10px;
+      padding-left: 10px;
+      /* padding-top: 10px; */
       padding-bottom: 12px;
       color: white;
       border-bottom: 0.5px solid grey;
@@ -847,7 +852,7 @@ body {
   padding: 1rem;
   border-radius: 2%;
   color: white;
-  background-color: #a2a1a116;
+  background-color: #cbc9c916;
   margin: 6px !important;
   flex: 0 0 100%; /* Each tweet occupies the full width of the container */
   max-width: calc(100% - 50px);
@@ -870,12 +875,13 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 .All-offers::-webkit-scrollbar {
-  width: 10px;
-  height: 4px;
+  display: none;
+  /* width: 10px; */
+  /* height: 4px; */
 }
 .All-offers::-webkit-scrollbar-thumb {
-  background: rgba(199, 196, 196, 0.511);
-  border-radius: 5px;
+  /* background: rgba(199, 196, 196, 0.511); */
+  /* border-radius: 5px; */
 }
 .All-offers::-webkit-scrollbar-track {
   background: transparent;
@@ -923,6 +929,8 @@ body {
 
   display: inline-block;
   outline: none;
+  width: 190px;
+  margin-bottom: 10px;
   cursor: pointer;
   font-size: 16px;
   line-height: 20px;
